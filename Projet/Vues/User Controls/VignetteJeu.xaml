@@ -10,7 +10,7 @@
         <Image>
             <!--mettre binding vers image-->
         </Image>
-        <TextBlock>
+        <TextBlock >
                 <!--//mettre binding vers NomJeu-->
         </TextBlock>
     </WrapPanel>
