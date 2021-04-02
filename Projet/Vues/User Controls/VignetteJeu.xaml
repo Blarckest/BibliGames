@@ -4,14 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Vues.User_Controls"
+             xmlns:SymbolStore="clr-namespace:System.Diagnostics.SymbolStore;assembly=System.Diagnostics.StackTrace"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <WrapPanel>
-        <Image>
-            <!--mettre binding vers image-->
-        </Image>
-        <TextBlock >
-                <!--//mettre binding vers NomJeu-->
-        </TextBlock>
-    </WrapPanel>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="8*"/>
+        </Grid.ColumnDefinitions>
+        <Image/>
+        <!--mettre binding vers image-->
+
+        <TextBlock/>
+        <!--//mettre binding vers NomJeu-->
+
+    </Grid>
 </UserControl>

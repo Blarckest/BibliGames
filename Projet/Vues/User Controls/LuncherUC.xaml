@@ -10,7 +10,7 @@
         <TextBlock>
             mettre Text nom luncher (binding)
         </TextBlock>
-        <TreeView>
+        <TreeView BorderThickness="0">
             observable collection de vignette jeu(binding)
         </TreeView>
     </TreeView>

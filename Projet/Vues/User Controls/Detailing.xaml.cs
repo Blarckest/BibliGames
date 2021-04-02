@@ -24,5 +24,9 @@ namespace Vues.User_Controls
         {
             InitializeComponent();
         }
+        public void parcourirFichiers(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

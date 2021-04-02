@@ -33,16 +33,19 @@ namespace Vues
         {
             //ouvrir fenetre paramatre
         }
-        private void ChampRechEntre(object sender, MouseButtonEventArgs e)
+        private void ChampRechEntre(object sender, RoutedEventArgs e)
         {
-            ((TextBlock)sender).Text = ""; //met a vide le champ
+            if (((TextBox)sender).Text =="Rechercher")
+            {
+                ((TextBox)sender).Text = ""; //met a vide le champ 
+            }
         }
-        private void ChampRechQuitter(object sender, MouseButtonEventArgs e)
+        private void ChampRechQuitter(object sender, RoutedEventArgs e)
         {
             //marche pas
-            if (((TextBlock)sender).Text == "")
+            if (((TextBox)sender).Text == "")
             {
-                ((TextBlock)sender).Text = "Rechercher";
+                ((TextBox)sender).Text = "Rechercher";
             }
         }
     }

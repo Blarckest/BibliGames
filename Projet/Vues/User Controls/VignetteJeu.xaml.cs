@@ -21,7 +21,9 @@ namespace Vues.User_Controls
         public VignetteJeu()
         {
             InitializeComponent();
+            DataContext = this;
         }
         public string NomJeu { get; set; }
+        public string LinkToImage { get; set; }
     }
 }
