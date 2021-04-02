@@ -6,7 +6,21 @@
         xmlns:local="clr-namespace:Vues"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <DockPanel>
+        <Image DockPanel.Dock="Top" Height="40" Width="40" Source="Icones\parametre.png" HorizontalAlignment="Right" 
+               Margin="0,10,10,0" MouseLeftButtonDown="OuvrirParametre"/>
+        <StackPanel DockPanel.Dock="Left" Margin="20,0,0,0">
+            <WrapPanel >
+                <Image Height="20" Width="20" Source="Icones\loupe.png"/>
+                <TextBlock Text="Rechercher" MouseLeftButtonDown="ChampRechEntre"
+                            MouseLeftButtonUp="ChampRechQuitter"/>
+            </WrapPanel>
 
-    </Grid>
+            <ListView>
+                <!--mettre les user controls luncherUC-->
+            </ListView>
+            <Button Height="30" Width="100" HorizontalAlignment="Left" Click="AjoutJeu">Ajouter un jeu</Button>
+        </StackPanel>
+        <!--partie detail a droite du dockpanel-->
+    </DockPanel>
 </Window>

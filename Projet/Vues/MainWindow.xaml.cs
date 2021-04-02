@@ -24,5 +24,26 @@ namespace Vues
         {
             InitializeComponent();
         }
+
+        private void AjoutJeu(object sender, RoutedEventArgs e)
+        {
+            //ajouter un nouveau Jeu
+        }
+        private void OuvrirParametre(object sender, MouseButtonEventArgs e)
+        {
+            //ouvrir fenetre paramatre
+        }
+        private void ChampRechEntre(object sender, MouseButtonEventArgs e)
+        {
+            ((TextBlock)sender).Text = ""; //met a vide le champ
+        }
+        private void ChampRechQuitter(object sender, MouseButtonEventArgs e)
+        {
+            //marche pas
+            if (((TextBlock)sender).Text == "")
+            {
+                ((TextBlock)sender).Text = "Rechercher";
+            }
+        }
     }
 }
