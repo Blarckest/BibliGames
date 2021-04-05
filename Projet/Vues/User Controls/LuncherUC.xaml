@@ -6,9 +6,9 @@
              xmlns:local="clr-namespace:Vues.User_Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel  PreviewMouseWheel="UCMouseWheelEvent">
-    <TextBlock Text="Steam"/>
-        <TreeView BorderThickness="0">
+    <StackPanel Style="{StaticResource BlackTheme}" PreviewMouseWheel="UCMouseWheelEvent">
+        <TextBlock Text="Steam" Foreground="{StaticResource TextColorDarkTheme}"/>
+        <TreeView BorderThickness="0" Background="#24282F">
             <local:VignetteJeu />
             <local:VignetteJeu />
             <local:VignetteJeu />

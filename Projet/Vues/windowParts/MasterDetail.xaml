@@ -7,7 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <DockPanel>
-        <ListView MinWidth="150" MaxWidth="200">
+        <ListView MinWidth="150" MaxWidth="200" Background="#24282F"
+                  BorderThickness="0">
             <ListViewItem>
                 <User_Controls:LuncherUC />
             </ListViewItem>

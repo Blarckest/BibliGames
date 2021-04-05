@@ -5,37 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Vues"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" MinHeight="480" MinWidth="650">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="4*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="5*"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Image Grid.Row="0" Grid.Column="1" Height="40" Width="40" Source="Icones\parametre.png" HorizontalAlignment="Right" 
-               Margin="0,20,20,0" MouseLeftButtonUp="OuvrirParametre" VerticalAlignment="Top"/>
-        <Grid Grid.Row="0" Grid.Column="0" Margin="10,0,0,0">
+        Title="BibliGames" Height="450" Width="800" MinHeight="200" MinWidth="250">
+    <DockPanel Style="{StaticResource BlackTheme}">
+        <Grid DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Image Grid.Column="0" Grid.Row="1" Source="Icones\loupe.png"/>
-            <TextBox Text="Rechercher" GotFocus="ChampRechEntre"
-                     LostFocus="ChampRechQuitter" Grid.Row="1" Grid.Column="1"
-                     FontSize="20" VerticalAlignment="Center"/>
+            <StackPanel Margin="10,0,0,0" Grid.Column="0" Orientation="Horizontal" >
+                <Image Margin="0,0,5,0" Height="35" Width="35" Source="Icones\loupe.png"/>
+                <TextBox Background="{StaticResource BackgroundColorDarkTheme}" BorderThickness="0,0,0,2"
+                         Text="Rechercher" GotFocus="ChampRechEntre" LostFocus="ChampRechQuitter" FontSize="20"
+                         VerticalAlignment="Center" Foreground="{StaticResource TextColorDarkTheme}"/>
+            </StackPanel>
+            <Image Grid.Column="1" Height="40" Width="40" Source="Icones\parametre.png"
+               Margin="5,5,5,5" MouseLeftButtonUp="OuvrirParametre" VerticalAlignment="Top"/>
         </Grid>
-        <windowParts:MasterDetail Grid.Row="1" Grid.ColumnSpan="2"/>
-        <Button Grid.Row="3" Grid.Column="0" Height="30" Width="100"
-                HorizontalAlignment="Left" Click="AjoutJeu" Margin="20,0,0,0">
-            Ajouter un jeu
+        <Button DockPanel.Dock="Bottom" Height="30" Background="{StaticResource BackgroundColorDarkTheme}"
+                HorizontalAlignment="Left" Click="AjoutJeu" Margin="20,5,0,5" BorderThickness="0">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="/Icones/plus.png"/>
+                <TextBlock Text="Ajouter un Jeu" VerticalAlignment="Center"
+                           Margin="0,0,5,0" Foreground="{StaticResource TextColorDarkTheme}"/>
+            </StackPanel>
         </Button>
-    </Grid>
+        <windowParts:MasterDetail/>
+    </DockPanel>
 </Window>

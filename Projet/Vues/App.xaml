@@ -4,6 +4,10 @@
              xmlns:local="clr-namespace:Vues"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <SolidColorBrush x:Key="BackgroundColorDarkTheme">#24282F</SolidColorBrush>
+        <SolidColorBrush x:Key="TextColorDarkTheme">#C5CBD8</SolidColorBrush>
+        <Style TargetType="Panel" x:Key="BlackTheme">
+            <Setter Property="Background" Value="{StaticResource BackgroundColorDarkTheme}"/>
+        </Style>
     </Application.Resources>
 </Application>
