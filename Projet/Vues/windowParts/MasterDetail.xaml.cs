@@ -11,14 +11,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Vues.User_Controls
+namespace Vues.windowParts
 {
     /// <summary>
-    /// Logique d'interaction pour VignetteJeu.xaml
+    /// Interaction logic for MasterDetail.xaml
     /// </summary>
-    public partial class VignetteJeu : UserControl
+    public partial class MasterDetail : UserControl
     {
-        public VignetteJeu()
+        public MasterDetail()
         {
             InitializeComponent();
         }

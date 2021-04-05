@@ -1,4 +1,4 @@
-﻿<Window x:Class="Vues.MainWindow"
+﻿<Window xmlns:windowParts="clr-namespace:Vues.windowParts"  x:Class="Vues.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -32,12 +32,7 @@
                      LostFocus="ChampRechQuitter" Grid.Row="1" Grid.Column="1"
                      FontSize="20" VerticalAlignment="Center"/>
         </Grid>
-        <ListView Grid.Row="1" Grid.Column="0">
-                user controls luncherUC                
-        </ListView>
-        <Button Grid.Row="1" Grid.Column="1">
-            details
-        </Button>
+        <windowParts:MasterDetail Grid.Row="1" Grid.ColumnSpan="2"/>
         <Button Grid.Row="3" Grid.Column="0" Height="30" Width="100"
                 HorizontalAlignment="Left" Click="AjoutJeu" Margin="20,0,0,0">
             Ajouter un jeu

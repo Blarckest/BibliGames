@@ -12,11 +12,7 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="8*"/>
         </Grid.ColumnDefinitions>
-        <Image/>
-        <!--mettre binding vers image-->
-
-        <TextBlock/>
-        <!--//mettre binding vers NomJeu-->
-
+        <Image Height="35" Width="35" Source="../icones/loupe.png"/>
+        <TextBlock  Grid.Column="1" Text="Un_nom_de_jeu" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </UserControl>
