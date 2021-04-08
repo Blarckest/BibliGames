@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <None Remove="Icones\loupe.png" />
+    <None Remove="Icones\minus.png" />
     <None Remove="Icones\parametre.png" />
     <None Remove="Icones\parametre.svg.png" />
     <None Remove="Icones\parcourir.png" />
@@ -20,6 +21,9 @@
 
   <ItemGroup>
     <Resource Include="Icones\loupe.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icones\minus.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Icones\parametre.png">
