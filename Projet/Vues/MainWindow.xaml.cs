@@ -32,10 +32,8 @@ namespace Vues
         }
         private void OuvrirParametre(object sender, MouseButtonEventArgs e)
         {
-            //Parametre window = new Parametre();
-            //window.ShowDialog();
-            //ouvrir fenetre paramatre
-            // Configure open file dialog box
+            Parametre window = new Parametre();
+            window.ShowDialog();
         }
         private void ChampRechEntre(object sender, RoutedEventArgs e)
         {

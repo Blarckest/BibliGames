@@ -28,5 +28,10 @@ namespace Vues
         {
 
         }
+
+        private void Annuler(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

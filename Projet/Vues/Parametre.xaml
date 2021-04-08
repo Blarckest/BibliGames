@@ -20,7 +20,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Lien vers le jeux :" Grid.Column="0" Grid.Row="0"/>
-                <TextBox Width="450" Height="30" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" />
+                <TextBox Width="450" Height="25" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" />
                 <Border Grid.Column="1" Grid.Row="0" MaxWidth="35" Background="GhostWhite" HorizontalAlignment="Left"  VerticalAlignment="Center" BorderBrush="Gray" BorderThickness="1">
                     <Image Source="\Icones\parcourir.png" Margin="3"/>
                 </Border>
@@ -31,11 +31,9 @@
 
                     </ListViewItem>
                 </ScrollViewer>
-                <Border Background="BlueViolet" Grid.Row="1" Grid.Column="1" BorderBrush="BlueViolet" BorderThickness="2" CornerRadius="10" HorizontalAlignment="Left" Margin="20" MinWidth="30" MaxHeight="30">
-                    <Button Content="-" Margin="2" Background="BlueViolet" BorderBrush="BlueViolet"/>
-                </Border>
-                <Button Content=" Retour " Grid.Column="0" Grid.Row="2" MaxWidth="50" MaxHeight="30" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                <Button Content=" Enregistrer " Grid.Column="1" Grid.Row="2" MaxWidth="70" MaxHeight="30" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                <Image Margin="2" Source="Icones/remove.png" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" MaxWidth="30"/>
+                <Button Content=" Retour " Grid.Column="0" Grid.Row="2" MaxWidth="50" MaxHeight="30" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="Annuler"/>
+                <Button Click="Annuler" Content=" Enregistrer " Grid.Column="1" Grid.Row="2" MaxWidth="70" MaxHeight="30" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
             </Grid>
         </StackPanel>
     </DockPanel>
