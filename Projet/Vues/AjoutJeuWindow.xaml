@@ -16,7 +16,7 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch" >
+        <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Text="Luncher associé: " VerticalAlignment="Center"/>
             <ComboBox MinWidth="570">
                 <!--liste des luncher via data binding-->
