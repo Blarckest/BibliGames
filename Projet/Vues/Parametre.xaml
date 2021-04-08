@@ -31,7 +31,7 @@
 
                     </ListViewItem>
                 </ScrollViewer>
-                <Image Margin="2" Source="Icones/remove.png" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" MaxWidth="30"/>
+                <Image Margin="2" Source="/Icones/minus.png" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" MaxWidth="30"/>
                 <Button Content=" Retour " Grid.Column="0" Grid.Row="2" MaxWidth="50" MaxHeight="30" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="Annuler"/>
                 <Button Click="Annuler" Content=" Enregistrer " Grid.Column="1" Grid.Row="2" MaxWidth="70" MaxHeight="30" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
             </Grid>
