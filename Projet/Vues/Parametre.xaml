@@ -3,43 +3,40 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Vues.User_Controls"
+      xmlns:local="clr-namespace:Vues"
       mc:Ignorable="d" 
       Title="Parametres" Height="450" Width="800" >
 
-    <DockPanel>
-        <StackPanel Margin="50">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.ColumnSpan="2" HorizontalAlignment="Center">
-                    <TextBlock Text="Lien vers le jeu :"  Grid.Column="0" Grid.Row="0" />
-                    <TextBox Width="450" Height="20" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <Border Width="30" Background="GhostWhite" BorderBrush="Gray" BorderThickness="1">
-                        <Image Source="\Icones\parcourir.png" Margin="3" RenderTransformOrigin="5.955,-0.724"/>
-                    </Border>
-                </StackPanel>
+    <StackPanel Margin="50">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.ColumnSpan="2"  Orientation="Horizontal">
+                <TextBlock Text="Lien vers le jeu :"  Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" />
+                <TextBox Width="450" Height="25" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Border Width="30" Margin="5" Height="30" Background="GhostWhite" BorderBrush="Gray" BorderThickness="1">
+                    <Image Source="\Icones\parcourir.png" Margin="2" RenderTransformOrigin="5.955,-0.724"/>
+                </Border>
+            </StackPanel>
 
-                <StackPanel Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center">
-                    <ScrollViewer Grid.Row="1" Grid.Column="0" Background="Beige" Padding="2" Margin="5" MaxWidth="600" MaxHeight="200" HorizontalAlignment="Left">
-                        <ListViewItem HorizontalAlignment="Left">
-                            <local:NomJeu/>
+            <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="10">
+                <ScrollViewer Grid.Row="1" Grid.Column="0" Background="Beige" Padding="2" Margin="5" MaxWidth="600" MaxHeight="200" HorizontalAlignment="Left" MinHeight="100" MinWidth="600">
+                    <ListViewItem HorizontalAlignment="Left">
 
-                        </ListViewItem>
-                    </ScrollViewer>
-                    <Image Margin="2" Source="/Icones/minus.png" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" MaxWidth="30"/>
-                </StackPanel>
-                
-                <Button Content=" Retour " Grid.Column="0" Grid.Row="2" MaxWidth="50" MaxHeight="30" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="Annuler"/>
-                <Button Click="Annuler" Content=" Enregistrer " Grid.Column="1" Grid.Row="2" MaxWidth="70" MaxHeight="30" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-            </Grid>
-        </StackPanel>
-    </DockPanel>
+                    </ListViewItem>
+                </ScrollViewer>
+                <Image Margin="5" Source="/Icones/minus.png" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" MaxWidth="30"/>
+            </StackPanel>
+
+            <Button Content=" Retour " Grid.Column="0" Grid.Row="2" MaxWidth="50" MaxHeight="30" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="Annuler"/>
+            <Button Click="Annuler" Content=" Enregistrer " Grid.Column="1" Grid.Row="2" MaxWidth="70" MaxHeight="30" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+        </Grid>
+    </StackPanel>
 </Window>
