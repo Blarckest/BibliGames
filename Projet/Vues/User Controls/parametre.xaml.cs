@@ -18,9 +18,9 @@ namespace Vues.User_Controls
     /// <summary>
     /// Logique d'interaction pour Page1.xaml
     /// </summary>
-    public partial class Page1 : Window
+    public partial class parametre : Window
     {
-        public Page1()
+        public parametre()
         {
             InitializeComponent();
         }
