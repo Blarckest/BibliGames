@@ -32,5 +32,24 @@ namespace Vues
             //valider modif
             this.Close();
         }
+        private void ChercherImage(object sender, MouseButtonEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.InitialDirectory = "C:\\Users\\Public\\Pictures\\Sample Pictures";
+            dlg.FileName = "Images"; // Default file name
+            dlg.DefaultExt = ".jpg | .png"; // Default file extension
+            dlg.Filter = "All images files (.jpg, .png)|*.jpg;*.png|JPG files (.jpg)|*.jpg|PNG files (.png)|*.png"; // Filter files by extension
+
+            // Show open file dialog box
+            bool? result = dlg.ShowDialog();
+
+            // Process open file dialog box results 
+            if (result == true)
+            {
+                // Open document 
+                string filename = dlg.FileName;
+                //mettre filename 
+            }
+        }
     }
 }

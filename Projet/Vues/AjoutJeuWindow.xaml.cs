@@ -32,13 +32,13 @@ namespace Vues
             this.Close();
         }
 
-        private void ChercherImage(object sender, MouseButtonEventArgs e)
+        private void ChercherExecutable(object sender, MouseButtonEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            dlg.InitialDirectory = "C:\\Users\\Public\\Pictures\\Sample Pictures";
-            dlg.FileName = "Images"; // Default file name
-            dlg.DefaultExt = ".jpg | .png | .bmp"; // Default file extension
-            dlg.Filter = "All images files (.jpg, .png)|*.jpg;*.png|JPG files (.jpg)|*.jpg|PNG files (.png)|*.png"; // Filter files by extension
+            dlg.InitialDirectory = "C:\\Users";
+            dlg.FileName = "Executable"; // Default file name
+            dlg.DefaultExt = ".exe"; // Default file extension
+            dlg.Filter = "All Executables files (.exe) | *.exe"; // Filter files by extension
 
             // Show open file dialog box
             bool? result = dlg.ShowDialog();

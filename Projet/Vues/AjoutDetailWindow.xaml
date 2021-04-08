@@ -19,7 +19,7 @@
         <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Text="Lien vers l'image: " VerticalAlignment="Center"/>
             <TextBox x:Name="textBoxLienImage" MinWidth="500" VerticalAlignment="Center"/>
-            <Image Margin="5" Source="/Icones/parcourir.png" Width="30"/>
+            <Image Margin="5" Source="/Icones/parcourir.png" Width="30" MouseLeftButtonDown="ChercherImage"/>
         </StackPanel>
         <StackPanel Grid.ColumnSpan="2" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Text="Description: "/>
