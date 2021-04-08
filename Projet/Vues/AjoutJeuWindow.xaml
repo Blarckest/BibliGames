@@ -27,7 +27,9 @@
             <TextBox x:Name="textBoxLienExe" MinWidth="500" VerticalAlignment="Center"/>
             <Image Margin="5" Source="/Icones/parcourir.png" Width="30"/>
         </StackPanel>
-        <Button Grid.Row="2" Content="Annuler" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <Button Grid.Row="2" Grid.Column="1" Content="Enregistrer" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Button Grid.Row="2" Content="Retour" HorizontalAlignment="Center"
+                VerticalAlignment="Top" Click="Annuler"/>
+        <Button Grid.Row="2" Grid.Column="1" Content="Enregistrer" HorizontalAlignment="Center"
+                VerticalAlignment="Top" Click="Valider"/>
     </Grid>
 </Window>

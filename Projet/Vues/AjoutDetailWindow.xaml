@@ -25,7 +25,7 @@
             <TextBlock Text="Description: "/>
             <TextBox x:Name="textBoxDescription" MinWidth="500" MinHeight="281" Margin="0,0,13,0"/>
         </StackPanel>
-        <Button Grid.Row="2" Content="Annuler" HorizontalAlignment="Center"
+        <Button Grid.Row="2" Content="Retour" HorizontalAlignment="Center"
                 VerticalAlignment="Top" Margin="5,10,5,5" Click="Annuler"/>
         <Button Grid.Row="2" Grid.Column="1" Content="Enregistrer" HorizontalAlignment="Center"
                 VerticalAlignment="Top" Margin="5,10,5,5" Click="Valider"/>

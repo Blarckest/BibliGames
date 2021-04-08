@@ -32,6 +32,8 @@ namespace Vues
         }
         private void OuvrirParametre(object sender, MouseButtonEventArgs e)
         {
+            Parametre window = new Parametre();
+            window.ShowDialog();
             //ouvrir fenetre paramatre
         }
         private void ChampRechEntre(object sender, RoutedEventArgs e)
