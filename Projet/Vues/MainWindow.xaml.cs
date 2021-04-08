@@ -27,7 +27,8 @@ namespace Vues
 
         private void AjoutJeu(object sender, RoutedEventArgs e)
         {
-            //ajouter un nouveau Jeu
+            AjoutJeuWindow Window = new AjoutJeuWindow();
+            Window.ShowDialog();
         }
         private void OuvrirParametre(object sender, MouseButtonEventArgs e)
         {
