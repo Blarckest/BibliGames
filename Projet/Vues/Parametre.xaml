@@ -5,35 +5,40 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Vues.User_Controls"
       mc:Ignorable="d" 
-      Title="parametres" Height="450" Width="800" >
+      Title="Parametres" Height="450" Width="800" >
 
     <DockPanel>
         <StackPanel Margin="50">
-            <Grid Height="324">
+            <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="100"/>
-                    <RowDefinition Height="100"/>
-                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="500"/>
+                    <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="Lien vers le jeux :" Grid.Column="0" Grid.Row="0"/>
-                <TextBox Width="450" Height="25" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" />
-                <Border Grid.Column="1" Grid.Row="0" MaxWidth="35" Background="GhostWhite" HorizontalAlignment="Left"  VerticalAlignment="Center" BorderBrush="Gray" BorderThickness="1">
-                    <Image Source="\Icones\parcourir.png" Margin="3"/>
-                </Border>
+                <StackPanel Grid.ColumnSpan="2" HorizontalAlignment="Center">
+                    <TextBlock Text="Lien vers le jeu :"  Grid.Column="0" Grid.Row="0" />
+                    <TextBox Width="450" Height="20" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <Border Width="30" Background="GhostWhite" BorderBrush="Gray" BorderThickness="1">
+                        <Image Source="\Icones\parcourir.png" Margin="3" RenderTransformOrigin="5.955,-0.724"/>
+                    </Border>
+                </StackPanel>
 
-                <ScrollViewer Grid.Row="1" Grid.Column="0" Background="Beige" Padding="2" Margin="5">
-                    <ListViewItem HorizontalAlignment="Left">
-                        <local:NomJeu/>
+                <StackPanel Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+                    <ScrollViewer Grid.Row="1" Grid.Column="0" Background="Beige" Padding="2" Margin="5" MaxWidth="600" MaxHeight="200" HorizontalAlignment="Left">
+                        <ListViewItem HorizontalAlignment="Left">
+                            <local:NomJeu/>
 
-                    </ListViewItem>
-                </ScrollViewer>
-                <Image Margin="2" Source="/Icones/minus.png" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" MaxWidth="30"/>
-                <Button Content=" Retour " Grid.Column="0" Grid.Row="2" MaxWidth="50" MaxHeight="30" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="Annuler"/>
-                <Button Click="Annuler" Content=" Enregistrer " Grid.Column="1" Grid.Row="2" MaxWidth="70" MaxHeight="30" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                        </ListViewItem>
+                    </ScrollViewer>
+                    <Image Margin="2" Source="/Icones/minus.png" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" MaxWidth="30"/>
+                </StackPanel>
+                
+                <Button Content=" Retour " Grid.Column="0" Grid.Row="2" MaxWidth="50" MaxHeight="30" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="Annuler"/>
+                <Button Click="Annuler" Content=" Enregistrer " Grid.Column="1" Grid.Row="2" MaxWidth="70" MaxHeight="30" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
             </Grid>
         </StackPanel>
     </DockPanel>
