@@ -1,4 +1,4 @@
-﻿<Window x:Class="Vues.User_Controls.parametre"
+﻿<Window x:Class="Vues.User_Controls.Parametre"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,7 +9,7 @@
 
     <DockPanel>
         <StackPanel Margin="50">
-            <Grid>
+            <Grid Height="324">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100"/>
                     <RowDefinition Height="100"/>
@@ -25,12 +25,17 @@
                     <Image Source="\Icones\parcourir.png" Margin="3"/>
                 </Border>
 
-                <ScrollViewer Grid.Row="1" Grid.Column="0" Background="Beige">
+                <ScrollViewer Grid.Row="1" Grid.Column="0" Background="Beige" Padding="2" Margin="5">
                     <ListViewItem HorizontalAlignment="Left">
                         <local:NomJeu/>
-                        
+
                     </ListViewItem>
                 </ScrollViewer>
+                <Border Background="BlueViolet" Grid.Row="1" Grid.Column="1" BorderBrush="BlueViolet" BorderThickness="2" CornerRadius="10" HorizontalAlignment="Left" Margin="20" MinWidth="30" MaxHeight="30">
+                    <Button Content="-" Margin="2" Background="BlueViolet" BorderBrush="BlueViolet"/>
+                </Border>
+                <Button Content=" Retour " Grid.Column="0" Grid.Row="2" MaxWidth="50" MaxHeight="30" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                <Button Content=" Enregistrer " Grid.Column="1" Grid.Row="2" MaxWidth="70" MaxHeight="30" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
             </Grid>
         </StackPanel>
     </DockPanel>
