@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Icones\cross.png" />
     <None Remove="Icones\loupe.png" />
     <None Remove="Icones\minus.png" />
     <None Remove="Icones\parametre.png" />
@@ -20,6 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Icones\cross.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Icones\loupe.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
