@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 namespace Vues
 {
     /// <summary>
-    /// Logique d'interaction pour Page1.xaml
+    /// Logique d'interaction pour Parametre.xaml
     /// </summary>
     public partial class Parametre : Window
     {
@@ -24,14 +24,23 @@ namespace Vues
         {
             InitializeComponent();
         }
-        public void parcourirFichiers(object sender, MouseButtonEventArgs e)
+        public void ParcourirDossiers(object sender, MouseButtonEventArgs e)
         {
-
+            ///marche pas du tout faut faire en sorte que ca ouvre un file explorer qui selectionne que les dossiers
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.CheckFileExists = false;
+            dlg.CheckPathExists = true;
+            dlg.ValidateNames = false;
+            dlg.ShowDialog();            
         }
-
         private void Annuler(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void SupprimeChemin(object sender, MouseButtonEventArgs e)
+        {
+            //suppression du chemin selectionné
         }
     }
 }
