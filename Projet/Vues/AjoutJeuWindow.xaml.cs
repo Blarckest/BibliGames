@@ -48,6 +48,7 @@ namespace Vues
             {
                 // Open document 
                 string filename = dlg.FileName;
+                textBoxLienExe.Text = filename;
                 //mettre filename 
             }
         }

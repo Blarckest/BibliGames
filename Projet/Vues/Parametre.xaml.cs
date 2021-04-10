@@ -41,9 +41,7 @@ namespace Vues
                 {
                     System.IO.Directory.CreateDirectory(path);
                 }
-                TextBlock temp = new TextBlock();
-                temp.Text=path;
-                StackPanelListeFolder.Children.Add(temp);
+                ListeFolder.Items.Add(path);
             }
         }
         private void Annuler(object sender, RoutedEventArgs e)
@@ -53,6 +51,7 @@ namespace Vues
 
         private void SupprimeChemin(object sender, MouseButtonEventArgs e)
         {
+            ListeFolder.Items.Remove(ListeFolder.SelectedItem);
             //suppression du chemin selectionné
         }
     }
