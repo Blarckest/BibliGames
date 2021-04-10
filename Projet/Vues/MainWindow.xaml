@@ -5,14 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Vues"
         mc:Ignorable="d"
-        Title="BibliGames" Height="450" Width="800" MinHeight="200" MinWidth="250" >
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="BibliGames" Height="450" Width="800" MinHeight="200" MinWidth="250">
     <DockPanel>
         <Grid DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <StackPanel Margin="10,0,0,0" Grid.Column="0" Orientation="Horizontal" >
+            <StackPanel Margin="10,0,0,0" Grid.Column="0" Orientation="Horizontal">
                 <Image Margin="0,0,5,0" Height="35" Width="35" Source="Icones\loupe.png"/>
                 <TextBox BorderThickness="0,0,0,2"
                          Text="Rechercher" GotFocus="ChampRechEntre" LostFocus="ChampRechQuitter" FontSize="20"
