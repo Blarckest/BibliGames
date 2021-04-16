@@ -10,6 +10,7 @@ namespace Modele
         EpicGames,
         Uplay,
         Riot,
+        Origin,
         Autre,
     }
 }
