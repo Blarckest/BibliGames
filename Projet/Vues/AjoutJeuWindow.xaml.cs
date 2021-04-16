@@ -36,6 +36,7 @@ namespace Vues
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.InitialDirectory = "C:\\Users";
+            dlg.Multiselect = false;
             dlg.FileName = "Executable"; // Default file name
             dlg.DefaultExt = ".exe"; // Default file extension
             dlg.Filter = "All Executables files (.exe) | *.exe"; // Filter files by extension

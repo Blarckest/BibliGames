@@ -36,6 +36,7 @@ namespace Vues
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.InitialDirectory = "C:\\Users\\Public\\Pictures\\Sample Pictures";
+            dlg.Multiselect = false;
             dlg.FileName = "Images"; // Default file name
             dlg.DefaultExt = ".jpg | .png"; // Default file extension
             dlg.Filter = "All images files (.jpg, .png)|*.jpg;*.png|JPG files (.jpg)|*.jpg|PNG files (.png)|*.png"; // Filter files by extension
@@ -49,6 +50,28 @@ namespace Vues
                 // Open document 
                 string filename = dlg.FileName;
                 textBoxLienImage.Text = filename;
+                //mettre filename 
+            }
+        }
+
+        private void ChercherExec(object sender, MouseButtonEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.InitialDirectory = "C:\\";
+            dlg.Multiselect = false;
+            dlg.FileName = "Executable"; // Default file name
+            dlg.DefaultExt = ".exe"; // Default file extension
+            dlg.Filter = "All Executables files(.exe) | *.exe"; // Filter files by extension
+
+            // Show open file dialog box
+            bool? result = dlg.ShowDialog();
+
+            // Process open file dialog box results 
+            if (result == true)
+            {
+                // Open document 
+                string filename = dlg.FileName;
+                textBoxLienExecutable.Text = filename;
                 //mettre filename 
             }
         }
