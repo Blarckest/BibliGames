@@ -38,7 +38,7 @@ namespace Modele
             if (Launcher==Launcher.Riot)//Riot est un peu speciale (peu de jeux)(launcher....etc) donc hardcodage de ceux la
             {
                 //manque le nom pour runeterra et apparemment valorant se lance en ligne de commande avec le RiotClientServices.exe
-                return Executables.First(e => e.Contains("LeagueClient.exe") || e.Contains("VALORANT.exe"));
+                return Executables.First(e => e.Contains("LeagueClient.exe") || e.Contains("VALORANT.exe") || e.Contains("LoR.exe"));
             }
             IEnumerable<string> Res = Executables.Where(e => Filter(e)); //apllication du filtre
             if (Res.Count() == 0) //si tout a disparu dans le filtre 
