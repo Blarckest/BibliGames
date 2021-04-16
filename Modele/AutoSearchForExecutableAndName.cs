@@ -68,6 +68,7 @@ namespace Modele
             return !(Executable.Contains("Unins", StringComparison.OrdinalIgnoreCase) || Executable.Contains("Crash", StringComparison.OrdinalIgnoreCase) || Executable.Contains("Helper", StringComparison.OrdinalIgnoreCase)
                 || Executable.Contains("AntiCheat", StringComparison.OrdinalIgnoreCase) || Executable.Contains("Downloader", StringComparison.OrdinalIgnoreCase) || Executable.Contains("Upload") || Executable.Contains("Report", StringComparison.OrdinalIgnoreCase)
                 || Executable.Contains("Unreal", StringComparison.OrdinalIgnoreCase) || Executable.Contains("Redist", StringComparison.OrdinalIgnoreCase) || Executable.Contains("egodumper", StringComparison.OrdinalIgnoreCase)
+                || Executable.Contains("mono.exe", StringComparison.OrdinalIgnoreCase)
                 ); //traitement des cas communs
         }
 
