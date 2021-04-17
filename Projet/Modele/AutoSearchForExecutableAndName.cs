@@ -28,6 +28,9 @@ namespace Modele
             Dossiers.TryGetValue(Launcher.Riot, out DossiersLauncher); //recup dossiers du launcher riot
             SearchForExecutables(Executables, DossiersLauncher,Launcher.Riot);
 
+            Dossiers.TryGetValue(Launcher.Origin, out DossiersLauncher); //recup dossiers du launcher Origin
+            SearchForExecutables(Executables, DossiersLauncher, Launcher.Origin);
+
             return Executables;
         }
 
@@ -68,8 +71,7 @@ namespace Modele
             return !(Executable.Contains("Unins", StringComparison.OrdinalIgnoreCase) || Executable.Contains("Crash", StringComparison.OrdinalIgnoreCase) || Executable.Contains("Helper", StringComparison.OrdinalIgnoreCase)
                 || Executable.Contains("AntiCheat", StringComparison.OrdinalIgnoreCase) || Executable.Contains("Downloader", StringComparison.OrdinalIgnoreCase) || Executable.Contains("Upload") || Executable.Contains("Report", StringComparison.OrdinalIgnoreCase)
                 || Executable.Contains("Unreal", StringComparison.OrdinalIgnoreCase) || Executable.Contains("Redist", StringComparison.OrdinalIgnoreCase) || Executable.Contains("egodumper", StringComparison.OrdinalIgnoreCase)
-                || Executable.Contains("mono.exe", StringComparison.OrdinalIgnoreCase)
-                ); //traitement des cas communs
+                || Executable.Contains("mono.exe", StringComparison.OrdinalIgnoreCase)); //traitement des cas communs
         }
 
         private static void SearchForExecutables(Dictionary<Launcher, List<Tuple<string, string>>> Executables, List<string> Dossiers,Launcher Launcher=Launcher.Autre)
@@ -82,6 +84,7 @@ namespace Modele
                 Nom = Path.GetFileName(Dossier);
                 string[] NomExecutables = Directory.GetFiles(Dossier, "*.exe", SearchOption.AllDirectories); //recup tout les .exe dans tout les sous-dossier
                 Executable = Filter(NomExecutables, Nom, Launcher); //filtrage
+                Executable = Executable.Replace("\\", "\\\\");
                 TabExecName.Add(new Tuple<string, string>(Executable, Nom)); //ajout
             }
             Executables.Add(Launcher, TabExecName); //met a jour le dictionnaire
@@ -120,9 +123,9 @@ namespace Modele
                         {
                             Dossier = Line.Substring(Line.IndexOf(":\\") - 1); //recuperation du debut du chemin jusqua la fin de la ligne
                             Dossier = Dossier.Substring(0, Dossier.Length - 1);  //suppression de la virgule de fin de ligne
-                            Dossier = Dossier.Replace("\\\\", "\\");  //tout les  \ sont echapé on a donc besoin d'en enlever 
-                            Dossier = Dossier.Replace("\"", "");  //met les dernier \ à \\
-                            Dossier += "\\";
+                            //Dossier = Dossier.Replace("\\\\", "\\");  //tout les  \ sont echapé on a donc besoin d'en enlever 
+                            Dossier = Dossier.Replace("\"", "");
+                            Dossier += "\\\\";
                         }
                     }
                     if (File.Exists(Dossier+Executable) && !Executable.Contains("UplayLaunch.exe")) //filter les jeux associe a uplay
