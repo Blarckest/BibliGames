@@ -8,6 +8,9 @@
 
   <ItemGroup>
     <None Remove="Icones\cross.png" />
+    <None Remove="Icones\disk.png" />
+    <None Remove="Icones\folder.png" />
+    <None Remove="Icones\left-arrow.png" />
     <None Remove="Icones\loupe.png" />
     <None Remove="Icones\minus.png" />
     <None Remove="Icones\parametre.png" />
@@ -25,6 +28,12 @@
     <Resource Include="Icones\cross.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Icones\disk.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icones\folder.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Icones\loupe.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -38,6 +47,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Icones\plus.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icones\left-arrow.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
