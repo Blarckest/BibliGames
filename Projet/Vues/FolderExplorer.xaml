@@ -67,7 +67,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <GridSplitter Width="1"/>
+            <GridSplitter Width="2"/>
             <ListView x:Name="VueDesDossiers" MouseDoubleClick="UpdateVue" Grid.Column="1">
                 <ListView.ItemTemplate>
                     <DataTemplate>
