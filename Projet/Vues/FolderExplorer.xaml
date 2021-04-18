@@ -15,32 +15,69 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="FolderExplorer" Height="450" Width="800">
     <DockPanel>
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
-            <Image Source="/Icones/left-arrow.png" Width="30" MouseLeftButtonDown="Remonter" Margin="0,0,40,0" VerticalAlignment="Center"/>
-            <TextBox x:Name="TextBoxChemin" FontSize="17" Width="400" KeyDown="TextBoxChemin_TouchEnterPressed" VerticalAlignment="Center"/>
-        </StackPanel>
+        <Grid DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                <Image Source="/Icones/left-arrow.png" Margin="10" Width="30" MouseLeftButtonDown="GoBackward"/>
+                <Image Source="/Icones/right-arrow.png" Margin="10" Width="30" MouseLeftButtonDown="GoForward"/>
+            </StackPanel>
+            <StackPanel  Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
+                <Image Source="/Icones/up-arrow.png" Width="30" MouseLeftButtonDown="Remonter" Margin="0,0,20,0" VerticalAlignment="Center"/>
+                <TextBox x:Name="TextBoxChemin" FontSize="17" Width="400" KeyDown="TextBoxChemin_TouchEnterPressed" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Margin="10,0,0,0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Image Margin="0,0,5,0" Width="30" Source="Icones\loupe.png"/>
+                <TextBox Text="Rechercher" GotFocus="ChampRechEntre" LostFocus="ChampRechQuitter" FontSize="20"
+                         VerticalAlignment="Center" Width="130" TextChanged="Recherche"/>
+            </StackPanel>
+        </Grid>
         <Grid DockPanel.Dock="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
             <TextBlock x:Name="ErrorBlock" FontSize="17" Foreground="Red" Grid.Column="0" />
-            <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="1">
+            <TextBlock x:Name="MessageBlock" FontSize="17" Grid.Column="0" Grid.Row="1" />
+            <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.RowSpan="2" Grid.Column="1">
                 <Button Content="Annuler" Margin="10" Click="Annuler"/>
                 <Button Content="Selectionner" Margin="10" Click="Selectionner"/>
             </StackPanel>
         </Grid>
-      
-        <ListView x:Name="VueDesDossiers" MouseDoubleClick="UpdateVue">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Image Source="{Binding Image}" Width="25" VerticalAlignment="Center"/>
-                        <TextBlock Text="{Binding Nom}" FontSize="15" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
 
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ListView x:Name="QuickAccess" MouseDoubleClick="QuickAccessUsed">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Image Source="{Binding Image}" Width="30" Margin="0,0,0,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding Nom}" FontSize="15" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <GridSplitter Width="1"/>
+            <ListView x:Name="VueDesDossiers" MouseDoubleClick="UpdateVue" Grid.Column="1">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Image Source="{Binding Image}" Width="25" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding Nom}" FontSize="15" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </DockPanel>
 </Window>
