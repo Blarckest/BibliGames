@@ -90,7 +90,7 @@ namespace Vues
         {
             if (VueDesDossiers.SelectedItem!=null) //on ferme uniquement si un dossier a été selectionner (peut-etre qu'il faudrait changer ce comportement)
             {
-                DossierSelectionner = Historique.Peek() + ((LigneExplorateur)VueDesDossiers.SelectedItem).Nom;
+                DossierSelectionner = Historique.Peek() + "\\" + ((LigneExplorateur)VueDesDossiers.SelectedItem).Nom;
                 this.Close();
             }
         }

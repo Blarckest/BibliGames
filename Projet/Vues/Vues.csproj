@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <None Remove="Icones\computer.png" />
+    <None Remove="Icones\cross-white.png" />
     <None Remove="Icones\cross.png" />
     <None Remove="Icones\desktop.png" />
     <None Remove="Icones\disk.png" />
@@ -34,6 +35,9 @@
 
   <ItemGroup>
     <Resource Include="Icones\computer.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icones\cross-white.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Icones\document.png">

@@ -22,5 +22,23 @@ namespace Vues.User_Controls
         {
             InitializeComponent();
         }
+
+        private void DemandeSuppression(object sender, MouseButtonEventArgs e)
+        {
+            if (MessageBox.Show("Supprimer ce jeu?", "Suppression", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                //suppression
+            }
+        }
+
+        private void MontrerCroix(object sender, MouseEventArgs e)
+        {
+            CroixSupp.Visibility = Visibility.Visible;
+        }
+
+        private void CacherCroix(object sender, MouseEventArgs e)
+        {
+            CroixSupp.Visibility = Visibility.Hidden;
+        }
     }
 }
