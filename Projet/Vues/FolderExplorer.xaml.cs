@@ -139,7 +139,7 @@ namespace Vues
         {
             if (e.Key == Key.Return)
             {
-                if (Directory.Exists(TextBoxChemin.Text) && TextBoxChemin.Text != DossierSelectionner.Substring(0, DossierSelectionner.Length - 1)) //equivaut a si dossier exist/si on est pas deja a cet endroit
+                if (Directory.Exists(TextBoxChemin.Text) && TextBoxChemin.Text != DossierSelectionner) //equivaut a si dossier exist/si on est pas deja a cet endroit
                 {
                     Historique.Push(TextBoxChemin.Text.Trim()); //trim au cas ou l'utilisateur aurait decider de mettre des espaces a la fin du chemin
                     SetDirectories(); //update

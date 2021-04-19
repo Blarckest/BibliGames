@@ -17,19 +17,20 @@ namespace Modele
             Dictionary<Launcher, List<Tuple<string, string>>> Executables = new Dictionary<Launcher, List<Tuple<string, string>>>();
             List<string> DossiersLauncher = new List<string>();
 
-            Dossiers.TryGetValue(Launcher.Steam, out DossiersLauncher); //recup dossiers du launcher steam
-            SearchForExecutables(Executables, DossiersLauncher,Launcher.Steam);
+            if(Dossiers.TryGetValue(Launcher.Steam, out DossiersLauncher)) //recup dossiers du launcher steam et recherche d'executable si il y en a
+                SearchForExecutables(Executables, DossiersLauncher,Launcher.Steam);
 
-            Dossiers.TryGetValue(Launcher.Uplay, out DossiersLauncher); //recup dossiers du launcher uplay
-            SearchForExecutables(Executables, DossiersLauncher,Launcher.Uplay);
+            if(Dossiers.TryGetValue(Launcher.Uplay, out DossiersLauncher)) //recup dossiers du launcher uplay et recherche d'executable si il y en a
+                SearchForExecutables(Executables, DossiersLauncher,Launcher.Uplay);
 
-            SearchForEpicExecutables(Executables); //pas besoin des dossiers tout est situé dans des fichiers de config
+            if(Dossiers.TryGetValue(Launcher.EpicGames, out DossiersLauncher)) //verifie si il y a des jeux epic
+                SearchForEpicExecutables(Executables); //pas besoin des dossiers tout est situé dans des fichiers de config
 
-            Dossiers.TryGetValue(Launcher.Riot, out DossiersLauncher); //recup dossiers du launcher riot
-            SearchForExecutables(Executables, DossiersLauncher,Launcher.Riot);
+            if(Dossiers.TryGetValue(Launcher.Riot, out DossiersLauncher)) //recup dossiers du launcher riot et recherche d'executable si il y en a
+                SearchForExecutables(Executables, DossiersLauncher,Launcher.Riot);
 
-            Dossiers.TryGetValue(Launcher.Origin, out DossiersLauncher); //recup dossiers du launcher Origin
-            SearchForExecutables(Executables, DossiersLauncher, Launcher.Origin);
+            if(Dossiers.TryGetValue(Launcher.Origin, out DossiersLauncher)) //recup dossiers du launcher Origin et recherche d'executable si il y en a
+                SearchForExecutables(Executables, DossiersLauncher, Launcher.Origin);
 
             return Executables;
         }
