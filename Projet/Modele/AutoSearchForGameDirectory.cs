@@ -36,7 +36,7 @@ namespace Modele
                     {
                         try //getfiles peut lancer une exception si il n'a pas les droits suffisants
                         {
-                            if (Directory.GetFiles(Dir, "*.exe", SearchOption.AllDirectories).Any()) //on verifie que il y a un executable dans le dossier
+                            if (!IsDirectoryEmpty(Dir)) //on verifie que il y a un executable dans le dossier et que le dossier n'est pas vide
                             {
                                 Dossiers.Add(Dir);
                             }
@@ -54,7 +54,7 @@ namespace Modele
         }
         private static bool IsDirectoryEmpty(string Path)
         {
-            return !(Directory.EnumerateFileSystemEntries(Path).Any() && (Directory.GetFiles(Path+"\\\\","*.exe",SearchOption.AllDirectories).Count()!=0));//renvoie si le dossier et vide ou contient aucun executable (any renvoie un booleen true si il y a qq chose ds le IEnumerable renvoyer)
+            return !(Directory.EnumerateFileSystemEntries(Path).Any() && (Directory.GetFiles(Path+"\\\\","*.exe",SearchOption.AllDirectories).Any()));//renvoie si le dossier et vide ou contient aucun executable (any renvoie un booleen true si il y a qq chose ds le IEnumerable renvoyer)
         }
         private static void SearchSteamGames(Dictionary<Launcher, List<string>> Dossiers)
         {
