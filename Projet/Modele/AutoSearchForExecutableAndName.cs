@@ -15,7 +15,7 @@ namespace Modele
         public static Dictionary<Launcher, List<Tuple<string, string>>> GetExecutableAndNameFromGameDirectory(Dictionary<Launcher, List<string>> Dossiers)
         {
             Dictionary<Launcher, List<Tuple<string, string>>> Executables = new Dictionary<Launcher, List<Tuple<string, string>>>();
-            List<string> DossiersLauncher = new List<string>();
+            List<string> DossiersLauncher;
 
             if(Dossiers.TryGetValue(Launcher.Steam, out DossiersLauncher)) //recup dossiers du launcher steam et recherche d'executable si il y en a
                 SearchForExecutables(Executables, DossiersLauncher,Launcher.Steam);
@@ -23,7 +23,7 @@ namespace Modele
             if(Dossiers.TryGetValue(Launcher.Uplay, out DossiersLauncher)) //recup dossiers du launcher uplay et recherche d'executable si il y en a
                 SearchForExecutables(Executables, DossiersLauncher,Launcher.Uplay);
 
-            if(Dossiers.TryGetValue(Launcher.EpicGames, out DossiersLauncher)) //verifie si il y a des jeux epic
+            if(Dossiers.Keys.Contains(Launcher.EpicGames)) //verifie si il y a des jeux epic
                 SearchForEpicExecutables(Executables); //pas besoin des dossiers tout est situé dans des fichiers de config
 
             if(Dossiers.TryGetValue(Launcher.Riot, out DossiersLauncher)) //recup dossiers du launcher riot et recherche d'executable si il y en a
@@ -31,6 +31,9 @@ namespace Modele
 
             if(Dossiers.TryGetValue(Launcher.Origin, out DossiersLauncher)) //recup dossiers du launcher Origin et recherche d'executable si il y en a
                 SearchForExecutables(Executables, DossiersLauncher, Launcher.Origin);
+
+            if (Dossiers.TryGetValue(Launcher.Autre, out DossiersLauncher)) //recup dossiers de launcer inconnu et recherche d'executable si il y en a
+                SearchForExecutables(Executables, DossiersLauncher, Launcher.Autre);
 
             return Executables;
         }

@@ -14,6 +14,7 @@
     <None Remove="Icones\disk.png" />
     <None Remove="Icones\document.png" />
     <None Remove="Icones\folder.png" />
+    <None Remove="Icones\interogation.png" />
     <None Remove="Icones\left-arrow.png" />
     <None Remove="Icones\loupe.png" />
     <None Remove="Icones\minus.png" />
@@ -41,6 +42,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Icones\document.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icones\interogation.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Icones\movie.png">

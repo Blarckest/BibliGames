@@ -28,8 +28,28 @@
         <StackPanel Grid.ColumnSpan="2"  Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Text="Lien vers le jeu :"  Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" />
             <TextBox Width="450" Margin="5" KeyDown="TextBoxChemin_TouchEnterPressed" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" />
-            <Image Source="\Icones\parcourir.png" Width="30" Margin="2"
+            <Image Source="/Icones/parcourir.png" Width="30" Margin="2"
                    MouseLeftButtonDown="ParcourirDossiers"/>
+            <Image Source="/Icones/interogation.png" Width="20" Margin="10,0,0,0">
+                <Image.ToolTip>
+                    <ToolTip>
+                        <StackPanel>
+                            <TextBlock>
+                                Veuillez selectionner le dossier contenant les dossiers des jeux
+                                <LineBreak/>
+                                <Run TextDecorations="Underline">
+                                    Folder
+                                </Run>
+                            </TextBlock>
+                            <TextBlock Margin="20,0,0,0">
+                                Game1
+                                <LineBreak/>
+                                Game2
+                            </TextBlock>                            
+                        </StackPanel>
+                    </ToolTip>
+                </Image.ToolTip>
+            </Image>
 
         </StackPanel>
 

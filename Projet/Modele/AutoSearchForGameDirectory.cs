@@ -25,6 +25,33 @@ namespace Modele
             SearchForOriginGames(Dossiers);
             return Dossiers;
         }
+        public static List<string> GetGameDirectoryFromPaths(string[] Paths)
+        {
+            List<string> Dossiers = new List<string>();
+            foreach (string Path in Paths)
+            {
+                if (Directory.Exists(Path))
+                {
+                    foreach (string Dir in Directory.GetDirectories(Path))
+                    {
+                        try //getfiles peut lancer une exception si il n'a pas les droits suffisants
+                        {
+                            if (Directory.GetFiles(Dir, "*.exe", SearchOption.AllDirectories).Any()) //on verifie que il y a un executable dans le dossier
+                            {
+                                Dossiers.Add(Dir);
+                            }
+                        }
+                        catch (Exception)
+                        {
+
+                            continue; //si exception lancer on ignore le dossier
+                        }
+                       
+                    }
+                }
+            }
+            return Dossiers;
+        }
         private static bool IsDirectoryEmpty(string Path)
         {
             return !(Directory.EnumerateFileSystemEntries(Path).Any() && (Directory.GetFiles(Path+"\\\\","*.exe",SearchOption.AllDirectories).Count()!=0));//renvoie si le dossier et vide ou contient aucun executable (any renvoie un booleen true si il y a qq chose ds le IEnumerable renvoyer)
