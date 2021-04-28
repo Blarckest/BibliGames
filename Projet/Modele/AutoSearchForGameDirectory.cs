@@ -22,7 +22,7 @@ namespace Modele
             SearchUplayGames(Dossiers);
             SearchEpicGames(Dossiers);
             SearchRiotGames(Dossiers);
-            SearchForOriginGames(Dossiers);
+            SearchOriginGames(Dossiers);
             return Dossiers;
         }
         public static List<string> GetGameDirectoryFromPaths(string[] Paths)
@@ -186,7 +186,7 @@ namespace Modele
             }
         }
 
-        private static void SearchForOriginGames(Dictionary<Launcher, List<string>> Dossiers)
+        private static void SearchOriginGames(Dictionary<Launcher, List<string>> Dossiers)
         {
             List<string> PathsToGameDirectory = new List<string>();
             string PathToProgramData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
