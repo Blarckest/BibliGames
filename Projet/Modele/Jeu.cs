@@ -25,7 +25,7 @@ namespace Modele
             this.Dossier = Dossier;
             this.Exec = Exec;
         }
-        public Jeu(string Nom, string Icone, string Dossier, string Exec, string Image,string Note,string Description) : this(Nom, Dossier,Exec)
+        public Jeu(string Nom, string Icone, string Dossier, string Exec, string Image,string Note,string Description) : this(Nom, Icone, Dossier,Exec)
         {
             this.Dossier = Dossier;
             this.Exec = Exec;
