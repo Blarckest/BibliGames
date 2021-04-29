@@ -1,8 +1,10 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Microsoft.Win32;
+
+
 
 namespace Modele
 {
@@ -100,7 +102,7 @@ namespace Modele
             string Nom="";
             string Executable="";
             string Dossier="";
-            string RegKey = "SOFTWARE\\WOW6432Node\\Epic Games\\EpicGamesLauncher";
+            string RegKey = "SOFTWARE\\WOW6432Node\\Epic Games\\EpicGamesLauncher";     
             RegistryKey Key = Registry.LocalMachine.OpenSubKey(RegKey);
             string Path = Key.GetValue("AppDataPath").ToString(); //get location du dossier ou epic stock les infos utiles
             Path += "Manifests\\";

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Microsoft.Win32;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System;
+using Microsoft.Win32;
 
 namespace Modele
 {
