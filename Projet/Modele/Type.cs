@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Modele
 {
-    public enum Type:byte
+    public enum Type
     {
         Launcher,
         Jeu,

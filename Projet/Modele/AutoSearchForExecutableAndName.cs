@@ -80,7 +80,7 @@ namespace Modele
                 || Executable.Contains("mono.exe", StringComparison.OrdinalIgnoreCase)); //traitement des cas communs
         }
 
-        private static void SearchForExecutables(Dictionary<Launcher, List<Tuple<string, string>>> Executables, List<string> Dossiers,Launcher Launcher=Launcher.Autre)
+        public static void SearchForExecutables(Dictionary<Launcher, List<Tuple<string, string>>> Executables, List<string> Dossiers,Launcher Launcher=Launcher.Autre)
         {
             List<Tuple<string, string>> TabExecName = new List<Tuple<string, string>>();
             string Nom;
