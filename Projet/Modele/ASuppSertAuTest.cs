@@ -8,10 +8,11 @@ namespace Modele
     {
         public static void Main(string[] args)
         {
-            var res = AutoSearchForGameDirectory.GetAllGameDirectory();
+            /*var res = AutoSearchForGameDirectory.GetAllGameDirectory();
             string[] dossiers = { "G:\\", "D:\\Jeux\\battle.net" };
             res.Add(Launcher.Autre, AutoSearchForGameDirectory.GetGameDirectoryFromPaths(dossiers));
-            AutoSearchForExecutableAndName.GetExecutableAndNameFromGameDirectory(res);
+            AutoSearchForExecutableAndName.GetExecutableAndNameFromGameDirectory(res); */
+            SearchInfo.SetInfo();
         }
     }
 }
