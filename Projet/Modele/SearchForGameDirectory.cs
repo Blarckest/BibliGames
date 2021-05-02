@@ -7,7 +7,7 @@ using Microsoft.Win32;
 
 namespace Modele
 {
-    public static class AutoSearchForGameDirectory
+    public static class SearchForGameDirectory
     {
         /// <summary>
         /// Retourne tout les dossiers dans launcher Steam/Uplay/Epic/Riot/origin

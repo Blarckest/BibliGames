@@ -8,7 +8,7 @@ using Microsoft.Win32;
 
 namespace Modele
 {
-    public static class AutoSearchForExecutableAndName
+    public static class SearchForExecutableAndName
     {
         /// <summary>
         /// Retourne la liste des executables en fonction du launcher
