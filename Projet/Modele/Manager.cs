@@ -14,7 +14,7 @@ namespace Modele
         public string Pattern { get; set; } = null;
         public IList<Element> Affichage { get; private set; }
         
-        public void AjoutJeu(Launcher Launcher,string Exec)
+        public void AjoutJeu(LauncherName Launcher,string Exec)
         {
             if (File.Exists(Exec))
             {
@@ -64,16 +64,16 @@ namespace Modele
         public void AjouterDossier(string Dossier)
         { 
             Dossiers.Add(Dossier);
-            Dictionary<Launcher, List<Tuple<string, string>>> res=new Dictionary<Launcher, List<Tuple<string, string>>>();
+            Dictionary<LauncherName, List<Tuple<string, string>>> res=new Dictionary<LauncherName, List<Tuple<string, string>>>();
             List<string> Folder = new List<string>();
             Folder.Add(Dossier);
             SearchForExecutableAndName.SearchForExecutables(res, Folder);
             for (int i = 0; i < Elements.Count; i++)
             {
-                if (Elements[i].Type == Type.Launcher && Elements[i].Nom == Launcher.Autre.ToString())
+                if (Elements[i].Type == Type.Launcher && Elements[i].Nom == LauncherName.Autre.ToString())
                 {
                     List<Tuple<string, string>> Jeux;
-                    if (res.TryGetValue(Launcher.Autre, out Jeux))
+                    if (res.TryGetValue(LauncherName.Autre, out Jeux))
                     {
                         foreach (Tuple<string, string> Jeu in Jeux)
                         {
@@ -92,7 +92,7 @@ namespace Modele
         {
             for (int i = 0; i < Elements.Count; i++)
             {
-                if (Elements[i].Type == Type.Launcher && Elements[i].Nom == Launcher.Autre.ToString())
+                if (Elements[i].Type == Type.Launcher && Elements[i].Nom == LauncherName.Autre.ToString())
                 {
                     i++;
                     while (i!=Elements.Count && Elements[i].Type != Type.Launcher)

@@ -14,37 +14,37 @@ namespace Modele
         /// Retourne la liste des executables en fonction du launcher
         /// </summary>
         /// <returns>Dictionary<Launcher,List<Tuple<string,string>>>(launcher,executable,nom)</returns>
-        public static Dictionary<Launcher, List<Tuple<string, string>>> GetExecutableAndNameFromGameDirectory(Dictionary<Launcher, List<string>> Dossiers)
+        public static Dictionary<LauncherName, List<Tuple<string, string>>> GetExecutableAndNameFromGameDirectory(Dictionary<LauncherName, List<string>> Dossiers)
         {
-            Dictionary<Launcher, List<Tuple<string, string>>> Executables = new Dictionary<Launcher, List<Tuple<string, string>>>();
+            Dictionary<LauncherName, List<Tuple<string, string>>> Executables = new Dictionary<LauncherName, List<Tuple<string, string>>>();
             List<string> DossiersLauncher;
 
-            if(Dossiers.TryGetValue(Launcher.Steam, out DossiersLauncher)) //recup dossiers du launcher steam et recherche d'executable si il y en a
-                SearchForExecutables(Executables, DossiersLauncher,Launcher.Steam);
+            if(Dossiers.TryGetValue(LauncherName.Steam, out DossiersLauncher)) //recup dossiers du launcher steam et recherche d'executable si il y en a
+                SearchForExecutables(Executables, DossiersLauncher,LauncherName.Steam);
 
-            if(Dossiers.TryGetValue(Launcher.Uplay, out DossiersLauncher)) //recup dossiers du launcher uplay et recherche d'executable si il y en a
-                SearchForExecutables(Executables, DossiersLauncher,Launcher.Uplay);
+            if(Dossiers.TryGetValue(LauncherName.Uplay, out DossiersLauncher)) //recup dossiers du launcher uplay et recherche d'executable si il y en a
+                SearchForExecutables(Executables, DossiersLauncher,LauncherName.Uplay);
 
-            if(Dossiers.Keys.Contains(Launcher.EpicGames)) //verifie si il y a des jeux epic
+            if(Dossiers.Keys.Contains(LauncherName.EpicGames)) //verifie si il y a des jeux epic
                 SearchForEpicExecutables(Executables); //pas besoin des dossiers tout est situé dans des fichiers de config
 
-            if(Dossiers.TryGetValue(Launcher.Riot, out DossiersLauncher)) //recup dossiers du launcher riot et recherche d'executable si il y en a
-                SearchForExecutables(Executables, DossiersLauncher,Launcher.Riot);
+            if(Dossiers.TryGetValue(LauncherName.Riot, out DossiersLauncher)) //recup dossiers du launcher riot et recherche d'executable si il y en a
+                SearchForExecutables(Executables, DossiersLauncher,LauncherName.Riot);
 
-            if(Dossiers.TryGetValue(Launcher.Origin, out DossiersLauncher)) //recup dossiers du launcher Origin et recherche d'executable si il y en a
-                SearchForExecutables(Executables, DossiersLauncher, Launcher.Origin);
+            if(Dossiers.TryGetValue(LauncherName.Origin, out DossiersLauncher)) //recup dossiers du launcher Origin et recherche d'executable si il y en a
+                SearchForExecutables(Executables, DossiersLauncher, LauncherName.Origin);
 
-            if (Dossiers.TryGetValue(Launcher.Autre, out DossiersLauncher)) //recup dossiers de launcer inconnu et recherche d'executable si il y en a
-                SearchForExecutables(Executables, DossiersLauncher, Launcher.Autre);
+            if (Dossiers.TryGetValue(LauncherName.Autre, out DossiersLauncher)) //recup dossiers de launcer inconnu et recherche d'executable si il y en a
+                SearchForExecutables(Executables, DossiersLauncher, LauncherName.Autre);
 
             return Executables;
         }
 
-        public static string Filter(string[] Executables, string Nom = null,Launcher Launcher=Launcher.Autre)
+        public static string Filter(string[] Executables, string Nom = null,LauncherName Launcher=LauncherName.Autre)
         {
             int archi;
             archi = Environment.Is64BitOperatingSystem ? 64 : 32;
-            if (Launcher==Launcher.Riot)//Riot est un peu speciale (peu de jeux)(launcher....etc) donc hardcodage de ceux la
+            if (Launcher==LauncherName.Riot)//Riot est un peu speciale (peu de jeux)(launcher....etc) donc hardcodage de ceux la
             {
                 //manque le nom pour runeterra et apparemment valorant se lance en ligne de commande avec le RiotClientServices.exe
                 return Executables.First(e => e.Contains("LeagueClient.exe") || e.Contains("VALORANT.exe") || e.Contains("LoR.exe"));
@@ -80,7 +80,7 @@ namespace Modele
                 || Executable.Contains("mono.exe", StringComparison.OrdinalIgnoreCase)); //traitement des cas communs
         }
 
-        public static void SearchForExecutables(Dictionary<Launcher, List<Tuple<string, string>>> Executables, List<string> Dossiers,Launcher Launcher=Launcher.Autre)
+        public static void SearchForExecutables(Dictionary<LauncherName, List<Tuple<string, string>>> Executables, List<string> Dossiers,LauncherName Launcher=LauncherName.Autre)
         {
             List<Tuple<string, string>> TabExecName = new List<Tuple<string, string>>();
             string Nom;
@@ -96,7 +96,7 @@ namespace Modele
             Executables.Add(Launcher, TabExecName); //met a jour le dictionnaire
         }
 
-        private static void SearchForEpicExecutables(Dictionary<Launcher, List<Tuple<string, string>>> Executables)
+        private static void SearchForEpicExecutables(Dictionary<LauncherName, List<Tuple<string, string>>> Executables)
         {
             List<Tuple<string, string>> TabExecName = new List<Tuple<string, string>>();
             string Nom="";
@@ -146,7 +146,7 @@ namespace Modele
                     TabExecName.Add(new Tuple<string, string>(Executable, Nom));
                 }
             }
-            Executables.Add(Launcher.EpicGames, TabExecName); //met a jour le dictionnaire
+            Executables.Add(LauncherName.EpicGames, TabExecName); //met a jour le dictionnaire
         }
     }
 }

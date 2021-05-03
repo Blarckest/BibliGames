@@ -11,6 +11,7 @@ namespace Modele
         public string Description { get; set; } = null;
         public string Note { get; set; } = null;
         public string Image { set; get; } = null;
+        public LauncherName Launcher { get; private set; }
 
 
         public Jeu():base(Type.Jeu) { }

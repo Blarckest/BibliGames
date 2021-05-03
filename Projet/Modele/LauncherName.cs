@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Modele
 {
-    public enum Launcher : byte
+    public enum LauncherName : byte
     {
         Steam,
         EpicGames,

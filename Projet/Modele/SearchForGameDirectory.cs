@@ -15,9 +15,9 @@ namespace Modele
         /// la fonction retourne un dictionnaire avec comme clé un launcher et comme value un liste contenant les dossiers associé a ce launcher
         /// </summary>
         /// <returns>Dictionary<Launcher, List<string>></returns>
-        public static Dictionary<Launcher, List<string>> GetAllGameDirectory()
+        public static Dictionary<LauncherName, List<string>> GetAllGameDirectory()
         {
-            Dictionary<Launcher, List<string>> Dossiers = new Dictionary<Launcher, List<string>>();
+            Dictionary<LauncherName, List<string>> Dossiers = new Dictionary<LauncherName, List<string>>();
             SearchSteamGames(Dossiers);
             SearchUplayGames(Dossiers);
             SearchEpicGames(Dossiers);
@@ -56,7 +56,7 @@ namespace Modele
         {
             return !(Directory.EnumerateFileSystemEntries(Path).Any() && (Directory.GetFiles(Path+"\\\\","*.exe",SearchOption.AllDirectories).Any()));//renvoie si le dossier et vide ou contient aucun executable (any renvoie un booleen true si il y a qq chose ds le IEnumerable renvoyer)
         }
-        private static void SearchSteamGames(Dictionary<Launcher, List<string>> Dossiers)
+        private static void SearchSteamGames(Dictionary<LauncherName, List<string>> Dossiers)
         {
             List<string> Paths = new List<string>();
             List<string> PathsToGameDirectory = new List<string>();
@@ -102,11 +102,11 @@ namespace Modele
                         }
                     }
                 }
-                Dossiers.Add(Launcher.Steam, PathsToGameDirectory); 
+                Dossiers.Add(LauncherName.Steam, PathsToGameDirectory); 
             }
         }
 
-        private static void SearchUplayGames(Dictionary<Launcher, List<string>> Dossiers)
+        private static void SearchUplayGames(Dictionary<LauncherName, List<string>> Dossiers)
         {
             List<string> PathsToGameDirectory = new List<string>();
             string RegKey = "SOFTWARE\\WOW6432Node\\Ubisoft\\Launcher\\Installs";
@@ -121,11 +121,11 @@ namespace Modele
                     Path = Path.Replace("/", "\\"); //pour avoir une sortie pareil pour tout les launcher ex d:\\path\\to\\directory
                     PathsToGameDirectory.Add(Path);
                 }
-                Dossiers.Add(Launcher.Uplay, PathsToGameDirectory);
+                Dossiers.Add(LauncherName.Uplay, PathsToGameDirectory);
             }
         }
 
-        private static void SearchEpicGames(Dictionary<Launcher, List<string>> Dossiers)
+        private static void SearchEpicGames(Dictionary<LauncherName, List<string>> Dossiers)
         {
             List<string> PathsToGameDirectory = new List<string>();
             string Temp;
@@ -160,12 +160,12 @@ namespace Modele
                             }
                         }
                     }
-                    Dossiers.Add(Launcher.EpicGames, PathsToGameDirectory);  
+                    Dossiers.Add(LauncherName.EpicGames, PathsToGameDirectory);  
                 }
             }
         }
 
-        private static void SearchRiotGames(Dictionary<Launcher, List<string>> Dossiers)
+        private static void SearchRiotGames(Dictionary<LauncherName, List<string>> Dossiers)
         {
             List<string> PathsToGameDirectory = new List<string>();
             string RegKey = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\"; //tout les chemin des jeux riot sont dispo ici
@@ -182,11 +182,11 @@ namespace Modele
             }
             if (PathsToGameDirectory.Count>0)
             {
-                Dossiers.Add(Launcher.Riot, PathsToGameDirectory);
+                Dossiers.Add(LauncherName.Riot, PathsToGameDirectory);
             }
         }
 
-        private static void SearchOriginGames(Dictionary<Launcher, List<string>> Dossiers)
+        private static void SearchOriginGames(Dictionary<LauncherName, List<string>> Dossiers)
         {
             List<string> PathsToGameDirectory = new List<string>();
             string PathToProgramData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
@@ -207,7 +207,7 @@ namespace Modele
                         PathsToGameDirectory.Add(PathToFolder);
                     }
                 }
-                Dossiers.Add(Launcher.Origin, PathsToGameDirectory); 
+                Dossiers.Add(LauncherName.Origin, PathsToGameDirectory); 
             }
         }
     }
