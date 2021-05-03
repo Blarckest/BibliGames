@@ -14,37 +14,37 @@ namespace Modele
         /// Retourne la liste des executables en fonction du launcher
         /// </summary>
         /// <returns>Dictionary<Launcher,List<Tuple<string,string>>>(launcher,executable,nom)</returns>
-        public static Dictionary<LauncherName, List<Tuple<string, string>>> GetExecutableAndNameFromGameDirectory(Dictionary<LauncherName, List<string>> Dossiers)
+        public static IList<Jeu> GetExecutableAndNameFromGameDirectory(Dictionary<LauncherName, List<string>> Dossiers)
         {
-            Dictionary<LauncherName, List<Tuple<string, string>>> Executables = new Dictionary<LauncherName, List<Tuple<string, string>>>();
+            List<Jeu> Jeux = new List<Jeu>();
             List<string> DossiersLauncher;
 
-            if(Dossiers.TryGetValue(LauncherName.Steam, out DossiersLauncher)) //recup dossiers du launcher steam et recherche d'executable si il y en a
-                SearchForExecutables(Executables, DossiersLauncher,LauncherName.Steam);
+            if (Dossiers.TryGetValue(LauncherName.Steam, out DossiersLauncher)) //recup dossiers du launcher steam et recherche d'executable si il y en a
+                SearchForSteamExecutables(Jeux, DossiersLauncher);
 
-            if(Dossiers.TryGetValue(LauncherName.Uplay, out DossiersLauncher)) //recup dossiers du launcher uplay et recherche d'executable si il y en a
-                SearchForExecutables(Executables, DossiersLauncher,LauncherName.Uplay);
+            if (Dossiers.TryGetValue(LauncherName.Uplay, out DossiersLauncher)) //recup dossiers du launcher uplay et recherche d'executable si il y en a
+                SearchForExecutables(Jeux, DossiersLauncher, LauncherName.Uplay);
 
-            if(Dossiers.Keys.Contains(LauncherName.EpicGames)) //verifie si il y a des jeux epic
-                SearchForEpicExecutables(Executables); //pas besoin des dossiers tout est situé dans des fichiers de config
+            if (Dossiers.Keys.Contains(LauncherName.EpicGames)) //verifie si il y a des jeux epic
+                SearchForEpicExecutables(Jeux); //pas besoin des dossiers tout est situé dans des fichiers de config
 
-            if(Dossiers.TryGetValue(LauncherName.Riot, out DossiersLauncher)) //recup dossiers du launcher riot et recherche d'executable si il y en a
-                SearchForExecutables(Executables, DossiersLauncher,LauncherName.Riot);
+            if (Dossiers.TryGetValue(LauncherName.Riot, out DossiersLauncher)) //recup dossiers du launcher riot et recherche d'executable si il y en a
+                SearchForExecutables(Jeux, DossiersLauncher, LauncherName.Riot);
 
-            if(Dossiers.TryGetValue(LauncherName.Origin, out DossiersLauncher)) //recup dossiers du launcher Origin et recherche d'executable si il y en a
-                SearchForExecutables(Executables, DossiersLauncher, LauncherName.Origin);
+            if (Dossiers.TryGetValue(LauncherName.Origin, out DossiersLauncher)) //recup dossiers du launcher Origin et recherche d'executable si il y en a
+                SearchForExecutables(Jeux, DossiersLauncher, LauncherName.Origin);
 
             if (Dossiers.TryGetValue(LauncherName.Autre, out DossiersLauncher)) //recup dossiers de launcer inconnu et recherche d'executable si il y en a
-                SearchForExecutables(Executables, DossiersLauncher, LauncherName.Autre);
+                SearchForExecutables(Jeux, DossiersLauncher, LauncherName.Autre);
 
-            return Executables;
+            return Jeux;
         }
 
-        public static string Filter(string[] Executables, string Nom = null,LauncherName Launcher=LauncherName.Autre)
+        public static string Filter(string[] Executables, string Nom = null, LauncherName Launcher = LauncherName.Autre)
         {
             int archi;
             archi = Environment.Is64BitOperatingSystem ? 64 : 32;
-            if (Launcher==LauncherName.Riot)//Riot est un peu speciale (peu de jeux)(launcher....etc) donc hardcodage de ceux la
+            if (Launcher == LauncherName.Riot)//Riot est un peu speciale (peu de jeux)(launcher....etc) donc hardcodage de ceux la
             {
                 //manque le nom pour runeterra et apparemment valorant se lance en ligne de commande avec le RiotClientServices.exe
                 return Executables.First(e => e.Contains("LeagueClient.exe") || e.Contains("VALORANT.exe") || e.Contains("LoR.exe"));
@@ -58,7 +58,7 @@ namespace Modele
             {
                 var temp = Res.Where(e => Path.GetFileName(e).Contains(Nom, StringComparison.OrdinalIgnoreCase));
                 Res = temp.Count() == 0 ? Res : temp;
-                temp = Res.Where(e => Path.GetFileName(e).Contains(Nom.Replace(" ",""), StringComparison.OrdinalIgnoreCase));
+                temp = Res.Where(e => Path.GetFileName(e).Contains(Nom.Replace(" ", ""), StringComparison.OrdinalIgnoreCase));
                 Res = temp.Count() == 0 ? Res : temp;
             }
             if (Res.Count() > 1 && Res.Any(e => e.Contains("bin", StringComparison.OrdinalIgnoreCase))) //preferer les exe contenu dans un dossier bin ou binaries (si il y en a)
@@ -80,9 +80,8 @@ namespace Modele
                 || Executable.Contains("mono.exe", StringComparison.OrdinalIgnoreCase)); //traitement des cas communs
         }
 
-        public static void SearchForExecutables(Dictionary<LauncherName, List<Tuple<string, string>>> Executables, List<string> Dossiers,LauncherName Launcher=LauncherName.Autre)
+        public static void SearchForExecutables(List<Jeu> Jeux, List<string> Dossiers, LauncherName Launcher = LauncherName.Autre)
         {
-            List<Tuple<string, string>> TabExecName = new List<Tuple<string, string>>();
             string Nom;
             string Executable;
             foreach (string Dossier in Dossiers) //pour chaque dossier recup l'executable le plus probable d'etre le bon
@@ -90,19 +89,71 @@ namespace Modele
                 Nom = Path.GetFileName(Dossier);
                 string[] NomExecutables = Directory.GetFiles(Dossier, "*.exe", SearchOption.AllDirectories); //recup tout les .exe dans tout les sous-dossier
                 Executable = Filter(NomExecutables, Nom, Launcher); //filtrage
-                Executable = Executable.Replace("\\", "\\\\");
-                TabExecName.Add(new Tuple<string, string>(Executable, Nom)); //ajout
+                Jeux.Add(new Jeu(Nom, Dossier, Executable, Launcher));//ajout
             }
-            Executables.Add(Launcher, TabExecName); //met a jour le dictionnaire
         }
 
-        private static void SearchForEpicExecutables(Dictionary<LauncherName, List<Tuple<string, string>>> Executables)
+        private static Jeu SearchForExecutables(string Dossier, LauncherName Launcher = LauncherName.Autre)
         {
-            List<Tuple<string, string>> TabExecName = new List<Tuple<string, string>>();
-            string Nom="";
-            string Executable="";
-            string Dossier="";
-            string RegKey = "SOFTWARE\\WOW6432Node\\Epic Games\\EpicGamesLauncher";     
+            string Nom;
+            string Executable;
+            Nom = Path.GetFileName(Dossier);
+            string[] NomExecutables = Directory.GetFiles(Dossier, "*.exe", SearchOption.AllDirectories); //recup tout les .exe dans tout les sous-dossier
+            Executable = Filter(NomExecutables, Nom, Launcher); //filtrage
+            return new Jeu(Nom, Dossier, Executable, Launcher);
+        }
+
+        private static void SearchForSteamExecutables(IList<Jeu> Jeux, List<string> Dossiers)
+        {
+            string Nom = "";
+            string FolderName = "";
+            List<string> SteamAppsVisited = new List<string>();
+            foreach (string Dossier in Dossiers) //sert juste a parcourir les differents steamapps
+            {
+                string PathToSteamApps = Directory.GetParent(Directory.GetParent(Dossier).FullName).FullName; 
+                if (!SteamAppsVisited.Contains(PathToSteamApps)) //si on pas deja traiter ce steamapps
+                {
+                    string[] AllFiles = Directory.GetFiles(PathToSteamApps, "*.acf"); //ce dossier contient tout les fichiers de config de tout les jeux
+                    foreach (string File in AllFiles)
+                    {
+                        if (System.IO.File.Exists(File))
+                        {
+                            string[] Lines = System.IO.File.ReadAllLines(File);
+                            foreach (string Line in Lines) //parcour du fichier
+                            {
+                                if (Line.Contains("name")) //recuperation du nom
+                                {
+                                    Nom = Line.Substring(10);
+                                    Nom = Nom.Replace("\"", "");
+                                }
+                                else if(Line.Contains("installdir")) //recuperation du dossier
+                                {
+                                    FolderName= Line.Substring(16);
+                                    FolderName=FolderName.Replace("\"", "");
+                                    FolderName = $"{PathToSteamApps}{@"\common\"}{FolderName}";
+                                    break;
+                                }
+                            }
+                            if (Nom!= "Steamworks Common Redistributables")
+                            {
+                                Jeu Jeu = SearchForExecutables(FolderName, LauncherName.Steam);
+                                Jeu.Nom = Nom;
+                                Jeux.Add(Jeu);
+
+                            }
+                        }
+                    }
+                    SteamAppsVisited.Add(PathToSteamApps);
+                }
+            }
+        }
+
+        private static void SearchForEpicExecutables(IList<Jeu> Jeux)
+        {
+            string Nom = "";
+            string Executable = "";
+            string Dossier = "";
+            string RegKey = "SOFTWARE\\WOW6432Node\\Epic Games\\EpicGamesLauncher";
             RegistryKey Key = Registry.LocalMachine.OpenSubKey(RegKey);
             string Path = Key.GetValue("AppDataPath").ToString(); //get location du dossier ou epic stock les infos utiles
             Path += "Manifests\\";
@@ -122,19 +173,18 @@ namespace Modele
                         }
                         else if (Line.Contains("DisplayName")) //recuperation du nom du jeu
                         {
-                            Nom = Line.Substring(Line.IndexOf(": \"") +3); //recuperation du nom jusqua la fin de la ligne
+                            Nom = Line.Substring(Line.IndexOf(": \"") + 3); //recuperation du nom jusqua la fin de la ligne
                             Nom = Nom.Substring(0, Nom.Length - 2);  //suppression de l'apostrophe et de la virgule de fin de ligne
                         }
-                        else if(Line.Contains("InstallLocation")) //recuperation du chemin de dossier
+                        else if (Line.Contains("InstallLocation")) //recuperation du chemin de dossier
                         {
                             Dossier = Line.Substring(Line.IndexOf(":\\") - 1); //recuperation du debut du chemin jusqua la fin de la ligne
                             Dossier = Dossier.Substring(0, Dossier.Length - 1);  //suppression de la virgule de fin de ligne
-                            //Dossier = Dossier.Replace("\\\\", "\\");  //tout les  \ sont echapé on a donc besoin d'en enlever 
+                            Dossier = Dossier.Replace("\\\\", "\\");  //tout les  \ sont echapé on a donc besoin d'en enlever 
                             Dossier = Dossier.Replace("\"", "");
-                            Dossier += "\\\\";
                         }
                     }
-                    if (File.Exists(Dossier+Executable) && !Executable.Contains("UplayLaunch.exe")) //filter les jeux associe a uplay
+                    if (File.Exists(Dossier + Executable) && !Executable.Contains("UplayLaunch.exe")) //filter les jeux associe a uplay
                     {
                         Executable = Dossier + Executable;
                     }
@@ -143,10 +193,9 @@ namespace Modele
                         string[] NomExecutables = Directory.GetFiles(Dossier, "*.exe", SearchOption.AllDirectories); //recup tout les .exe dans tout les sous-dossier
                         Executable = Filter(NomExecutables, Nom); //filtrage
                     }
-                    TabExecName.Add(new Tuple<string, string>(Executable, Nom));
+                    Jeux.Add(new Jeu(Nom, Dossier, Executable, LauncherName.EpicGames));//ajout
                 }
             }
-            Executables.Add(LauncherName.EpicGames, TabExecName); //met a jour le dictionnaire
         }
     }
 }

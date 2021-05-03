@@ -12,6 +12,7 @@ namespace Modele
 {
     public class SearchInfo
     {
+        //on pourrait tenter d'aller directement a la page du jeux en allant https://www.igdb.com/games/+(jeux en minuscule et espace remplacer par '-' tt les caracteres speciaux sont supprimé)
 
         ///exec
         ///     ressources

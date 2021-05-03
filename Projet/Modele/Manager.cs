@@ -61,10 +61,15 @@ namespace Modele
             var Elem = ElementSelected as Jeu;
             System.Diagnostics.Process.Start(Elem.Exec); //normalement ca marche a tester
         }
+
+        /// <summary>
+        /// Appeller lors de l'ajout d'un dossier dans les parametre
+        /// </summary>
+        /// <param name="Dossier"></param>
         public void AjouterDossier(string Dossier)
         { 
             Dossiers.Add(Dossier);
-            Dictionary<LauncherName, List<Tuple<string, string>>> res=new Dictionary<LauncherName, List<Tuple<string, string>>>();
+            List<Jeu> res=new List<Jeu>();
             List<string> Folder = new List<string>();
             Folder.Add(Dossier);
             SearchForExecutableAndName.SearchForExecutables(res, Folder);
@@ -72,17 +77,15 @@ namespace Modele
             {
                 if (Elements[i].Type == Type.Launcher && Elements[i].Nom == LauncherName.Autre.ToString())
                 {
-                    List<Tuple<string, string>> Jeux;
-                    if (res.TryGetValue(LauncherName.Autre, out Jeux))
+                    int baseI = i;
+                    foreach (Jeu Jeu in res)
                     {
-                        foreach (Tuple<string, string> Jeu in Jeux)
+                        i = baseI;
+                        while (Elements[i].Nom.CompareTo(Jeu.Nom) < 0)
                         {
-                            while (Elements[i].Nom.CompareTo(Jeu.Item1) < 0)
-                            {
-                                i++;
-                            }
-                            Elements.Insert(i, new Jeu(Jeu.Item1, Dossier, Jeu.Item2));
+                            i++;
                         }
+                        Elements.Insert(i, Jeu);
                     }
                     break;
                 }
