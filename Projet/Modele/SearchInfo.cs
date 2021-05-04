@@ -45,11 +45,9 @@ namespace Modele
 
         public static Jeu ExtractGameInfoFromExec(string Exec)
         {
-            Jeu Jeu = new Jeu();
-            Jeu.Exec = Exec;
-            Jeu.Dossier = Directory.GetParent(Exec).FullName;
-            Jeu.Nom = Path.GetFileName(Directory.GetParent(Exec).FullName);
-            return Jeu;
+            string Dossier = Directory.GetParent(Exec).FullName;
+            string Nom = Path.GetFileName(Directory.GetParent(Exec).FullName);
+            return new Jeu(Nom,Dossier,Exec);
         }
 
         private static void ExtractGameInfoFromWeb(Jeu Jeu,bool NeedImage,bool NeedIcon,bool NeedDescription)

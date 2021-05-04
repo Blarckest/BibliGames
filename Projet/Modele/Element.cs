@@ -1,30 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace Modele
 {
-    public class Element
+    public abstract class Element : IEquatable<Element>,IComparable<Element>
     {
-        public string Icone { get; set; } = null;
         public string Nom { get; set;} = null;
-        public Type Type { get; set; }
-
-        protected Element(Type Type = Type.Launcher)
-        {
-            this.Type = Type;
-        }
-        protected Element(string Nom,Type Type = Type.Launcher)
+        protected Element(string Nom)
         {
             this.Nom = Nom;
-            this.Type = Type;
-        }
-        protected Element(string Nom, string Icone,Type Type=Type.Launcher)
-        {
-            this.Nom = Nom;
-            this.Icone = Icone;
-            this.Type = Type;
         }
 
+        public virtual bool Equals([AllowNull] Element other)
+        {
+            return Nom.Equals(other.Nom);
+        }
+
+        public virtual int CompareTo([AllowNull] Element other)
+        {
+            return Nom.CompareTo(other.Nom);
+        }
+        public override string ToString()
+        {
+            return Nom;
+        }
     }
 }

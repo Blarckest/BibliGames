@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Threading;
+using System.Linq;
 
 namespace Modele
 {
@@ -13,40 +14,35 @@ namespace Modele
         public Element ElementSelected { get; set; }
         public string Pattern { get; set; } = null;
         public IList<Element> Affichage { get; private set; }
-        
-        public void AjoutJeu(LauncherName Launcher,string Exec)
+
+        public void AjoutJeu(LauncherName Launcher, string Exec)
         {
             if (File.Exists(Exec))
             {
-                Element Jeu = SearchInfo.ExtractGameInfoFromExec(Exec);
-                for (int i = 0; i < Elements.Count; i++)
-                {
-                    if (Elements[i].Type == Type.Launcher && Elements[i].Nom == Launcher.ToString())
-                    {
-                        while (Elements[i].Nom.CompareTo(Jeu.Nom)<0)
-                        {
-                            i++;
-                        }
-                        Elements.Insert(i, Jeu);
-                        break;
-                    }
-                } 
+                Jeu Jeu = SearchInfo.ExtractGameInfoFromExec(Exec);
+                InsertGame(Launcher, Jeu);
             }
         }
-        public void ModifDetail(string Image,string Description,string Exec)
+
+        public void AjoutJeu(LauncherName Launcher, Jeu Jeu)
         {
-            if (ElementSelected.Type==Type.Jeu)
+            InsertGame(Launcher, Jeu);
+        }
+
+        public void ModifDetail(string Image, string Description, string Exec)
+        {
+            if (ElementSelected.GetType() == typeof(Jeu))
             {
                 var Element = ElementSelected as Jeu;
-                if (Element.Image!=Image && File.Exists(Image))
+                if (Element.Image != Image && File.Exists(Image))
                 {
                     Element.Image = Image;
                 }
-                if (Element.Description!=Description)
+                if (Element.Description != Description)
                 {
                     Element.Description = Description;
                 }
-                if (Element.Exec!=Exec && File.Exists(Exec))
+                if (Element.Exec != Exec && File.Exists(Exec))
                 {
                     Element.Exec = Exec;
                 }
@@ -67,49 +63,33 @@ namespace Modele
         /// </summary>
         /// <param name="Dossier"></param>
         public void AjouterDossier(string Dossier)
-        { 
+        {
             Dossiers.Add(Dossier);
-            List<Jeu> res=new List<Jeu>();
+            List<Jeu> Res = new List<Jeu>();
             List<string> Folder = new List<string>();
             Folder.Add(Dossier);
-            SearchForExecutableAndName.SearchForExecutables(res, Folder);
-            for (int i = 0; i < Elements.Count; i++)
+            SearchForExecutableAndName.SearchForExecutables(Res, Folder);
+            foreach (Jeu Jeu in Res)
             {
-                if (Elements[i].Type == Type.Launcher && Elements[i].Nom == LauncherName.Autre.ToString())
-                {
-                    int baseI = i;
-                    foreach (Jeu Jeu in res)
-                    {
-                        i = baseI;
-                        while (Elements[i].Nom.CompareTo(Jeu.Nom) < 0)
-                        {
-                            i++;
-                        }
-                        Elements.Insert(i, Jeu);
-                    }
-                    break;
-                }
+                AjoutJeu(LauncherName.Autre, Jeu);
             }
         }
+
         public void SuppDossier(string Dossier)
         {
-            for (int i = 0; i < Elements.Count; i++)
+            int index = GetLauncherIndex(LauncherName.Autre);
+            if (index!=-1)
             {
-                if (Elements[i].Type == Type.Launcher && Elements[i].Nom == LauncherName.Autre.ToString())
+                for (int i = index; i < Elements.Count; i++)
                 {
-                    i++;
-                    while (i!=Elements.Count && Elements[i].Type != Type.Launcher)
+                    Jeu Jeu = Elements[i] as Jeu; //à revoir Jeu.dossier != dossier
+                    if (Directory.GetParent(Jeu.Dossier).FullName == Dossier)
                     {
-                        Jeu Jeu = Elements[i] as Jeu; //à revoir Jeu.dossier != dossier
-                        if (Jeu.Dossier == Dossier)
-                        {
-                            Elements.Remove(Jeu);
-                        }
-                        i++;
+                        Elements.Remove(Jeu);
                     }
-                    break;
                 }
             }
+           
         }
         //servira si jamais on a plus de filtre a appliquer sur les elements affichés
         public void UpdateAffichage()
@@ -124,7 +104,7 @@ namespace Modele
             {
                 foreach (Element Elem in Affichage)
                 {
-                    if (Elem.Type == Type.Jeu && !Elem.Nom.Contains(Pattern, StringComparison.OrdinalIgnoreCase)) //si on est sur on jeu et que il correspond pas au pattern
+                    if (Elem.GetType() == typeof(Jeu) && !Elem.Nom.Contains(Pattern, StringComparison.OrdinalIgnoreCase)) //si on est sur on jeu et que il correspond pas au pattern
                     {
                         Affichage.Remove(Elem);
                     }
@@ -138,7 +118,7 @@ namespace Modele
         private void GetGame()
         {
             var res = SearchForGameDirectory.GetAllGameDirectory();
-            if (Dossiers.Count!=0)
+            if (Dossiers.Count != 0)
             {
                 //res.Add(Launcher.Autre, AutoSearchForGameDirectory.GetGameDirectoryFromPaths(Dossiers));
             }
@@ -147,6 +127,58 @@ namespace Modele
         private void GetInfo(Jeu Jeu)
         {
 
+        }
+
+        private void InsertGame(LauncherName Launcher, Jeu Jeu)
+        {
+            if (Elements.Any(e => e.Nom.Equals(Launcher.ToString())))   
+            {
+                int index = GetLauncherIndex(Launcher);
+                Launcher LauncherActuel = Elements[index] as Launcher; //garde en memoire l'instance du launcher
+                while (Elements[index].GetType() == typeof(Jeu) && Elements[index].CompareTo(Jeu as Element) < 0)
+                {
+                    index++; //tant que l'ordre alphabetique est pas respecté
+                }
+                if (index >= Elements.Count) //si on est a la fin
+                {
+                    Elements.Add(Jeu);
+                }
+                else
+                {
+                    Elements.Insert(index, Jeu);
+                }
+                (Elements[index] as Jeu).Launcher = Launcher; //on set le launcher associé au jeu
+                (Elements.Where(e => ReferenceEquals(e, LauncherActuel)).First() as Launcher).NbJeux++; //on ajoute un jeu
+            }
+            else
+            {
+                InsertLauncher(Launcher); //on insert le launcher
+                InsertGame(Launcher, Jeu); //on relance et on va se retrouver dans le code au dessus car cette fois-ci le launcher existe
+            }
+
+        }
+
+        private void InsertLauncher(LauncherName Launcher)
+        {
+            int index = 0;
+            while ((Elements[index] as Launcher).Nom.CompareTo(Launcher.ToString())<0) //tant que le launcher est pas a sa place dans l'ordre alphabetique
+            {
+                index += (Elements[index] as Launcher).NbJeux;
+            }
+            if (index>=Elements.Count) //si on est a la fin
+            {
+                Elements.Add(new Launcher(Launcher));
+            }
+            else
+            {
+                Elements.Insert(index, new Launcher(Launcher));
+            }
+        }
+
+        private int GetLauncherIndex(LauncherName LauncherName)
+        {
+            Launcher Temp = new Launcher(LauncherName);
+            return Elements.IndexOf(Temp);
         }
     }
 }
