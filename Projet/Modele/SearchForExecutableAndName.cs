@@ -134,7 +134,7 @@ namespace Modele
                                     break;
                                 }
                             }
-                            if (Nom!= "Steamworks Common Redistributables")
+                            if (Nom!= "Steamworks Common Redistributables") //Ce dossier n'est pas un jeu
                             {
                                 Jeu Jeu = SearchForExecutables(FolderName, LauncherName.Steam);
                                 Jeu.Nom = Nom;

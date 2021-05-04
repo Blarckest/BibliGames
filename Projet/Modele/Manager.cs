@@ -100,7 +100,7 @@ namespace Modele
                     i++;
                     while (i!=Elements.Count && Elements[i].Type != Type.Launcher)
                     {
-                        Jeu Jeu = Elements[i] as Jeu;
+                        Jeu Jeu = Elements[i] as Jeu; //à revoir Jeu.dossier != dossier
                         if (Jeu.Dossier == Dossier)
                         {
                             Elements.Remove(Jeu);

@@ -102,7 +102,10 @@ namespace Modele
                         }
                     }
                 }
-                Dossiers.Add(LauncherName.Steam, PathsToGameDirectory); 
+                if (PathsToGameDirectory.Count > 0)
+                {
+                    Dossiers.Add(LauncherName.Steam, PathsToGameDirectory);
+                }
             }
         }
 
@@ -121,7 +124,10 @@ namespace Modele
                     Path = Path.Replace("/", "\\"); //pour avoir une sortie pareil pour tout les launcher ex d:\\path\\to\\directory
                     PathsToGameDirectory.Add(Path);
                 }
-                Dossiers.Add(LauncherName.Uplay, PathsToGameDirectory);
+                if (PathsToGameDirectory.Count > 0)
+                {
+                    Dossiers.Add(LauncherName.Uplay, PathsToGameDirectory);
+                }
             }
         }
 
@@ -160,7 +166,10 @@ namespace Modele
                             }
                         }
                     }
-                    Dossiers.Add(LauncherName.EpicGames, PathsToGameDirectory);  
+                    if (PathsToGameDirectory.Count > 0)
+                    {
+                        Dossiers.Add(LauncherName.EpicGames, PathsToGameDirectory);
+                    }  
                 }
             }
         }
@@ -207,7 +216,10 @@ namespace Modele
                         PathsToGameDirectory.Add(PathToFolder);
                     }
                 }
-                Dossiers.Add(LauncherName.Origin, PathsToGameDirectory); 
+                if (PathsToGameDirectory.Count > 0)
+                {
+                    Dossiers.Add(LauncherName.Origin, PathsToGameDirectory);
+                }
             }
         }
     }

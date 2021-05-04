@@ -110,7 +110,7 @@ namespace Vues
             {
                 Historique.Push(ForwardHistorique.Pop()); //on ajoute a notre historique backward
             }
-            SetDirectories(); //pas reflechi encore
+            SetDirectories();
         }
 
         private void Remonter(object sender, MouseButtonEventArgs e) //fonction appeller pour aller au dossier parent
@@ -131,8 +131,7 @@ namespace Vues
         
         private void UpdatePathTextBox() //met a jour la textbox
         {
-            string Temp = Historique.Peek() == null ? "/" : Historique.Peek();
-            TextBoxChemin.Text = Temp;
+            TextBoxChemin.Text = Historique.Peek() == null ? "/" : Historique.Peek();
         }
 
         private void TextBoxChemin_TouchEnterPressed(object sender, KeyEventArgs e) //la textbox a ete modifier cette fonction sert a voir si on peux aller a l'endroit demander
@@ -234,9 +233,9 @@ namespace Vues
 
         private string[] Filter(string[] Dirs) //filtre les dossiers indesirables
         {
-            return Dirs.Where(d => !(System.IO.Path.GetFileName(d).StartsWith(".") || System.IO.Path.GetFileName(d).StartsWith("$") || char.IsDigit(System.IO.Path.GetFileName(d)[0])
+            return Dirs.Where(d => !(System.IO.Path.GetFileName(d).StartsWith(".") || System.IO.Path.GetFileName(d).StartsWith("$") || (char.IsDigit(System.IO.Path.GetFileName(d)[0]) && char.IsDigit(d.Last()))
                    || System.IO.Path.GetFileName(d).Contains("MSOCache") || System.IO.Path.GetFileName(d).Contains("System Volume Information") || System.IO.Path.GetFileName(d).Contains("Documents and Settings")
-                   || System.IO.Path.GetFileName(d).Contains("Temp", StringComparison.OrdinalIgnoreCase) || System.IO.Path.GetFileName(d).Contains("Recovery") || System.IO.Path.GetFileName(d).Contains("ProgramData"))).ToArray();
+                   || System.IO.Path.GetFileName(d).Contains("Recovery") || System.IO.Path.GetFileName(d).Contains("ProgramData"))).ToArray();
         }
 
         private void Recherche(object sender, TextChangedEventArgs e)//appeler quand le texte de la barre de recherche change
@@ -268,14 +267,14 @@ namespace Vues
             else
             {
                 Nom = Text;
-                Path = Text; //pour garantir qu'un clique dans acces rapide sur un leucteur ouvre le lecteur
+                Path = Text; //pour garantir qu'un clique dans acces rapide sur un lecteur ouvre le lecteur
             }
         }
         public LigneExplorateur(string PathImage, string Text, string Path)
         {
             Image = PathImage;
             Nom = Text;
-            this.Path = Path; //pour garantir qu'un clique dans acces rapide sur un leucteur ouvre le lecteur
+            this.Path = Path; //pour garantir qu'un clique dans acces rapide sur un lecteur ouvre le lecteur
 
         }
     }
