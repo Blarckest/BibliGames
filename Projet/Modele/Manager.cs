@@ -161,18 +161,26 @@ namespace Modele
         private void InsertLauncher(LauncherName Launcher)
         {
             int index = 0;
-            while ((Elements[index] as Launcher).Nom.CompareTo(Launcher.ToString())<0) //tant que le launcher est pas a sa place dans l'ordre alphabetique
+            if (Launcher!=LauncherName.Autre)
             {
-                index += (Elements[index] as Launcher).NbJeux;
-            }
-            if (index>=Elements.Count) //si on est a la fin
-            {
-                Elements.Add(new Launcher(Launcher));
+                while ((Elements[index] as Launcher).Nom.CompareTo(Launcher.ToString()) < 0) //tant que le launcher est pas a sa place dans l'ordre alphabetique
+                {
+                    index += (Elements[index] as Launcher).NbJeux;
+                }
+                if (index >= Elements.Count) //si on est a la fin
+                {
+                    Elements.Add(new Launcher(Launcher));
+                }
+                else
+                {
+                    Elements.Insert(index, new Launcher(Launcher));
+                }
             }
             else
             {
-                Elements.Insert(index, new Launcher(Launcher));
+                Elements.Add(new Launcher(Launcher)); //launcher.autre est obligatoirement en dernier
             }
+            
         }
 
         private int GetLauncherIndex(LauncherName LauncherName)

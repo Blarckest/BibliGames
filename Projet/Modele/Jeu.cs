@@ -22,7 +22,7 @@ namespace Modele
             this.Launcher = Launcher;
         }
 
-        public Jeu(string Nom, string Icone, string Dossier, string Exec, string Image,string Note,string Description, LauncherName Launcher = LauncherName.Autre) : this(Nom, Dossier,Exec,Launcher)
+        public Jeu(string Nom, string Dossier, string Exec, string Image, string Icone, string Note,string Description, LauncherName Launcher = LauncherName.Autre) : this(Nom, Dossier,Exec,Launcher)
         {
             this.Icone = Icone;
             this.Image = Image;
