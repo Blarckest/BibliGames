@@ -80,8 +80,9 @@ namespace Modele
                 || Executable.Contains("mono.exe", StringComparison.OrdinalIgnoreCase)); //traitement des cas communs
         }
 
-        public static void SearchForExecutables(List<Jeu> Jeux, List<string> Dossiers, LauncherName Launcher = LauncherName.Autre)
+        public static void SearchForExecutables(List<Jeu> Jeux, IList<string> Dossiers, LauncherName Launcher = LauncherName.Autre)
         {
+            List<Jeu> Temp = new List<Jeu>();
             string Nom;
             string Executable;
             foreach (string Dossier in Dossiers) //pour chaque dossier recup l'executable le plus probable d'etre le bon
@@ -89,8 +90,10 @@ namespace Modele
                 Nom = Path.GetFileName(Dossier);
                 string[] NomExecutables = Directory.GetFiles(Dossier, "*.exe", SearchOption.AllDirectories); //recup tout les .exe dans tout les sous-dossier
                 Executable = Filter(NomExecutables, Nom, Launcher); //filtrage
-                Jeux.Add(new Jeu(Nom, Dossier, Executable, Launcher));//ajout
+                Temp.Add(new Jeu(Nom, Dossier, Executable, Launcher));//ajout
             }
+            Temp.Sort();
+            Jeux.AddRange(Temp);
         }
 
         private static Jeu SearchForExecutables(string Dossier, LauncherName Launcher = LauncherName.Autre)
@@ -103,8 +106,9 @@ namespace Modele
             return new Jeu(Nom, Dossier, Executable, Launcher);
         }
 
-        private static void SearchForSteamExecutables(IList<Jeu> Jeux, List<string> Dossiers)
+        private static void SearchForSteamExecutables(List<Jeu> Jeux, IList<string> Dossiers)
         {
+            List<Jeu> Temp = new List<Jeu>();
             string Nom = "";
             string FolderName = "";
             List<string> SteamAppsVisited = new List<string>();
@@ -138,7 +142,7 @@ namespace Modele
                             {
                                 Jeu Jeu = SearchForExecutables(FolderName, LauncherName.Steam);
                                 Jeu.Nom = Nom;
-                                Jeux.Add(Jeu);
+                                Temp.Add(Jeu);
 
                             }
                         }
@@ -146,10 +150,13 @@ namespace Modele
                     SteamAppsVisited.Add(PathToSteamApps);
                 }
             }
+            Temp.Sort();
+            Jeux.AddRange(Temp);
         }
 
-        private static void SearchForEpicExecutables(IList<Jeu> Jeux)
+        private static void SearchForEpicExecutables(List<Jeu> Jeux)
         {
+            List<Jeu> Temp = new List<Jeu>();
             string Nom = "";
             string Executable = "";
             string Dossier = "";
@@ -193,9 +200,11 @@ namespace Modele
                         string[] NomExecutables = Directory.GetFiles(Dossier, "*.exe", SearchOption.AllDirectories); //recup tout les .exe dans tout les sous-dossier
                         Executable = Filter(NomExecutables, Nom); //filtrage
                     }
-                    Jeux.Add(new Jeu(Nom, Dossier, Executable, LauncherName.EpicGames));//ajout
+                    Temp.Add(new Jeu(Nom, Dossier, Executable, LauncherName.EpicGames));//ajout
                 }
             }
+            Temp.Sort();
+            Jeux.AddRange(Temp);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace DataManager
 {
     public abstract class Loader
     {
-        private string Path;
+        protected string Path;
         public Loader(string Path)
         {
             this.Path = Path;

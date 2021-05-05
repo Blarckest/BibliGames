@@ -111,10 +111,7 @@ namespace Modele
                 }
             }
         }
-        private void GetSave()
-        {
 
-        }
         private void GetGame()
         {
             var res = SearchForGameDirectory.GetAllGameDirectory();
@@ -123,10 +120,6 @@ namespace Modele
                 //res.Add(Launcher.Autre, AutoSearchForGameDirectory.GetGameDirectoryFromPaths(Dossiers));
             }
             SearchForExecutableAndName.GetExecutableAndNameFromGameDirectory(res);
-        }
-        private void GetInfo(Jeu Jeu)
-        {
-
         }
 
         private void InsertGame(LauncherName Launcher, Jeu Jeu)
