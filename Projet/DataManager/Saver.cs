@@ -12,6 +12,6 @@ namespace DataManager
         {
             this.Path = Path;
         }
-        public abstract void Save(IList<Element> Elements);
+        public abstract void Save(IList<Element> Elements, IList<string> AdditionalFolder);
     }
 }

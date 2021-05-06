@@ -18,13 +18,29 @@ namespace Modele
         public static Dictionary<LauncherName, List<string>> GetAllGameDirectory()
         {
             Dictionary<LauncherName, List<string>> Dossiers = new Dictionary<LauncherName, List<string>>();
+            SearchEpicGames(Dossiers);
+            SearchOriginGames(Dossiers);
+            SearchRiotGames(Dossiers);
             SearchSteamGames(Dossiers);
             SearchUplayGames(Dossiers);
-            SearchEpicGames(Dossiers);
-            SearchRiotGames(Dossiers);
-            SearchOriginGames(Dossiers);
             return Dossiers;
         }
+
+        public static Dictionary<LauncherName, List<string>> GetAllGameDirectory(List<string> Paths)
+        {
+            Dictionary<LauncherName, List<string>> Dossiers = new Dictionary<LauncherName, List<string>>();
+            SearchEpicGames(Dossiers);
+            SearchOriginGames(Dossiers);
+            SearchRiotGames(Dossiers);
+            SearchSteamGames(Dossiers);
+            SearchUplayGames(Dossiers);
+            if (Paths!=null && Paths.Count!=0)
+            {
+                Dossiers.Add(LauncherName.Autre, GetGameDirectoryFromPaths(Paths.ToArray()));
+            }
+            return Dossiers;
+        }
+
         public static List<string> GetGameDirectoryFromPaths(string[] Paths)
         {
             List<string> Dossiers = new List<string>();
