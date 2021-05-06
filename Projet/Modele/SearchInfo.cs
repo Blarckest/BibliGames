@@ -51,6 +51,33 @@ namespace Modele
             return new Jeu(Nom,Dossier,Exec);
         }
 
+        private static string Translate(string Original)
+        {
+            Original = Original.Replace("\n", "\\n");
+            Original = Original.Replace("\"", "'");
+            Original = Original.Replace("”", "'");
+            Original = Original.Replace("“", "'");
+            WebRequest request = WebRequest.Create("https://api.pons.com/text-translation-web/v4/translate?locale=fr");
+            string postsourcedata = $"{{\"impressionId\":\"e69edd59-88af-47de-aba6-e40d065b838d\",\"sourceLanguage\":\"en\",\"targetLanguage\":\"fr\",\"text\":\"{Original}\"}}";
+            request.Method = "POST";
+            request.ContentType = "application/json; charset=UTF-8";
+            request.ContentLength = postsourcedata.Length;
+            //request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36";
+            Stream writeStream = request.GetRequestStream(); //recuperation du flux
+            Encoding encoding = new UTF8Encoding();
+            byte[] bytes = encoding.GetBytes(postsourcedata);
+            writeStream.Write(bytes, 0, bytes.Length); //envoie
+            writeStream.Close();
+            WebResponse response = request.GetResponse(); //recup de la reponse
+            Stream responseStream = response.GetResponseStream();
+            StreamReader readStream = new StreamReader(responseStream, Encoding.UTF8); //extraction de la reponse
+            string Page = readStream.ReadToEnd();
+            Page = Page.Substring(Page.IndexOf("text\":\"")+ "text\":\"".Length);
+            Page = Page.Substring(0, Page.IndexOf("\",\"links\":"));
+
+            return "";
+        }
+
         private static void ExtractGameInfoFromWeb(Jeu Jeu,bool NeedImage,bool NeedIcon,bool NeedDescription)
         {
             GoToGamePage(Jeu);
@@ -98,6 +125,7 @@ namespace Modele
             Texte = Texte.Substring(0,Texte.IndexOf("</p>\",\"websites\":"));
             Regex Reg = new Regex("<.?p>");
             Texte = Reg.Replace(Texte, string.Empty); //on supp toutes les balise de paragraphes
+            Texte = Translate(Texte);
             StreamWriter fichier = new StreamWriter(@$".\Ressources\Infojeux\{Jeu.Nom}\text.txt");
             fichier.WriteLine(Texte);
             fichier.Close();

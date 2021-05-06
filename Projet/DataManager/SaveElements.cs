@@ -11,7 +11,7 @@ namespace DataManager
 {
     public class SaveElements : Saver
     {
-        public SaveElements(string Path) : base(Path)
+        public SaveElements(string Folder) : base(Folder)
         {
            
         }
@@ -28,7 +28,7 @@ namespace DataManager
             Fichier.Add(new XElement("Launchers", Launchers));
             XmlWriterSettings Settings = new XmlWriterSettings();
             Settings.Indent = true;
-            TextWriter TextWriter = File.CreateText($"{Path}/LauncherInfo.xml");
+            TextWriter TextWriter = File.CreateText($"{Folder}/LauncherInfo.xml");
             XmlWriter Writer = XmlWriter.Create(TextWriter, Settings);
             Fichier.Save(Writer);
 
@@ -47,16 +47,21 @@ namespace DataManager
 
             Fichier.Add(new XElement("Launchers", Launchers));
 
-            TextWriter = File.CreateText($"{Path}/GamesInfo.xml");
+            TextWriter = File.CreateText($"{Folder}/GamesInfo.xml");
             Writer = XmlWriter.Create(TextWriter, Settings);
             Fichier.Save(Writer);
 
-            TextWriter FichierAdditionalPaths = new StreamWriter($"{Path}/AdditionalFolder.txt");
+            TextWriter FichierAdditionalPaths = new StreamWriter($"{Folder}/AdditionalFolder.txt");
             foreach (string Path in AdditionalFolder)
             {
                 FichierAdditionalPaths.WriteLine(Path);
             }
             FichierAdditionalPaths.Close();
+        }
+
+        public override void Save(Manager Manager)
+        {
+            Save(Manager.Elements, Manager.Dossier);
         }
     }
 }

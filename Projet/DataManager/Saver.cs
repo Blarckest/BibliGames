@@ -7,11 +7,12 @@ namespace DataManager
 {
     public abstract class Saver
     {
-        protected string Path;
-        public Saver(string Path)
+        protected string Folder;
+        public Saver(string Folder)
         {
-            this.Path = Path;
+            this.Folder = Folder;
         }
+        public abstract void Save(Manager Manager);
         public abstract void Save(IList<Element> Elements, IList<string> AdditionalFolder);
     }
 }
