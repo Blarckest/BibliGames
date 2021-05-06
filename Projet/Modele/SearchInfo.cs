@@ -25,23 +25,22 @@ namespace Modele
         private static WebClient WebClient = new WebClient();
         public static void SetInfo(Jeu Jeu)
         {
-                      
-            bool Image=false, Icone=false, Description=false;
+            bool NeedImage=false, NeedIcone=false, NeedDescription=false;
             CreateFolderStructure(Jeu);
-            if (!File.Exists(@$".\Ressources\InfoJeux\{Jeu.Nom}\image.jpg"))
+            if (!File.Exists(@$".\Ressources\InfoJeux\{Jeu.Nom}\image.jpg") || new FileInfo(@$".\Ressources\InfoJeux\{Jeu.Nom}\image.jpg").Length==0)
             {
-                Image = true;
+                NeedImage = true;
             }
-            if(!File.Exists(@$".\Ressources\InfoJeux\{Jeu.Nom}\icon.jpg"))
+            if(!File.Exists(@$".\Ressources\InfoJeux\{Jeu.Nom}\icon.jpg") || new FileInfo(@$".\Ressources\InfoJeux\{Jeu.Nom}\icon.jpg").Length == 0)
             {
-                Icone = true;
+                NeedIcone = true;
             }
-            if(!File.Exists(@$".\Ressources\InfoJeux\{Jeu.Nom}\text.txt"))
+            if(!File.Exists(@$".\Ressources\InfoJeux\{Jeu.Nom}\text.txt") || new FileInfo(@$".\Ressources\InfoJeux\{Jeu.Nom}\text.txt").Length == 0)
             {
-                Description = true;
+                NeedDescription = true;
             }
 
-            ExtractGameInfoFromWeb(Jeu, Image, Icone, Description);
+            ExtractGameInfoFromWeb(Jeu, NeedImage, NeedIcone, NeedDescription);
         }
 
         public static Jeu ExtractGameInfoFromExec(string Exec)
