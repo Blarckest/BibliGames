@@ -56,13 +56,14 @@ namespace Modele
             Original = Original.Replace("\n", "\\n");
             Original = Original.Replace("\"", "'");
             Original = Original.Replace("”", "'");
-            Original = Original.Replace("“", "'");
+            Original = Original.Replace("“", "'"); //le serveur ne supporte pas le caracteres echapé
             WebRequest request = WebRequest.Create("https://api.pons.com/text-translation-web/v4/translate?locale=fr");
-            string postsourcedata = $"{{\"impressionId\":\"e69edd59-88af-47de-aba6-e40d065b838d\",\"sourceLanguage\":\"en\",\"targetLanguage\":\"fr\",\"text\":\"{Original}\"}}";
-            request.Method = "POST";
-            request.ContentType = "application/json; charset=UTF-8";
-            request.ContentLength = postsourcedata.Length;
-            //request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36";
+            string postsourcedata = $"{{\"impressionId\":\"e69edd59-88af-47de-aba6-e40d065b838d\",\"sourceLanguage\":\"en\",\"targetLanguage\":\"fr\",\"text\":\"{Original}\"}}"; //requete post a envoyer
+            request.Method = "POST"; //parametre de la requete
+            request.ContentType = "application/json; charset=UTF-8"; //parametre de la requete
+            request.ContentLength = postsourcedata.Length;  //parametre de la requete
+
+
             Stream writeStream = request.GetRequestStream(); //recuperation du flux
             Encoding encoding = new UTF8Encoding();
             byte[] bytes = encoding.GetBytes(postsourcedata);
@@ -72,10 +73,11 @@ namespace Modele
             Stream responseStream = response.GetResponseStream();
             StreamReader readStream = new StreamReader(responseStream, Encoding.UTF8); //extraction de la reponse
             string Page = readStream.ReadToEnd();
-            Page = Page.Substring(Page.IndexOf("text\":\"")+ "text\":\"".Length);
+            Page = Page.Substring(Page.IndexOf("text\":\"")+ "text\":\"".Length); //exctraction de la partie qui nous interesse
             Page = Page.Substring(0, Page.IndexOf("\",\"links\":"));
-
-            return "";
+            Page = Page.Replace("\\n ", "\n"); //on remet les saut de lignes
+            Page = Page.Replace("\\n", "\n");
+            return Page;
         }
 
         private static void ExtractGameInfoFromWeb(Jeu Jeu,bool NeedImage,bool NeedIcon,bool NeedDescription)
