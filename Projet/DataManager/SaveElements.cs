@@ -61,7 +61,7 @@ namespace DataManager
 
         public override void Save(Manager Manager)
         {
-            Save(Manager.Elements, Manager.Dossier);
+            Save(Manager.Elements, Manager.Dossiers);
         }
     }
 }

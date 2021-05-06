@@ -10,7 +10,7 @@ namespace Modele
     public class Manager
     {
         public IList<Element> Elements { get; set; }
-        private IList<string> Dossiers { get; set; }
+        public IList<string> Dossiers { get; private set; }
         public Element ElementSelected { get; set; }
         public string Pattern { get; set; } = null;
         public IList<Element> Affichage { get; private set; }
