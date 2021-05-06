@@ -6,10 +6,10 @@ namespace DataManager
 {
     public abstract class Loader
     {
-        protected string Path;
-        public Loader(string Path)
+        protected string Folder;
+        public Loader(string Folder)
         {
-            this.Path = Path;
+            this.Folder = Folder;
         }
         public abstract IList<Element> Load();
     }

@@ -11,14 +11,14 @@ namespace DataManager
 {
     public class LoadElements : Loader
     {
-        public LoadElements(string Path) : base(Path)
+        public LoadElements(string Folder) : base(Folder)
         {
         }
 
         public override IList<Element> Load()
         {
             bool NeedRecupGames = true;
-            XDocument LaunchersFile = XDocument.Load($"{Path}/LauncherInfo.xml");
+            XDocument LaunchersFile = XDocument.Load($"{Folder}/LauncherInfo.xml");
             List<Element> Elements = new List<Element>();
             var Launchers = LaunchersFile.Descendants("Launcher")
                                   .Select(e => new Launcher()
@@ -27,7 +27,7 @@ namespace DataManager
                                       NbJeux = int.Parse(e.Element("NbJeux").Value)
                                   })
                                   .ToList();
-            XDocument GamesFile = XDocument.Load($"{Path}/GamesInfo.xml");
+            XDocument GamesFile = XDocument.Load($"{Folder}/GamesInfo.xml");
             var Games=GamesFile.Descendants("Jeu")
                                .Select(e=>new Jeu(                               
                                     e.Attribute("Nom").Value,
@@ -42,7 +42,7 @@ namespace DataManager
 
 
 
-            string[] AdditionalFolder= System.IO.File.ReadAllLines($"{Path}/AdditionalFolder.txt"); //on recupere les dossier de recherche
+            string[] AdditionalFolder= System.IO.File.ReadAllLines($"{Folder}/AdditionalFolder.txt"); //on recupere les dossier de recherche
             var DirectoryDetected = SearchForGameDirectory.GetAllGameDirectory(AdditionalFolder.ToList()); //get les directory qu'est censer avoir la sauvegarde
            
 
