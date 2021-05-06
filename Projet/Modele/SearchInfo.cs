@@ -119,7 +119,7 @@ namespace Modele
             Texte = Regex.Unescape(Texte);
             Texte = Texte.Substring(Texte.IndexOf("<p>"));
             Texte = Texte.Substring(0,Texte.IndexOf("</p>&"));
-            Regex Reg = new Regex("<\?p>");
+            Regex Reg = new Regex("<p>");
             Texte = Reg.Replace(Texte, string.Empty);
             StreamWriter fichier = new StreamWriter(@$".\Ressources\Infojeux\{Jeu.Nom}\text.txt");
             fichier.WriteLine(Texte);
