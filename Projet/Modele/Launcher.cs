@@ -7,7 +7,22 @@ namespace Modele
 {
     public class Launcher:Element
     {
-        public int NbJeux { get; set; } = 0;
+        private int nbjeux = 0;
+        public int NbJeux
+        {
+            get { return nbjeux; }
+            set
+            {
+                if (value < 0)
+                {
+                    nbjeux = 0;
+                }
+                else
+                {
+                    nbjeux = value;
+                }
+            }
+        }
         public Launcher(LauncherName Name=LauncherName.Autre):base(Name.ToString())
         {
 
