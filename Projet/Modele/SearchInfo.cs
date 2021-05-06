@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using System.Net;
-using OpenQA.Selenium.Support.UI;
 using System.Threading;
 using HtmlAgilityPack;
 using System.Text.RegularExpressions;
@@ -15,8 +12,6 @@ namespace Modele
 {
     public class SearchInfo
     {
-        //on pourrait tenter d'aller directement a la page du jeux en allant https://www.igdb.com/games/+(jeux en minuscule et espace remplacer par '-' tt les caracteres speciaux sont supprimé)
-
         ///exec
         ///     ressources
         ///         infojeux
@@ -73,9 +68,9 @@ namespace Modele
             }
             
         }
-        private static string ReplaceName(Jeu Jeu) //faudra peutetre changer la regex
+        private static string ReplaceName(Jeu Jeu)
         {
-            //   return Uri.EscapeDataString(Jeu.Nom).Replace("%20","+");
+            //aller directement a la page du jeux en allant https://www.igdb.com/games/+(jeux en minuscule et espace remplacer par '-' tt les caracteres speciaux sont supprimé)
             string Nom=Jeu.Nom;
             Nom = Nom.ToLower();
             Regex Reg = new Regex("[*'\",_&#^@]");
@@ -92,35 +87,17 @@ namespace Modele
             string texte = doc.Text;
             texte = texte.Replace("><", ">\n<");
             LinesOfTheWebPage = texte.Split("\n");
-            //Driver.Url = @$"https://www.igdb.com/search?type=1&q={ReplaceName(Jeu)}";
-            //Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
-            //Driver.FindElement(By.XPath("/html/body/div[3]/main/div[2]/div[2]/div[1]/div/div[1]/a/div/div/img")).Click();
         }
 
         private static string ExtractDescription(Jeu Jeu)
         {
-            //try
-            //{
-            //    IWebElement desc = Driver.FindElement(By.XPath("/html/body/div[3]/main/div[2]/div[1]/div/div[2]/div[2]/div[2]/div[2]/div[1]"));
-            //    desc.Click();
-            //    string Res = desc.Text;
-            //    StreamWriter fichier = new StreamWriter(@$".\Ressources\Infojeux\{Jeu.Nom}\text.txt");
-            //    fichier.WriteLine(Res);
-            //    fichier.Close();
-            //    return Res;
-            //}
-            //catch (Exception)
-            //{
-
-            //    return "";
-            //}
-
-            string Texte = LinesOfTheWebPage.Where(l => l.Contains("<div data-react-class=\"GamePageHeader\" data-react-props")).First();
-            Texte = Regex.Unescape(Texte);
+            string Texte = LinesOfTheWebPage.Where(l => l.Contains("<div data-react-class=\"GamePageHeader\" data-react-props")).First(); //get la ligne qui nous interesse
+            Texte = System.Web.HttpUtility.HtmlDecode(Texte);  //transforme les caractere speciaux au html en ascii
+            Texte = Regex.Unescape(Texte); //on met les \003u en < et autre 
             Texte = Texte.Substring(Texte.IndexOf("<p>"));
-            Texte = Texte.Substring(0,Texte.IndexOf("</p>&"));
-            Regex Reg = new Regex("<p>");
-            Texte = Reg.Replace(Texte, string.Empty);
+            Texte = Texte.Substring(0,Texte.IndexOf("</p>\",\"websites\":"));
+            Regex Reg = new Regex("<.?p>");
+            Texte = Reg.Replace(Texte, string.Empty); //on supp toutes les balise de paragraphes
             StreamWriter fichier = new StreamWriter(@$".\Ressources\Infojeux\{Jeu.Nom}\text.txt");
             fichier.WriteLine(Texte);
             fichier.Close();
@@ -129,12 +106,11 @@ namespace Modele
 
         private static bool ExctractImage(Jeu Jeu)
         {
-            var Images = LinesOfTheWebPage.Where(l => l.Contains("<a href=\"https://images.igdb.com/igdb/image/upload/t_original/")).ToList();            
-            string Image = Images[Rand.Next(Images.Count())];
+            var Images = LinesOfTheWebPage.Where(l => l.Contains("<a href=\"https://images.igdb.com/igdb/image/upload/t_original/")).ToList();  //get les lignes qui nous interesse          
+            string Image = Images[Rand.Next(Images.Count())]; //on en choisis une au hasard
             Image = Image.Substring(Image.IndexOf("http"));
             Image = Image.Substring(0, Image.IndexOf(".jpg") + 4);
-            WebClient WebClient = new WebClient();
-            WebClient.DownloadFile(new Uri(Image), @$".\Ressources\InfoJeux\{Jeu.Nom}\image.jpg");
+            WebClient.DownloadFile(new Uri(Image), @$".\Ressources\InfoJeux\{Jeu.Nom}\image.jpg"); //on telecharge
             return true; //a revoir peutetre remettrre le try-catch
         }
 
@@ -143,7 +119,6 @@ namespace Modele
             string Icon = LinesOfTheWebPage.Where(l => l.Contains("<meta content=\"https://images.igdb.com/igdb/image/upload/t_cover_big/")).First();
             Icon = Icon.Substring(Icon.IndexOf("http"));
             Icon = Icon.Substring(0, Icon.IndexOf(".jpg") + 4);
-            WebClient WebClient = new WebClient();
             WebClient.DownloadFile(new Uri(Icon), @$".\Ressources\InfoJeux\{Jeu.Nom}\icon.jpg");
             return true; //a revoir peutetre remettrre le try-catch
         }
@@ -154,24 +129,3 @@ namespace Modele
         }
     }
 }
-
-
-/*
- * faire les remplacement en consequences 
- *          HtmlWeb web = new HtmlWeb();
-            HtmlDocument doc = web.Load("https://www.igdb.com/games/buildings-have-feelings-too");
-            string texte = doc.Text;
-            texte=texte.Replace("><", ">\n<");
-            string[] lines = texte.Split("\n");
-            var icon = lines.Where(l => l.Contains("<meta content=\"https://images.igdb.com/igdb/image/upload/t_cover_big/")).First();
-            icon = icon.Substring(icon.IndexOf("http"));
-            icon = icon.Substring(0, icon.IndexOf(".jpg")+4);
-            var Images = lines.Where(l => l.Contains("<a href=\"https://images.igdb.com/igdb/image/upload/t_original/")).ToList();
-            var rand = new Random();
-            var Image = Images[rand.Next(Images.Count())];
-            Image = Image.Substring(Image.IndexOf("http"));
-            Image = Image.Substring(0, Image.IndexOf(".jpg") + 4);
-            var Texte = lines.Where(l => l.Contains("<div data-react-class=\"GamePageHeader\" data-react-props")).First();
-            Texte = Texte.Substring(Texte.IndexOf("\\u003cp\\u003e") + "\\u003cp\\u003e".Length);
-            Texte = Texte.Substring(0, Texte.IndexOf("\\u003c/p\\u003e"));
-*/
