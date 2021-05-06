@@ -103,5 +103,10 @@ namespace DataManager
 
             return Elements;
         }
+
+        public override IList<string> LoadAdditionalPath()
+        {
+            return File.ReadAllLines($"{Folder}/AdditionalFolder.txt"); //on recupere les dossier de recherche
+        }
     }
 }

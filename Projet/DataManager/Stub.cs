@@ -67,5 +67,10 @@ namespace DataManager
         {
             return Jeux;
         }
+
+        public override IList<string> LoadAdditionalPath()
+        {
+            return new List<string>{ };
+        }
     }
 }
