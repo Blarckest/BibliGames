@@ -78,11 +78,11 @@ namespace Modele
             //   return Uri.EscapeDataString(Jeu.Nom).Replace("%20","+");
             string Nom=Jeu.Nom;
             Nom = Nom.ToLower();
-            Regex reg = new Regex("[*'\",_&#^@]");
-            Nom = reg.Replace(Nom, string.Empty);
+            Regex Reg = new Regex("[*'\",_&#^@]");
+            Nom = Reg.Replace(Nom, string.Empty);
 
-            Regex reg1 = new Regex("[ ]");
-            Nom = reg1.Replace(Nom, "-");
+            Reg = new Regex("[ ]");
+            Nom = Reg.Replace(Nom, "-");
             return Nom;
         }
 
@@ -114,11 +114,13 @@ namespace Modele
 
             //    return "";
             //}
+
             string Texte = LinesOfTheWebPage.Where(l => l.Contains("<div data-react-class=\"GamePageHeader\" data-react-props")).First();
-            Texte = Texte.Substring(Texte.IndexOf("\\u003cp\\u003e") + "\\u003cp\\u003e".Length);
-            Texte.Replace("\\u003cp\\u003e", "");
-            Texte.Replace("\\u003c/p\\u003e", "");
-            Texte = Texte.Substring(0, Texte.IndexOf("\\u003c/p\\u003e"));
+            Texte = Regex.Unescape(Texte);
+            Texte = Texte.Substring(Texte.IndexOf("<p>"));
+            Texte = Texte.Substring(0,Texte.IndexOf("</p>&"));
+            Regex Reg = new Regex("<\?p>");
+            Texte = Reg.Replace(Texte, string.Empty);
             StreamWriter fichier = new StreamWriter(@$".\Ressources\Infojeux\{Jeu.Nom}\text.txt");
             fichier.WriteLine(Texte);
             fichier.Close();
