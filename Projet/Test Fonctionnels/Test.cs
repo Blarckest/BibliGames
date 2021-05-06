@@ -7,11 +7,8 @@ namespace Test_Fonctionnels
 {
     class Test
     {
-        public static void TestElements()
+        public static void TestAfficherElements(Manager Modele)
         {
-            Manager Modele = new Manager();
-            Loader Loader = new Stub("");
-            Modele.Elements = Loader.Load();
             foreach (Element element in Modele.Elements)
             {
                 Console.WriteLine(element);
@@ -61,11 +58,27 @@ namespace Test_Fonctionnels
         {
             string path = "./ressource/sauvegarde";
             Saver save = new SaveElements(path);
+            Loader Loader = new Stub("");
+            IList<Element> Elements = Loader.Load();
+            IList<string> Add = new List<string>();
+            Add.Add("zefzqf");
+            save.Save(Elements, Add);
+        }
+
+        private static void TestLoad()
+        {
+            string path = "./ressource/sauvegarde";
+            Loader Loader = new LoadElements(path);
+            Manager Manager = new Manager() { Elements = Loader.Load(),
+                Dossiers = Loader.LoadAdditionalPath()
+            };
+            TestAfficherElements(Manager);
         }
         static void Main(string[] args)
         {
             //TestExecutable();
-            TestSave();
+            //TestSave();
+            TestLoad();
         }
     }
 }
