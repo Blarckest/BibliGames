@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Modele
 {
-    class Manager
+    public class Manager
     {
         public IList<Element> Elements { get; set; }
         private IList<string> Dossiers { get; set; }

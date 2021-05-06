@@ -58,19 +58,18 @@ namespace Modele
 
         private static void ExtractGameInfoFromWeb(Jeu Jeu,bool NeedImage,bool NeedIcon,bool NeedDescription)
         {
-            IWebDriver Driver = new ChromeDriver();
-            GoToGamePage(Driver, Jeu);
-            if(NeedImage && ExctractImage(Driver, Jeu))
+            GoToGamePage(Jeu);
+            if(NeedImage && ExctractImage(Jeu))
             {
                 Jeu.Image = @$".\Ressources\InfoJeux\{Jeu.Nom}\image.jpg";
             }
-            if(NeedIcon && ExctractIcon(Driver, Jeu,!NeedImage))
+            if(NeedIcon && ExctractIcon(Jeu))
             {
                 Jeu.Icone = @$".\Ressources\InfoJeux\{Jeu.Nom}\icon.jpg";
             }
             if (NeedDescription)
             {
-                Jeu.Description = ExtractDescription(Driver, Jeu);
+                Jeu.Description = ExtractDescription(Jeu);
             }
             
         }
@@ -78,26 +77,27 @@ namespace Modele
         {
             //   return Uri.EscapeDataString(Jeu.Nom).Replace("%20","+");
             string Nom=Jeu.Nom;
+            Nom = Nom.ToLower();
             Regex reg = new Regex("[*'\",_&#^@]");
             Nom = reg.Replace(Nom, string.Empty);
 
             Regex reg1 = new Regex("[ ]");
-            Nom = reg.Replace(Nom, "-");
+            Nom = reg1.Replace(Nom, "-");
             return Nom;
         }
 
-        private static void GoToGamePage(IWebDriver Driver,Jeu Jeu)
+        private static void GoToGamePage(Jeu Jeu)
         {
             HtmlDocument doc = Web.Load(@$"https://www.igdb.com/games/{ReplaceName(Jeu)}");
             string texte = doc.Text;
             texte = texte.Replace("><", ">\n<");
-            string[] LinesOfTheWebPage = texte.Split("\n");
+            LinesOfTheWebPage = texte.Split("\n");
             //Driver.Url = @$"https://www.igdb.com/search?type=1&q={ReplaceName(Jeu)}";
             //Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
             //Driver.FindElement(By.XPath("/html/body/div[3]/main/div[2]/div[2]/div[1]/div/div[1]/a/div/div/img")).Click();
         }
 
-        private static string ExtractDescription(IWebDriver Driver, Jeu Jeu)
+        private static string ExtractDescription(Jeu Jeu)
         {
             //try
             //{
@@ -116,6 +116,8 @@ namespace Modele
             //}
             string Texte = LinesOfTheWebPage.Where(l => l.Contains("<div data-react-class=\"GamePageHeader\" data-react-props")).First();
             Texte = Texte.Substring(Texte.IndexOf("\\u003cp\\u003e") + "\\u003cp\\u003e".Length);
+            Texte.Replace("\\u003cp\\u003e", "");
+            Texte.Replace("\\u003c/p\\u003e", "");
             Texte = Texte.Substring(0, Texte.IndexOf("\\u003c/p\\u003e"));
             StreamWriter fichier = new StreamWriter(@$".\Ressources\Infojeux\{Jeu.Nom}\text.txt");
             fichier.WriteLine(Texte);
@@ -123,24 +125,8 @@ namespace Modele
             return Texte;
         }
 
-        private static bool ExctractImage(IWebDriver Driver,Jeu Jeu)
+        private static bool ExctractImage(Jeu Jeu)
         {
-            //try
-            //{
-            //    Thread.Sleep(10000);
-            //    IWebElement Image = Driver.FindElement(By.XPath("/html/body/div[3]/main/div[2]/div[1]/div/div[1]/div"));
-            //    string Style = Image.GetAttribute("style");
-            //    Style = Style.Substring(Style.IndexOf("http"), (Style.Length-3)- Style.IndexOf("http"));
-            //    Style = Style.Replace("t_screenshot_big", "t_original");
-            //    WebClient WebClient = new WebClient();
-            //    WebClient.DownloadFile(new Uri(Style), @$".\Ressources\InfoJeux\{Jeu.Nom}\image.jpg");
-            //    return true;
-            //}
-            //catch (Exception)
-            //{
-
-            //    return false;
-            //}
             var Images = LinesOfTheWebPage.Where(l => l.Contains("<a href=\"https://images.igdb.com/igdb/image/upload/t_original/")).ToList();            
             string Image = Images[Rand.Next(Images.Count())];
             Image = Image.Substring(Image.IndexOf("http"));
@@ -150,25 +136,8 @@ namespace Modele
             return true; //a revoir peutetre remettrre le try-catch
         }
 
-        private static bool ExctractIcon(IWebDriver Driver, Jeu Jeu, bool NeedAttente)
+        private static bool ExctractIcon(Jeu Jeu)
         {
-            //try
-            //{
-            //    if (NeedAttente)
-            //    {
-            //        Thread.Sleep(10000);
-            //    }
-            //    IWebElement Icon = Driver.FindElement(By.XPath("/html/body/div[3]/main/div[2]/div[1]/div/div[2]/div[1]/img"));
-            //    string Chemin = Icon.GetAttribute("src");
-            //    WebClient WebClient = new WebClient();
-            //    WebClient.DownloadFile(new Uri(Chemin), @$".\Ressources\InfoJeux\{Jeu.Nom}\icon.jpg");
-            //    return true;
-            //}
-            //catch (Exception)
-            //{
-
-            //    return false;
-            //}
             string Icon = LinesOfTheWebPage.Where(l => l.Contains("<meta content=\"https://images.igdb.com/igdb/image/upload/t_cover_big/")).First();
             Icon = Icon.Substring(Icon.IndexOf("http"));
             Icon = Icon.Substring(0, Icon.IndexOf(".jpg") + 4);

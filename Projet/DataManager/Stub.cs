@@ -8,7 +8,7 @@ namespace DataManager
 {
     public class Stub :Loader
     {
-        public List<Element> Jeux { get; set; }
+        public List<Element> Jeux { get; set; } = new List<Element>();
         public Stub(string Path=""):base(Path)
         {
             Directory.CreateDirectory("./Stub/Game1/Infos");
