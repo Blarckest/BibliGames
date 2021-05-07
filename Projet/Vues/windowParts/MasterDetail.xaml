@@ -13,19 +13,19 @@
         </Grid.ColumnDefinitions>
         <ListView Grid.Column="0" BorderThickness="0">
             <ListViewItem>
-                <User_Controls:LuncherUC />
+                <User_Controls:LauncherUC />
             </ListViewItem>
             <ListViewItem>
-                <User_Controls:LuncherUC />
+                <User_Controls:LauncherUC />
             </ListViewItem>
             <ListViewItem>
-                <User_Controls:LuncherUC />
+                <User_Controls:LauncherUC />
             </ListViewItem>
             <ListViewItem>
-                <User_Controls:LuncherUC />
+                <User_Controls:LauncherUC />
             </ListViewItem>
             <ListViewItem>
-                <User_Controls:LuncherUC />
+                <User_Controls:LauncherUC />
             </ListViewItem>
         </ListView>
         <GridSplitter Width="2" VerticalAlignment="Stretch" ShowsPreview="True" ResizeBehavior="PreviousAndNext"/>
