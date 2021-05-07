@@ -97,7 +97,7 @@ namespace Modele
             Affichage = Elements;
             Recherche();
         }
-        //effectue juste un suppression des elements non désiré (correspondant pas au pattern)
+        //effectue juste une suppression des elements non désiré (correspondant pas au pattern)
         public void Recherche()
         {
             if (Pattern != null)
