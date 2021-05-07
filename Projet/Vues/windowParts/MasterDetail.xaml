@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Vues.windowParts"
+             xmlns:Modele="clr-namespace:Modele;assembly=Modele"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -11,14 +12,17 @@
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition MinWidth="300"/>
         </Grid.ColumnDefinitions>
-        <ListView Grid.Column="0" BorderThickness="0" ItemsSource="{Binding Affichage}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
+        <ListView x:Name="ListeJeu" Grid.Column="0" BorderThickness="0" ItemsSource="{Binding Affichage}">
+            <ListView.Resources>
+                <DataTemplate DataType="{x:Type Modele:Jeu}">
+                    <User_Controls:VignetteJeu />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type Modele:Launcher}">
                     <User_Controls:LauncherUC />
                 </DataTemplate>
-            </ListView.ItemTemplate>
+            </ListView.Resources>
         </ListView>
         <GridSplitter Width="2" VerticalAlignment="Stretch" ShowsPreview="True" ResizeBehavior="PreviousAndNext"/>
-        <User_Controls:Details Grid.Column="1"/>
+        <User_Controls:Details DataContext="{Binding SelectedItem, ElementName=ListeJeu}" Grid.Column="1"/>
     </Grid>
 </UserControl>

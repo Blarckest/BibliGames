@@ -40,7 +40,10 @@ namespace Modele
                 NeedDescription = true;
             }
 
-            ExtractGameInfoFromWeb(Jeu, NeedImage, NeedIcone, NeedDescription);
+            if (NeedDescription||NeedIcone||NeedDescription)
+            {
+                ExtractGameInfoFromWeb(Jeu, NeedImage, NeedIcone, NeedDescription);
+            }
         }
 
         public static Jeu ExtractGameInfoFromExec(string Exec)
@@ -52,7 +55,7 @@ namespace Modele
 
         private static string Translate(string Original)
         {
-            Original = Original.Replace("\n", "\\n");
+            Original = Original.Replace("\n", "\\n ");
             Original = Original.Replace("\"", "'");
             Original = Original.Replace("”", "'");
             Original = Original.Replace("“", "'"); //le serveur ne supporte pas le caracteres echapé
@@ -103,7 +106,7 @@ namespace Modele
             //aller directement a la page du jeux en allant https://www.igdb.com/games/+(jeux en minuscule et espace remplacer par '-' tt les caracteres speciaux sont supprimé)
             string Nom=Jeu.Nom;
             Nom = Nom.ToLower();
-            Regex Reg = new Regex("[*'\",_&#^@]");
+            Regex Reg = new Regex("[*':\",_&#^@]");
             Nom = Reg.Replace(Nom, string.Empty);
 
             Reg = new Regex("[ ]");
@@ -137,10 +140,10 @@ namespace Modele
                 Texte = Regex.Unescape(Texte); //on met les \003u en < et autre 
                 Texte = Texte.Substring(Texte.IndexOf("<p>"));
                 Texte = Texte.Substring(0, Texte.IndexOf("</p>\",\"websites\":"));
-                Regex Reg = new Regex("<.?p>");
-                Texte = Reg.Replace(Texte, string.Empty); //on supp toutes les balise de paragraphes
+                Regex Reg = new Regex("<.?.?..?>");
+                Texte = Reg.Replace(Texte, string.Empty); //on supp toutes les balise de paragraphes et break
                 Texte = Translate(Texte);
-                StreamWriter fichier = new StreamWriter(@$".\Ressources\Infojeux\{Jeu.Nom}\text.txt");
+                StreamWriter fichier = new StreamWriter(@$".\Ressources\Infojeux\{MakeNameCompatibleWithWindows(Jeu.Nom)}\text.txt");
                 fichier.WriteLine(Texte);
                 fichier.Close();
                 return Texte;
@@ -160,7 +163,7 @@ namespace Modele
                 string Image = Images[Rand.Next(Images.Count())]; //on en choisis une au hasard
                 Image = Image.Substring(Image.IndexOf("http"));
                 Image = Image.Substring(0, Image.IndexOf(".jpg") + 4);
-                WebClient.DownloadFile(new Uri(Image), @$".\Ressources\InfoJeux\{Jeu.Nom}\image.jpg"); //on telecharge
+                WebClient.DownloadFile(new Uri(Image), @$".\Ressources\InfoJeux\{MakeNameCompatibleWithWindows(Jeu.Nom)}\image.jpg"); //on telecharge
                 return true;
             }
             catch (Exception)
@@ -177,7 +180,7 @@ namespace Modele
                 string Icon = LinesOfTheWebPage.Where(l => l.Contains("<meta content=\"https://images.igdb.com/igdb/image/upload/t_cover_big/")).First();
                 Icon = Icon.Substring(Icon.IndexOf("http"));
                 Icon = Icon.Substring(0, Icon.IndexOf(".jpg") + 4);
-                WebClient.DownloadFile(new Uri(Icon), @$".\Ressources\InfoJeux\{Jeu.Nom}\icon.jpg");
+                WebClient.DownloadFile(new Uri(Icon), @$".\Ressources\InfoJeux\{MakeNameCompatibleWithWindows(Jeu.Nom)}\icon.jpg");
                 return true;
             }
             catch (Exception)
@@ -187,9 +190,17 @@ namespace Modele
             }
         }
 
+        private static string MakeNameCompatibleWithWindows(string Nom)
+        {
+            Regex Reg = new Regex("[<>:\"/\\|?*]"); //caractere interdit dans dossier windows
+            Nom = Reg.Replace(Nom, string.Empty);
+            return Nom;
+        }
+
         private static void CreateFolderStructure(Jeu Jeu)
         {
-            Directory.CreateDirectory(@$".\Ressources\Infojeux\{Jeu.Nom}");
+
+            Directory.CreateDirectory(@$".\Ressources\Infojeux\{MakeNameCompatibleWithWindows(Jeu.Nom)}");
         }
     }
 }

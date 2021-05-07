@@ -24,7 +24,7 @@ namespace Vues
     {
         public MainWindow()
         {
-            Loader Loader = new Stub();
+            Loader Loader = new LoadElements("Ressource/Sauvegarde");
             Manager manager = new Manager();
             manager.Elements = Loader.Load();
             manager.Dossiers = Loader.LoadAdditionalPath();
