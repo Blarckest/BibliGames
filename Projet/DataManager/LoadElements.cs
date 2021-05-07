@@ -18,73 +18,57 @@ namespace DataManager
         public override IList<Element> Load()
         {
             bool NeedRecupGames = true;
-            XDocument LaunchersFile = XDocument.Load($"{Folder}/LauncherInfo.xml");
-            List<Element> Elements = new List<Element>();
-            var Launchers = LaunchersFile.Descendants("Launcher")
-                                  .Select(e => new Launcher()
-                                  {
-                                      Nom = e.Attribute("Nom").Value,
-                                      NbJeux = int.Parse(e.Element("NbJeux").Value)
-                                  })
-                                  .ToList();
-            XDocument GamesFile = XDocument.Load($"{Folder}/GamesInfo.xml");
-            var Games=GamesFile.Descendants("Jeu")
-                               .Select(e=>new Jeu(                               
-                                    e.Attribute("Nom").Value,
-                                    e.Attribute("Dossier").Value,
-                                    e.Attribute("Exec").Value,
-                                    e.Attribute("Image").Value,
-                                    e.Attribute("Icone").Value,
-                                    e.Attribute("Note").Value,
-                                    e.Attribute("Description").Value,                                     
-                                    (LauncherName)Enum.Parse(typeof(LauncherName), e.Attribute("Launcher").Value)))
-                               .ToList();
-
-
-
-            string[] AdditionalFolder= System.IO.File.ReadAllLines($"{Folder}/AdditionalFolder.txt"); //on recupere les dossier de recherche
-            var DirectoryDetected = SearchForGameDirectory.GetAllGameDirectory(AdditionalFolder.ToList()); //get les directory qu'est censer avoir la sauvegarde
-           
-
-            if (Launchers.All(l => DirectoryDetected.Keys.Contains((LauncherName)Enum.Parse(typeof(LauncherName),l.Nom)))) //si on a bien tt les clé en rapport avec la sauvegarde
+            string[] AdditionalFolder;
+            List<Launcher> Launchers;
+            List<Jeu> Games;
+            List<Element> Elements=new List<Element>(); ;
+            Dictionary<LauncherName, List<string>> DirectoryDetected;
+            if (File.Exists($"{Folder}/LauncherInfo.xml") && File.Exists($"{Folder}/GamesInfo.xml") && File.Exists($"{Folder}/AdditionalFolder.txt") && new FileInfo($"{Folder}/LauncherInfo.xml").Length != 0) //si la sauvegarde existe et que les fichiers sont pas vide si AdditionalFolder.txt est vide c pas grave
             {
-                foreach (LauncherName Launcher in DirectoryDetected.Keys)
+                XDocument LaunchersFile = XDocument.Load($"{Folder}/LauncherInfo.xml");
+
+                Launchers = LaunchersFile.Descendants("Launcher")
+                                      .Select(e => new Launcher()
+                                      {
+                                          Nom = e.Attribute("Nom").Value,
+                                          NbJeux = int.Parse(e.Element("NbJeux").Value)
+                                      })
+                                      .ToList();
+
+                XDocument GamesFile = XDocument.Load($"{Folder}/GamesInfo.xml");
+
+                Games = GamesFile.Descendants("Jeu")
+                                   .Select(e => new Jeu(
+                                        e.Attribute("Nom").Value,
+                                        e.Element("Dossier").Value,
+                                        e.Element("Exec").Value,
+                                        e.Element("Image").Value,
+                                        e.Element("Icone").Value,
+                                        e.Element("Note").Value,
+                                        e.Element("Description").Value,
+                                        (LauncherName)Enum.Parse(typeof(LauncherName), e.Element("Launcher").Value)))
+                                   .ToList();
+
+
+
+                AdditionalFolder = System.IO.File.ReadAllLines($"{Folder}/AdditionalFolder.txt"); //on recupere les dossier de recherche
+                DirectoryDetected = SearchForGameDirectory.GetAllGameDirectory(AdditionalFolder.ToList()); //get les directory qu'est censer avoir la sauvegarde
+
+                if (Launchers.All(l => DirectoryDetected.Keys.Contains((LauncherName)Enum.Parse(typeof(LauncherName), l.Nom)))) //si on a bien tt les clé en rapport avec la sauvegarde
                 {
-                    List<string> ListeDossier;
-                    if (DirectoryDetected.TryGetValue(Launcher, out ListeDossier))
+                    foreach (LauncherName Launcher in DirectoryDetected.Keys)
                     {
-                        if (Games.Where(e=>e.Launcher==Launcher).All(e => ListeDossier.Contains(e.Dossier))) //on regarde si chaque jeu a son dossier dans les dossiers retourné par GetAllGameDirectory
+                        List<string> ListeDossier;
+                        if (DirectoryDetected.TryGetValue(Launcher, out ListeDossier))
                         {
-                            NeedRecupGames = false;
+                            if (Games.Where(e => e.Launcher == Launcher).All(e => ListeDossier.Contains(e.Dossier))) //on regarde si chaque jeu a son dossier dans les dossiers retourné par GetAllGameDirectory
+                            {
+                                NeedRecupGames = false;
+                            }
                         }
                     }
                 }
-            }
 
-
-            if (NeedRecupGames) //si on a besoin de recuperer les jeux
-            {
-                Games = SearchForExecutableAndName.GetExecutableAndNameFromGameDirectory(DirectoryDetected);
-                Launcher Actuel = new Launcher(Games[0].Launcher);
-                Elements.Add(Actuel);
-                for (int i = 0; i < Games.Count; i++)
-                {
-                    if (Games[i].Launcher.ToString()==Actuel.ToString()) //on est dans le meme launcher
-                    {
-                        Elements.Add(Games[i]);
-                        Actuel.NbJeux++;//on augmente le nb de jeu
-                    }
-                    else
-                    {
-                        Actuel = new Launcher(Games[i].Launcher); //on ajoute le launcher
-                        Elements.Add(Actuel);
-                        Elements.Add(Games[i]);
-                        Actuel.NbJeux++;//on augmente le nb de jeu
-                    }
-                }
-            }
-            else
-            {
                 foreach (Launcher launcher in Launchers)
                 {
                     Elements.Add(launcher);
@@ -92,13 +76,46 @@ namespace DataManager
                     Games.RemoveRange(0, launcher.NbJeux);
                 }
             }
+            else
+            {
+                NeedRecupGames = true;
+                DirectoryDetected = SearchForGameDirectory.GetAllGameDirectory();
+            }
 
+
+
+
+            if (NeedRecupGames) //si on a besoin de recuperer les jeux
+            {
+                Games = SearchForExecutableAndName.GetExecutableAndNameFromGameDirectory(DirectoryDetected);
+                if (Games.Count>0)//si l'utilisateur a des jeux
+                {
+                    Launcher Actuel = new Launcher(Games[0].Launcher);
+                    Elements.Add(Actuel);
+                    for (int i = 0; i < Games.Count; i++)
+                    {
+                        if (Games[i].Launcher.ToString() == Actuel.ToString()) //on est dans le meme launcher
+                        {
+                            Elements.Add(Games[i]);
+                            Actuel.NbJeux++;//on augmente le nb de jeu
+                        }
+                        else
+                        {
+                            Actuel = new Launcher(Games[i].Launcher); //on ajoute le launcher
+                            Elements.Add(Actuel);
+                            Elements.Add(Games[i]);
+                            Actuel.NbJeux++;//on augmente le nb de jeu
+                        }
+                    }
+                }               
+            }
+           
             foreach (Element element in Elements)
             {
-                if (element.GetType()==typeof(Jeu))
+                if (element.GetType() == typeof(Jeu))
                 {
                     SearchInfo.SetInfo(element as Jeu);
-                }                
+                }
             }
 
             return Elements;

@@ -27,15 +27,15 @@ namespace Modele
         {
             bool NeedImage=false, NeedIcone=false, NeedDescription=false;
             CreateFolderStructure(Jeu);
-            if (!File.Exists(@$".\Ressources\InfoJeux\{Jeu.Nom}\image.jpg") || new FileInfo(@$".\Ressources\InfoJeux\{Jeu.Nom}\image.jpg").Length==0)
+            if (!File.Exists(@$".\Ressources\InfoJeux\{Jeu.Nom}\image.jpg") || new FileInfo(@$".\Ressources\InfoJeux\{Jeu.Nom}\image.jpg").Length==0) //si fichier existe pas ou qu'il est vide
             {
                 NeedImage = true;
             }
-            if(!File.Exists(@$".\Ressources\InfoJeux\{Jeu.Nom}\icon.jpg") || new FileInfo(@$".\Ressources\InfoJeux\{Jeu.Nom}\icon.jpg").Length == 0)
+            if(!File.Exists(@$".\Ressources\InfoJeux\{Jeu.Nom}\icon.jpg") || new FileInfo(@$".\Ressources\InfoJeux\{Jeu.Nom}\icon.jpg").Length == 0) //si fichier existe pas ou qu'il est vide
             {
                 NeedIcone = true;
             }
-            if(!File.Exists(@$".\Ressources\InfoJeux\{Jeu.Nom}\text.txt") || new FileInfo(@$".\Ressources\InfoJeux\{Jeu.Nom}\text.txt").Length == 0)
+            if(!File.Exists(@$".\Ressources\InfoJeux\{Jeu.Nom}\text.txt") || new FileInfo(@$".\Ressources\InfoJeux\{Jeu.Nom}\text.txt").Length == 0) //si fichier existe pas ou qu'il est vide
             {
                 NeedDescription = true;
             }

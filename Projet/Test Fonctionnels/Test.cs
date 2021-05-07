@@ -56,7 +56,7 @@ namespace Test_Fonctionnels
 
         private static void TestSave()
         {
-            string path = "./ressource/sauvegarde";
+            string path = "./Ressource/sauvegarde";
             Saver save = new SaveElements(path);
             Loader Loader = new Stub("");
             IList<Element> Elements = Loader.Load();
@@ -67,18 +67,40 @@ namespace Test_Fonctionnels
 
         private static void TestLoad()
         {
-            string path = "./ressource/sauvegarde";
+            string path = "./Ressource/sauvegarde";
             Loader Loader = new LoadElements(path);
             Manager Manager = new Manager() { Elements = Loader.Load(),
                 Dossiers = Loader.LoadAdditionalPath()
             };
             TestAfficherElements(Manager);
         }
+
+        private static void TestLoadAfficheSave(Loader Loader=null)
+        {
+            if (Loader==null)
+            {
+                Loader = new LoadElements("./Ressources/sauvegarde");
+            }
+            Manager manager = new Manager();
+            manager.Elements=Loader.Load();
+            if (manager.Elements.Count==0)
+            {
+                manager.AjoutJeu(new Jeu("Riot1", "", "Valorant.exe", LauncherName.Riot));
+                manager.AjoutJeu(new Jeu("Riot2", "", "Valorant.exe", LauncherName.Riot));
+                manager.AjoutJeu(new Jeu("Steam1", "", "Valorant.exe", LauncherName.Steam));
+                manager.AjoutJeu(new Jeu("EG1", "", "Valorant.exe", LauncherName.EpicGames));
+            }
+            TestAfficherElements(manager);
+            Saver saver = new SaveElements("./Ressources/sauvegarde");
+            saver.Save(manager);
+        }
+
         static void Main(string[] args)
         {
-            TestExecutable();
+            //TestExecutable();
             //TestSave();
             //TestLoad();
+            TestLoadAfficheSave();
         }
     }
 }

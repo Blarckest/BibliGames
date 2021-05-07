@@ -19,6 +19,7 @@ namespace DataManager
         public override void Save(IList<Element> Elements, IList<string> AdditionalFolder)
         {
             XDocument Fichier = new XDocument();
+
             var Launchers = Elements.Where(e => e.GetType() == typeof(Launcher))
                                     .Select(e => e as Launcher)
                                     .Select(e => new XElement("Launcher",
@@ -31,6 +32,8 @@ namespace DataManager
             TextWriter TextWriter = File.CreateText($"{Folder}/LauncherInfo.xml");
             XmlWriter Writer = XmlWriter.Create(TextWriter, Settings);
             Fichier.Save(Writer);
+            Writer.Close();
+            TextWriter.Close();
 
             Fichier = new XDocument();
             var Jeux = Elements.Where(e => e.GetType() == typeof(Jeu))
@@ -45,17 +48,22 @@ namespace DataManager
                              new XElement("Image", e.Image),
                              new XElement("Icone", e.Icone)));
 
-            Fichier.Add(new XElement("Launchers", Launchers));
+            Fichier.Add(new XElement("Jeux", Jeux));
 
             TextWriter = File.CreateText($"{Folder}/GamesInfo.xml");
             Writer = XmlWriter.Create(TextWriter, Settings);
             Fichier.Save(Writer);
+            Writer.Close();
+            TextWriter.Close();
 
             TextWriter FichierAdditionalPaths = new StreamWriter($"{Folder}/AdditionalFolder.txt");
-            foreach (string Path in AdditionalFolder)
+            if (AdditionalFolder!=null)
             {
-                FichierAdditionalPaths.WriteLine(Path);
-            }
+                foreach (string Path in AdditionalFolder)
+                {
+                    FichierAdditionalPaths.WriteLine(Path);
+                }
+            }            
             FichierAdditionalPaths.Close();
         }
 

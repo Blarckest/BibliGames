@@ -24,9 +24,9 @@ namespace Modele
             }
         }
 
-        public void AjoutJeu(LauncherName Launcher, Jeu Jeu)
+        public void AjoutJeu(Jeu Jeu)
         {
-            InsertGame(Launcher, Jeu);
+            InsertGame(Jeu.Launcher, Jeu);
         }
 
         public void ModifDetail(string Image, string Description, string Exec)
@@ -71,7 +71,7 @@ namespace Modele
             SearchForExecutableAndName.SearchForExecutables(Res, Folder);
             foreach (Jeu Jeu in Res)
             {
-                AjoutJeu(LauncherName.Autre, Jeu);
+                AjoutJeu(Jeu);
             }
         }
 
@@ -128,7 +128,8 @@ namespace Modele
             {
                 int index = GetLauncherIndex(Launcher);
                 Launcher LauncherActuel = Elements[index] as Launcher; //garde en memoire l'instance du launcher
-                while (Elements[index].GetType() == typeof(Jeu) && Elements[index].CompareTo(Jeu as Element) < 0)
+                index++;
+                while (index != Elements.Count && Elements[index].GetType() == typeof(Jeu) && Elements[index].CompareTo(Jeu as Element) < 0)
                 {
                     index++; //tant que l'ordre alphabetique est pas respecté
                 }
@@ -154,11 +155,16 @@ namespace Modele
         private void InsertLauncher(LauncherName Launcher)
         {
             int index = 0;
+            if (Elements.Count==0) //si c'est le premier element inserer
+            {
+                Elements.Add(new Launcher(Launcher));
+                return;
+            }
             if (Launcher!=LauncherName.Autre)
             {
-                while ((Elements[index] as Launcher).Nom.CompareTo(Launcher.ToString()) < 0) //tant que le launcher est pas a sa place dans l'ordre alphabetique
+                while (index != Elements.Count && (Elements[index] as Launcher).Nom.CompareTo(Launcher.ToString()) < 0) //tant que le launcher est pas a sa place dans l'ordre alphabetique
                 {
-                    index += (Elements[index] as Launcher).NbJeux;
+                    index += (Elements[index] as Launcher).NbJeux+1;
                 }
                 if (index >= Elements.Count) //si on est a la fin
                 {
