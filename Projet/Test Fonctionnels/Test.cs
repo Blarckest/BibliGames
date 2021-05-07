@@ -76,9 +76,9 @@ namespace Test_Fonctionnels
         }
         static void Main(string[] args)
         {
-            //TestExecutable();
+            TestExecutable();
             //TestSave();
-            TestLoad();
+            //TestLoad();
         }
     }
 }
