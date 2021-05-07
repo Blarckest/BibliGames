@@ -11,22 +11,12 @@
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition MinWidth="300"/>
         </Grid.ColumnDefinitions>
-        <ListView Grid.Column="0" BorderThickness="0">
-            <ListViewItem>
-                <User_Controls:LauncherUC />
-            </ListViewItem>
-            <ListViewItem>
-                <User_Controls:LauncherUC />
-            </ListViewItem>
-            <ListViewItem>
-                <User_Controls:LauncherUC />
-            </ListViewItem>
-            <ListViewItem>
-                <User_Controls:LauncherUC />
-            </ListViewItem>
-            <ListViewItem>
-                <User_Controls:LauncherUC />
-            </ListViewItem>
+        <ListView Grid.Column="0" BorderThickness="0" ItemsSource="{Binding Affichage}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <User_Controls:LauncherUC />
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
         <GridSplitter Width="2" VerticalAlignment="Stretch" ShowsPreview="True" ResizeBehavior="PreviousAndNext"/>
         <User_Controls:Details Grid.Column="1"/>

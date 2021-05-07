@@ -9,12 +9,15 @@ namespace Modele
 {
     public class Manager
     {
-        public IList<Element> Elements { get; set; }
+        private IList<Element> elements;
+        public IList<Element> Elements {
+            get { return elements; }
+            set { elements = value; Affichage = value; }
+        }
         public IList<string> Dossiers { get; set; }
         public Element ElementSelected { get; set; }
         public string Pattern { get; set; } = null;
         public IList<Element> Affichage { get; private set; }
-
         public void AjoutJeu(LauncherName Launcher, string Exec)
         {
             if (File.Exists(Exec))

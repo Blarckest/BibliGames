@@ -70,7 +70,7 @@ namespace DataManager
 
         public override IList<string> LoadAdditionalPath()
         {
-            return new List<string>{ };
+            return new List<string> { "Path1", "Path2" };
         }
     }
 }

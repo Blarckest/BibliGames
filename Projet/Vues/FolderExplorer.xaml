@@ -57,27 +57,27 @@
                 <ColumnDefinition Width="200"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <ListView x:Name="QuickAccess" MouseDoubleClick="QuickAccessUsed">
-                <ListView.ItemTemplate>
+            <ListBox x:Name="QuickAccess" MouseDoubleClick="QuickAccessUsed">
+                <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <Image Source="{Binding Image}" Width="30" Margin="0,0,0,0" VerticalAlignment="Center"/>
                             <TextBlock Text="{Binding Nom}" FontSize="15" VerticalAlignment="Center"/>
                         </StackPanel>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </ListBox.ItemTemplate>
+            </ListBox>
             <GridSplitter Width="2"/>
-            <ListView x:Name="VueDesDossiers" MouseDoubleClick="UpdateVue" Grid.Column="1">
-                <ListView.ItemTemplate>
+            <ListBox x:Name="VueDesDossiers" MouseDoubleClick="UpdateVue" Grid.Column="1"  ItemsSource="{Binding ListeDossier}" Cursor="Hand">
+                <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <Image Source="{Binding Image}" Width="25" VerticalAlignment="Center"/>
                             <TextBlock Text="{Binding Nom}" FontSize="15" VerticalAlignment="Center"/>
                         </StackPanel>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Grid>
     </DockPanel>
 </Window>

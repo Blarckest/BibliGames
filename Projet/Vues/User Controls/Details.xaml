@@ -14,9 +14,9 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Image Source="/Icones/loupe.png" Margin="50,0,50,0" />
+            <Image Source="{Binding Image}" Margin="50,0,50,0" />
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                <TextBlock x:Name="textBlockDescription" TextWrapping="Wrap" Text="description" Margin="50,0,50,0"/>
+                <TextBlock x:Name="textBlockDescription" TextWrapping="Wrap" Text="{Binding Description}" Margin="50,0,50,0"/>
             </ScrollViewer>
         </Grid>
     </DockPanel>

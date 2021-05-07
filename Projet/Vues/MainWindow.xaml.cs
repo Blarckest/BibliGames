@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DataManager;
+using Modele;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +24,11 @@ namespace Vues
     {
         public MainWindow()
         {
+            Loader Loader = new Stub();
+            Manager manager = new Manager();
+            manager.Elements = Loader.Load();
+            manager.Dossiers = Loader.LoadAdditionalPath();
+            DataContext = manager;
             InitializeComponent();
         }
 

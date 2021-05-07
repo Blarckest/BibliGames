@@ -13,5 +13,6 @@ namespace Vues
     /// </summary>
     public partial class App : Application
     {
+
     }
 }

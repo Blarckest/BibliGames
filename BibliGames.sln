@@ -4,6 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vues", "Projet\Vues\Vues.csproj", "{00289F6C-CCFF-4DFC-8814-F62DBB0F7B63}"
+	ProjectSection(ProjectDependencies) = postProject
+		{67E74C9B-E233-49D0-A5E0-F8D34DD611D1} = {67E74C9B-E233-49D0-A5E0-F8D34DD611D1}
+		{7A1FB99F-7F48-4997-86B2-159F1A1A78FF} = {7A1FB99F-7F48-4997-86B2-159F1A1A78FF}
+		{9918CCFC-6923-4912-8865-EEDBE7FD490A} = {9918CCFC-6923-4912-8865-EEDBE7FD490A}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modele", "Projet\Modele\Modele.csproj", "{9918CCFC-6923-4912-8865-EEDBE7FD490A}"
 EndProject
@@ -11,7 +16,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataManager", "Projet\DataM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test Fonctionnels", "Projet\Test Fonctionnels\Test Fonctionnels.csproj", "{F4A4C9FE-BAE1-4268-B80D-86FC2633AC20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test Unitaire", "Projet\Test Unitaire\Test Unitaire.csproj", "{DB492339-19AB-4060-AA42-B13B83BB213B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test Unitaire", "Projet\Test Unitaire\Test Unitaire.csproj", "{DB492339-19AB-4060-AA42-B13B83BB213B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Icones", "Projet\Icones\Icones.csproj", "{7A1FB99F-7F48-4997-86B2-159F1A1A78FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +46,10 @@ Global
 		{DB492339-19AB-4060-AA42-B13B83BB213B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB492339-19AB-4060-AA42-B13B83BB213B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB492339-19AB-4060-AA42-B13B83BB213B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A1FB99F-7F48-4997-86B2-159F1A1A78FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A1FB99F-7F48-4997-86B2-159F1A1A78FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A1FB99F-7F48-4997-86B2-159F1A1A78FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A1FB99F-7F48-4997-86B2-159F1A1A78FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -23,7 +23,6 @@ namespace Vues
         }
         private void Annuler(object sender, RoutedEventArgs e)
         {
-            //annuler modif
             this.Close();
         }
         private void Valider(object sender, RoutedEventArgs e)

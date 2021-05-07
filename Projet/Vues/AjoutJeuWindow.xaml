@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:Vues"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:mod="clr-namespace:Modele;assembly=Modele"
         mc:Ignorable="d"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -14,6 +16,16 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="Ajouter un jeu" Height="238" Width="759" ResizeMode="NoResize">
+    
+    <Window.Resources>
+        <ObjectDataProvider x:Key="LauncherName"
+                        ObjectType="{x:Type sys:Enum}"
+                        MethodName="GetValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="mod:LauncherName" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
     <Grid VerticalAlignment="Center">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -26,7 +38,7 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Text="Luncher associé: " VerticalAlignment="Center"/>
-            <ComboBox Width="570">
+            <ComboBox Width="570" ItemsSource="{Binding Source={StaticResource LauncherName}}">
                 <!--liste des luncher via data binding-->
             </ComboBox>
         </StackPanel>

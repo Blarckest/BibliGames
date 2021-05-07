@@ -28,7 +28,7 @@ namespace Vues
         public ObservableCollection<LigneExplorateur> ListeDossier { get; set; } //la liste afficher
         public FolderExplorer()
         {
-
+            DataContext = this;
             SearchActivated = false;
             ForwardHistorique = new Stack<string>();
             Historique = new Stack<string>();
@@ -36,10 +36,6 @@ namespace Vues
             InitializeComponent();
             InitializeQuickAccess();
             MessageBlock.Text = "Veuillez selectionner un dossier";
-
-            Binding bindingObject = new Binding("ListeDossier"); //binding de ListeDossier vers la listview
-            bindingObject.Source = this;
-            VueDesDossiers.SetBinding(ListBox.ItemsSourceProperty, bindingObject);
 
             Historique.Push(null); //init
             SetDirectories();

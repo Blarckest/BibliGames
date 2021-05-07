@@ -35,6 +35,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DataManager\DataManager.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Icones\computer.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
