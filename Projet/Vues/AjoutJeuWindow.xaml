@@ -45,7 +45,7 @@
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,7">
             <TextBlock Text="Lien vers l'executable: " VerticalAlignment="Center"/>
             <TextBox x:Name="textBoxLienExe" Width="500" VerticalAlignment="Center"/>
-            <Image Source="/Icones/parcourir.png" Width="30" Margin="5" MouseLeftButtonDown="ChercherExecutable"/>
+            <Image Source="/Icones;Component/parcourir.png" Width="30" Margin="5" MouseLeftButtonDown="ChercherExecutable"/>
         </StackPanel>
         <Button Grid.Row="2" Content="Retour" HorizontalAlignment="Center"
                 VerticalAlignment="Top" Click="Annuler"/>

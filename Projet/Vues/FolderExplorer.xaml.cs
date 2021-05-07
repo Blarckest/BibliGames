@@ -44,15 +44,15 @@ namespace Vues
 
         private void InitializeQuickAccess() //initialise la list view quick access
         {
-            QuickAccess.Items.Add(new LigneExplorateur("/Icones/desktop.png", Environment.GetFolderPath(Environment.SpecialFolder.Desktop),true));
-            QuickAccess.Items.Add(new LigneExplorateur("/Icones/document.png", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),true));
-            QuickAccess.Items.Add(new LigneExplorateur("/Icones/picture.png", Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),true));
-            QuickAccess.Items.Add(new LigneExplorateur("/Icones/music.png", Environment.GetFolderPath(Environment.SpecialFolder.MyMusic),true));
-            QuickAccess.Items.Add(new LigneExplorateur("/Icones/movie.png", Environment.GetFolderPath(Environment.SpecialFolder.MyVideos),true));
-            QuickAccess.Items.Add(new LigneExplorateur("/Icones/computer.png", "Ce PC",null));
+            QuickAccess.Items.Add(new LigneExplorateur("/Icones;Component/desktop.png", Environment.GetFolderPath(Environment.SpecialFolder.Desktop),true));
+            QuickAccess.Items.Add(new LigneExplorateur("/Icones;Component/document.png", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),true));
+            QuickAccess.Items.Add(new LigneExplorateur("/Icones;Component/picture.png", Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),true));
+            QuickAccess.Items.Add(new LigneExplorateur("/Icones;Component/music.png", Environment.GetFolderPath(Environment.SpecialFolder.MyMusic),true));
+            QuickAccess.Items.Add(new LigneExplorateur("/Icones;Component/movie.png", Environment.GetFolderPath(Environment.SpecialFolder.MyVideos),true));
+            QuickAccess.Items.Add(new LigneExplorateur("/Icones;Component/computer.png", "Ce PC",null));
             foreach (string Name in GetDrives())
             {
-                QuickAccess.Items.Add(new LigneExplorateur("/Icones/disk.png", Name));
+                QuickAccess.Items.Add(new LigneExplorateur("/Icones;Component/disk.png", Name));
             }
         }
 
@@ -190,7 +190,7 @@ namespace Vues
                     ListeDossier.Clear(); //vide la vue
                     foreach (string Dir in Dirs) //rempli la vue
                     {
-                        ListeDossier.Add(new LigneExplorateur("/Icones/folder.png", System.IO.Path.GetFileName(Dir)));
+                        ListeDossier.Add(new LigneExplorateur("/Icones;Component/folder.png", System.IO.Path.GetFileName(Dir)));
                     }
                     if (Path.Last() == '\\' && Path.Length > 3) //permet d'enlever les \\ a la fin si jamais il y en a
                     {
@@ -218,7 +218,7 @@ namespace Vues
             ListeDossier.Clear();
             foreach (string Name in GetDrives()) //ajoute chaque disque a la liste
             {
-                ListeDossier.Add(new LigneExplorateur("Icones/disk.png",Name));
+                ListeDossier.Add(new LigneExplorateur("/Icones;Component/disk.png", Name));
             }
         }
 

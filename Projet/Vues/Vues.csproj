@@ -7,95 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Icones\computer.png" />
-    <None Remove="Icones\cross-white.png" />
-    <None Remove="Icones\cross.png" />
-    <None Remove="Icones\desktop.png" />
-    <None Remove="Icones\disk.png" />
-    <None Remove="Icones\document.png" />
-    <None Remove="Icones\folder.png" />
-    <None Remove="Icones\interogation.png" />
-    <None Remove="Icones\left-arrow.png" />
-    <None Remove="Icones\loupe.png" />
-    <None Remove="Icones\minus.png" />
-    <None Remove="Icones\movie.png" />
-    <None Remove="Icones\music.png" />
-    <None Remove="Icones\parametre.png" />
-    <None Remove="Icones\parametre.svg.png" />
-    <None Remove="Icones\parcourir.png" />
-    <None Remove="Icones\picture.png" />
-    <None Remove="Icones\plus.png" />
-    <None Remove="Icones\right-arrow.png" />
-    <None Remove="Icones\up-arrow.png" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="MaterialDesignColors" Version="1.2.2" />
     <PackageReference Include="MaterialDesignThemes" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DataManager\DataManager.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Icones\computer.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Icones\cross-white.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Icones\document.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Icones\interogation.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Icones\movie.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Icones\picture.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Icones\desktop.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Icones\music.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Icones\cross.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Icones\disk.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Icones\folder.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Icones\right-arrow.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Icones\up-arrow.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Icones\loupe.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Icones\minus.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Icones\parametre.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Icones\parcourir.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Icones\plus.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Icones\left-arrow.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    <ProjectReference Include="..\Icones\Icones.csproj" />
   </ItemGroup>
 
 </Project>
