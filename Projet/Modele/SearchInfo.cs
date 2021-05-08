@@ -56,12 +56,10 @@ namespace Modele
         private static string Translate(string Original)
         {
             Original = Original.Replace("\n", "\\n");
-            Original = Original.Replace("\"", "'");
-            Original = Original.Replace("”", "'");
-            Original = Original.Replace("’", "'");
-            Original = Original.Replace("®", "");
-            Original = Original.Replace("™", "");
-            Original = Original.Replace("“", "'"); //le serveur ne supporte pas le caracteres echapé/speciaux
+            Regex charToApostrophe = new Regex("[\"”’“]");
+            Regex charToEmpty = new Regex("[®™]"); //le serveur ne supporte pas le caracteres echapé/speciaux
+            Original = charToApostrophe.Replace(Original, "'");
+            Original = charToEmpty.Replace(Original, "");
             WebRequest request = WebRequest.Create("https://api.pons.com/text-translation-web/v4/translate?locale=fr");
             string postsourcedata = $"{{\"impressionId\":\"e69edd59-88af-47de-aba6-e40d065b838d\",\"sourceLanguage\":\"en\",\"targetLanguage\":\"fr\",\"text\":\"{Original}\"}}"; //requete post a envoyer
             request.Method = "POST"; //parametre de la requete
