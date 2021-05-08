@@ -115,15 +115,6 @@ namespace Modele
             }
         }
 
-        private void GetGame()
-        {
-            var res = SearchForGameDirectory.GetAllGameDirectory();
-            if (Dossiers.Count != 0)
-            {
-                //res.Add(Launcher.Autre, AutoSearchForGameDirectory.GetGameDirectoryFromPaths(Dossiers));
-            }
-            SearchForExecutableAndName.GetExecutableAndNameFromGameDirectory(res);
-        }
 
         private void InsertGame(LauncherName Launcher, Jeu Jeu)
         {

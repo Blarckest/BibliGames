@@ -9,7 +9,7 @@ namespace DataManager
     public abstract class Saver
     {
         protected string Folder;
-        public Saver(string Folder)
+        protected Saver(string Folder)
         {
             this.Folder = Folder;
             Directory.CreateDirectory(Folder);
