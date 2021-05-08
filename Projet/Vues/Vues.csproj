@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataManager\DataManager.csproj" />
+    <ProjectReference Include="..\FolderExplorer\FolderExplorerLogic.csproj" />
     <ProjectReference Include="..\Icones\Icones.csproj" />
   </ItemGroup>
 

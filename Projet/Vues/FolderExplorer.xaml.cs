@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.Win32;
 using System.Linq;
+using FolderExplorerLogic;
 
 namespace Vues
 {
