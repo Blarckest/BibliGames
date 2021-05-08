@@ -27,15 +27,15 @@ namespace Modele
         {
             bool NeedImage=false, NeedIcone=false, NeedDescription=false;
             CreateFolderStructure(Jeu);
-            if (!File.Exists(@$".\Ressources\InfoJeux\{Jeu.Nom}\image.jpg") || new FileInfo(@$".\Ressources\InfoJeux\{Jeu.Nom}\image.jpg").Length==0) //si fichier existe pas ou qu'il est vide
+            if (!File.Exists(@$".\Ressources\InfoJeux\{GetFolderName(Jeu)}\image.jpg") || new FileInfo(@$".\Ressources\InfoJeux\{GetFolderName(Jeu)}\image.jpg").Length==0) //si fichier existe pas ou qu'il est vide
             {
                 NeedImage = true;
             }
-            if(!File.Exists(@$".\Ressources\InfoJeux\{Jeu.Nom}\icon.jpg") || new FileInfo(@$".\Ressources\InfoJeux\{Jeu.Nom}\icon.jpg").Length == 0) //si fichier existe pas ou qu'il est vide
+            if(!File.Exists(@$".\Ressources\InfoJeux\{GetFolderName(Jeu)}\icon.jpg") || new FileInfo(@$".\Ressources\InfoJeux\{GetFolderName(Jeu)}\icon.jpg").Length == 0) //si fichier existe pas ou qu'il est vide
             {
                 NeedIcone = true;
             }
-            if(!File.Exists(@$".\Ressources\InfoJeux\{Jeu.Nom}\text.txt") || new FileInfo(@$".\Ressources\InfoJeux\{Jeu.Nom}\text.txt").Length == 0) //si fichier existe pas ou qu'il est vide
+            if(!File.Exists(@$".\Ressources\InfoJeux\{GetFolderName(Jeu)}\text.txt") || new FileInfo(@$".\Ressources\InfoJeux\{GetFolderName(Jeu)}\text.txt").Length == 0) //si fichier existe pas ou qu'il est vide
             {
                 NeedDescription = true;
             }
@@ -91,11 +91,11 @@ namespace Modele
             {
                 if (NeedImage && ExctractImage(Jeu))
                 {
-                    Jeu.Image = @$".\Ressources\InfoJeux\{Jeu.Nom}\image.jpg";
+                    Jeu.Image = @$".\Ressources\InfoJeux\{GetFolderName(Jeu)}\image.jpg";
                 }
                 if (NeedIcon && ExctractIcon(Jeu))
                 {
-                    Jeu.Icone = @$".\Ressources\InfoJeux\{Jeu.Nom}\icon.jpg";
+                    Jeu.Icone = @$".\Ressources\InfoJeux\{GetFolderName(Jeu)}\icon.jpg";
                 }
                 if (NeedDescription)
                 {
@@ -146,7 +146,7 @@ namespace Modele
                 Regex Reg = new Regex("<.?.?..?>");
                 Texte = Reg.Replace(Texte, string.Empty); //on supp toutes les balise de paragraphes et break
                 Texte = Translate(Texte);
-                StreamWriter fichier = new StreamWriter(@$".\Ressources\Infojeux\{MakeNameCompatibleWithWindows(Jeu.Nom)}\text.txt");
+                StreamWriter fichier = new StreamWriter(@$".\Ressources\Infojeux\{GetFolderName(Jeu)}\text.txt");
                 fichier.WriteLine(Texte);
                 fichier.Close();
                 return Texte;
@@ -166,7 +166,7 @@ namespace Modele
                 string Image = Images[Rand.Next(Images.Count())]; //on en choisis une au hasard
                 Image = Image.Substring(Image.IndexOf("http"));
                 Image = Image.Substring(0, Image.IndexOf(".jpg") + 4);
-                WebClient.DownloadFile(new Uri(Image), @$".\Ressources\InfoJeux\{MakeNameCompatibleWithWindows(Jeu.Nom)}\image.jpg"); //on telecharge
+                WebClient.DownloadFile(new Uri(Image), @$".\Ressources\InfoJeux\{GetFolderName(Jeu)}\image.jpg"); //on telecharge
                 return true;
             }
             catch (Exception)
@@ -183,7 +183,7 @@ namespace Modele
                 string Icon = LinesOfTheWebPage.Where(l => l.Contains("<meta content=\"https://images.igdb.com/igdb/image/upload/t_cover_big/")).First();
                 Icon = Icon.Substring(Icon.IndexOf("http"));
                 Icon = Icon.Substring(0, Icon.IndexOf(".jpg") + 4);
-                WebClient.DownloadFile(new Uri(Icon), @$".\Ressources\InfoJeux\{MakeNameCompatibleWithWindows(Jeu.Nom)}\icon.jpg");
+                WebClient.DownloadFile(new Uri(Icon), @$".\Ressources\InfoJeux\{GetFolderName(Jeu)}\icon.jpg");
                 return true;
             }
             catch (Exception)
@@ -193,17 +193,15 @@ namespace Modele
             }
         }
 
-        private static string MakeNameCompatibleWithWindows(string Nom)
+        private static string GetFolderName(Jeu Jeu)
         {
-            Regex Reg = new Regex("[<>:\"/\\|?*]"); //caractere interdit dans dossier windows
-            Nom = Reg.Replace(Nom, string.Empty);
-            return Nom;
+            return Path.GetFileName(Jeu.Dossier);
         }
 
         private static void CreateFolderStructure(Jeu Jeu)
         {
 
-            Directory.CreateDirectory(@$".\Ressources\Infojeux\{MakeNameCompatibleWithWindows(Jeu.Nom)}");
+            Directory.CreateDirectory(@$".\Ressources\Infojeux\{GetFolderName(Jeu)}");
         }
     }
 }

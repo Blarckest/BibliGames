@@ -22,10 +22,10 @@ namespace Vues
     /// </summary>
     public partial class MainWindow : Window
     {
+        public Manager manager = new Manager();
         public MainWindow()
         {
-            Loader Loader = new LoadElements("Ressource/Sauvegarde");
-            Manager manager = new Manager();
+            Loader Loader = new LoadElements("Ressources/Sauvegarde");
             manager.Elements = Loader.Load();
             manager.Dossiers = Loader.LoadAdditionalPath();
             DataContext = manager;
@@ -51,11 +51,16 @@ namespace Vues
         }
         private void ChampRechQuitter(object sender, RoutedEventArgs e)
         {
-            //marche pas
             if (((TextBox)sender).Text == "")
             {
                 ((TextBox)sender).Text = "Rechercher";
             }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Saver Saver = new SaveElements("Ressources/Sauvegarde");
+            Saver.Save(manager);
         }
     }
 }

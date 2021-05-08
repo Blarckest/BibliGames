@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace FolderExplorerLogic
 {
-    public class FolderExplorerLogic
+    public class FolderExplorer : INotifyPropertyChanged
     {
         public bool SearchActivated; //dit a la barre de recherche si la recherche est activé
         private Stack<string> Historique; //contient l'historique
@@ -14,11 +16,45 @@ namespace FolderExplorerLogic
         public string DossierSelectionner { get; set; } //contient la valeur du dossier actuel
         public ObservableCollection<LigneExplorateur> ListeDossier { get; set; } //la liste afficher
         public ObservableCollection<LigneExplorateur> QuickAccess { get; set; } //la liste des raccourcisafficher
-        public string Message;
-        public string MessageError;
-        public string Chemin;
+        private string message, messageError, chemin;
+        public string Message
+        {
+            get
+            {
+                return message;
+            }
+            set
+            {
+                message = value;
+                NotifyPropertyChanged();
+            }
+        }
+        public string MessageError
+        {
+            get
+            {
+                return messageError;
+            }
+            set
+            {
+                messageError = value;
+                NotifyPropertyChanged();
+            }
+        }
+        public string Chemin
+        {
+            get
+            {
+                return chemin;
+            }
+            set
+            {
+                chemin = value;
+                NotifyPropertyChanged();
+            }
+        }
 
-        public FolderExplorerLogic()
+        public FolderExplorer()
         {
             SearchActivated = false;
             ForwardHistorique = new Stack<string>();
@@ -31,6 +67,13 @@ namespace FolderExplorerLogic
             Historique.Push(null); //init
             SetDirectories();
             SearchActivated = true;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void InitializeQuickAccess() //initialise la list view quick access
@@ -86,12 +129,12 @@ namespace FolderExplorerLogic
             }
         }
 
-        private void UpdatePathTextBox() //met a jour la textbox
+        public void UpdatePathTextBox() //met a jour la textbox
         {
             Chemin = Historique.Peek() == null ? "/" : Historique.Peek();
         }
 
-        private void TouchEnterPressed(string Text) //la textbox a ete modifier cette fonction sert a voir si on peux aller a l'endroit demander
+        public void TouchEnterPressed(string Text) //la textbox a ete modifier cette fonction sert a voir si on peux aller a l'endroit demander
         {
             if (Directory.Exists(Text) && Text != DossierSelectionner) //equivaut a si dossier exist/si on est pas deja a cet endroit
             {
@@ -101,7 +144,7 @@ namespace FolderExplorerLogic
 
         }
 
-        private void UpdateVue(LigneExplorateur Item) //appeler lors d'un double clique sur un element
+        public void UpdateVue(LigneExplorateur Item) //appeler lors d'un double clique sur un element
         {
             string Path;
             Path = Historique.Peek() == null ? "" : Historique.Peek().Length == 3 ? Historique.Peek() : Historique.Peek() + "\\"; //un peu complexe mais je trouvais ca marrant equivaut a if(count==1){if length==3 -> peek else -> peek+"\\"}
@@ -113,7 +156,7 @@ namespace FolderExplorerLogic
             }
         }
 
-        private void QuickAccessUsed(LigneExplorateur Item) //appeler lors d'un selection dans le QuickAccess
+        public void QuickAccessUsed(LigneExplorateur Item) //appeler lors d'un selection dans le QuickAccess
         {
             Historique.Push(Item.Path);
             ForwardHistorique.Clear();//n'a pas de sens de revenir a un endroit peutetre jamais decouvert

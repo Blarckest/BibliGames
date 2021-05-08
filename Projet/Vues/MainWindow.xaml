@@ -13,7 +13,8 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="BibliGames" Height="450" Width="800" MinHeight="200" MinWidth="250">
+        Title="BibliGames" Height="450" Width="800" MinHeight="200" MinWidth="250"
+        Closed="Window_Closed">
     <DockPanel>
         <Grid DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>

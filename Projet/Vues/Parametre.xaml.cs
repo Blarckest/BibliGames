@@ -27,7 +27,7 @@ namespace Vues
         }
         public void ParcourirDossiers(object sender, MouseButtonEventArgs e)
         {
-            FolderExplorer FolderExplorer = new FolderExplorer();
+            FolderExplorerView FolderExplorer = new FolderExplorerView();
             FolderExplorer.ShowDialog();
             string Dossier = FolderExplorer.DossierSelectionner;
             if (Dossier!=null)
