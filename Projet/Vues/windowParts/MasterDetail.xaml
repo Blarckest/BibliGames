@@ -22,7 +22,7 @@
                 </DataTemplate>
             </ListView.Resources>
         </ListView>
-        <GridSplitter Width="2" VerticalAlignment="Stretch" ShowsPreview="True" ResizeBehavior="PreviousAndNext"/>
+        <GridSplitter Width="2" VerticalAlignment="Stretch" ShowsPreview="True"/>
         <User_Controls:Details DataContext="{Binding SelectedItem, ElementName=ListeJeu}" Grid.Column="1"/>
     </Grid>
 </UserControl>
