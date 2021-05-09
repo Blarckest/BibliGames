@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test Unitaire", "Projet\Tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Icones", "Projet\Icones\Icones.csproj", "{374FDDA2-76C4-468D-9509-269B84AF0A27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FolderExplorerLogic", "Projet\FolderExplorer\FolderExplorerLogic.csproj", "{308DAD16-0BFE-4735-9A9B-7ADB0A16D7C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FolderExplorer", "Projet\FolderExplorer\FolderExplorer.csproj", "{308DAD16-0BFE-4735-9A9B-7ADB0A16D7C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
