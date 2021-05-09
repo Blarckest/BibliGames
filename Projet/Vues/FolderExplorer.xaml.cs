@@ -92,7 +92,10 @@ namespace Vues
 
         private void UpdateVue(object sender, MouseButtonEventArgs e) //appeler lors d'un double clique sur un element
         {
-            FolderExplorer.UpdateVue((LigneExplorateur)VueDesDossiers.SelectedItem);
+            if (!FolderExplorer.UpdateVue((LigneExplorateur)VueDesDossiers.SelectedItem)) //si l'acces au dossier a été refusé
+            {
+                VueDesDossiers.SelectedItem = null;
+            }
         }
 
         private void QuickAccessUsed(object sender, MouseButtonEventArgs e) //appeler lors d'un selection dans le QuickAccess

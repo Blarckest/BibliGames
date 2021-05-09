@@ -144,16 +144,18 @@ namespace FolderExplorerLogic
 
         }
 
-        public void UpdateVue(LigneExplorateur Item) //appeler lors d'un double clique sur un element
+        public bool UpdateVue(LigneExplorateur Item) //appeler lors d'un double clique sur un element, retourne si l'action a été possible ou pas
         {
             string Path;
             Path = Historique.Peek() == null ? "" : Historique.Peek().Length == 3 ? Historique.Peek() : Historique.Peek() + "\\"; //un peu complexe mais je trouvais ca marrant equivaut a if(count==1){if length==3 -> peek else -> peek+"\\"}
             Path += Item != null ? Item.Nom : ""; //si pas goback alors on rajoute le nom du dossier selectionner au chemin actuelle
             Historique.Push(Path);
-            if (!SetDirectories()) //on a pas pu rentrer dans le dossier choisi 
+            bool Res = SetDirectories();
+            if (!Res) //on a pas pu rentrer dans le dossier choisi 
             {
                 Historique.Pop(); //on annule
             }
+            return Res;
         }
 
         public void QuickAccessUsed(LigneExplorateur Item) //appeler lors d'un selection dans le QuickAccess
