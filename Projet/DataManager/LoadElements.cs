@@ -6,6 +6,7 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 using System.IO;
+using System.Threading;
 
 namespace DataManager
 {
@@ -115,13 +116,20 @@ namespace DataManager
                     }
                 }               
             }
-           
-            foreach (Element element in Elements) //on set les infos
+
+            List<Thread> threads= new List<Thread>(); //liste qui contient les threads
+            foreach (Element element in Elements)//on set les infos
             {
                 if (element.GetType() == typeof(Jeu))
                 {
-                    SearchInfo.SetInfo(element as Jeu);
+                    Thread thread = new Thread(new ParameterizedThreadStart(SearchInfo.SetInfo));
+                    thread.Start(element);
+                    threads.Add(thread);
                 }
+            }
+            foreach (Thread thread in threads)//on verifie que tout les thread sont fini avant de return
+            {
+                thread.Join();
             }
 
             return Elements;

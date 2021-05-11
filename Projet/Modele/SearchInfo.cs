@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Modele
 {
-    public class SearchInfo
+    public static class SearchInfo
     {
         ///exec
         ///     ressources
@@ -19,31 +19,37 @@ namespace Modele
         ///                 icon.jpg/image.jpg/text.txt
         ///         sauvegarde
         ///             liste des jeux                
-        private static HtmlWeb Web = new HtmlWeb();
-        private static string[] LinesOfTheWebPage;
-        private static Random Rand = new Random();
-        private static WebClient WebClient = new WebClient();
-        public static void SetInfo(Jeu Jeu)
-        {
-            bool NeedImage=false, NeedIcone=false, NeedDescription=false;
-            CreateFolderStructure(Jeu);
-            if (!File.Exists(@$".\Ressources\InfoJeux\{GetFolderName(Jeu)}\image.jpg") || new FileInfo(@$".\Ressources\InfoJeux\{GetFolderName(Jeu)}\image.jpg").Length==0 || Jeu.Image==null) //si fichier existe pas ou qu'il est vide
-            {
-                NeedImage = true;
-            }
-            if(!File.Exists(@$".\Ressources\InfoJeux\{GetFolderName(Jeu)}\icon.jpg") || new FileInfo(@$".\Ressources\InfoJeux\{GetFolderName(Jeu)}\icon.jpg").Length == 0 || Jeu.Icone==null) //si fichier existe pas ou qu'il est vide
-            {
-                NeedIcone = true;
-            }
-            if(!File.Exists(@$".\Ressources\InfoJeux\{GetFolderName(Jeu)}\text.txt") || new FileInfo(@$".\Ressources\InfoJeux\{GetFolderName(Jeu)}\text.txt").Length == 0 || Jeu.Description==null) //si fichier existe pas ou qu'il est vide
-            {
-                NeedDescription = true;
-            }
+        [ThreadStatic] private static string[] LinesOfTheWebPage;
+        [ThreadStatic] private static Random Rand;
+        [ThreadStatic] private static WebClient WebClient;
 
-            if (NeedDescription||NeedIcone||NeedDescription)
+        public static void SetInfo(object Jeu) //on recoit un objet pour etre en accord avec le deleguate de ParameterizedThreadStart
+        {
+            if (Jeu.GetType()==typeof(Jeu))
             {
-                ExtractGameInfoFromWeb(Jeu, NeedImage, NeedIcone, NeedDescription);
-            }
+                Jeu JeuRecu = Jeu as Jeu;
+                Rand = new Random();//on est obligé d'instancier les variables threadStatic
+                WebClient = new WebClient();
+                bool NeedImage = false, NeedIcone = false, NeedDescription = false;
+                CreateFolderStructure(JeuRecu);
+                if (!File.Exists(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\image.jpg") || new FileInfo(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\image.jpg").Length == 0 || JeuRecu.Image == null) //si fichier existe pas ou qu'il est vide
+                {
+                    NeedImage = true;
+                }
+                if (!File.Exists(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\icon.jpg") || new FileInfo(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\icon.jpg").Length == 0 || JeuRecu.Icone == null) //si fichier existe pas ou qu'il est vide
+                {
+                    NeedIcone = true;
+                }
+                if (!File.Exists(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\text.txt") || new FileInfo(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\text.txt").Length == 0 || JeuRecu.Description == null) //si fichier existe pas ou qu'il est vide
+                {
+                    NeedDescription = true;
+                }
+
+                if (NeedDescription || NeedIcone || NeedDescription)
+                {
+                    ExtractGameInfoFromWeb(JeuRecu, NeedImage, NeedIcone, NeedDescription);
+                }
+            } 
         }
 
         public static Jeu ExtractGameInfoFromExec(string Exec)
@@ -122,6 +128,7 @@ namespace Modele
         {
             try
             {
+                HtmlWeb Web = new HtmlWeb();
                 HtmlDocument doc = Web.Load(@$"https://www.igdb.com/games/{ReplaceName(Jeu)}");
                 string texte = doc.Text;
                 texte = texte.Replace("><", ">\n<");
