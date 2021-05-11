@@ -20,7 +20,7 @@ namespace DataManager
         {
             XDocument Fichier = new XDocument();
 
-            var Launchers = Elements.Where(e => e.GetType() == typeof(Launcher))
+            var Launchers = Elements.Where(e => e.GetType() == typeof(Launcher)) //sauvegarde des launchers
                                     .Select(e => e as Launcher)
                                     .Select(e => new XElement("Launcher",
                                     new XAttribute("Nom", e.Nom),               
@@ -28,15 +28,15 @@ namespace DataManager
 
             Fichier.Add(new XElement("Launchers", Launchers));
             XmlWriterSettings Settings = new XmlWriterSettings();
-            Settings.Indent = true;
+            Settings.Indent = true; //on active l'indatage du fichier
             TextWriter TextWriter = File.CreateText($"{Folder}/LauncherInfo.xml");
             XmlWriter Writer = XmlWriter.Create(TextWriter, Settings);
-            Fichier.Save(Writer);
+            Fichier.Save(Writer); //on ecrit
             Writer.Close();
             TextWriter.Close();
 
             Fichier = new XDocument();
-            var Jeux = Elements.Where(e => e.GetType() == typeof(Jeu))
+            var Jeux = Elements.Where(e => e.GetType() == typeof(Jeu)) //sauvegarde des jeux
                              .Select(e => e as Jeu)
                              .Select(e => new XElement("Jeu",
                              new XAttribute("Nom", e.Nom),
@@ -52,7 +52,7 @@ namespace DataManager
 
             TextWriter = File.CreateText($"{Folder}/GamesInfo.xml");
             Writer = XmlWriter.Create(TextWriter, Settings);
-            Fichier.Save(Writer);
+            Fichier.Save(Writer); //on ecrit
             Writer.Close();
             TextWriter.Close();
 
@@ -61,13 +61,13 @@ namespace DataManager
             {
                 foreach (string Path in AdditionalFolder)
                 {
-                    FichierAdditionalPaths.WriteLine(Path);
+                    FichierAdditionalPaths.WriteLine(Path); //on copie chaque dossier supplementaire dans unfichier
                 }
             }            
             FichierAdditionalPaths.Close();
         }
 
-        public override void Save(Manager Manager)
+        public override void Save(Manager Manager) //constructeur prenant un manager (fait la meme chose que l'autre)
         {
             Save(Manager.Elements, Manager.Dossiers);
         }

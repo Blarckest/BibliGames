@@ -17,17 +17,17 @@ namespace DataManager
 
         public override IList<Element> Load()
         {
-            bool NeedRecupGames = true;
+            bool NeedRecupGames = true; //determine si on a besoin de recuperer les jeux a nouveaux
             string[] AdditionalFolder;
             List<Launcher> Launchers;
             List<Jeu> Games;
-            List<Element> Elements=new List<Element>(); ;
+            List<Element> Elements=new List<Element>();
             Dictionary<LauncherName, List<string>> DirectoryDetected;
             if (File.Exists($"{Folder}/LauncherInfo.xml") && File.Exists($"{Folder}/GamesInfo.xml") && File.Exists($"{Folder}/AdditionalFolder.txt") && new FileInfo($"{Folder}/LauncherInfo.xml").Length != 0) //si la sauvegarde existe et que les fichiers sont pas vide si AdditionalFolder.txt est vide c pas grave
             {
                 XDocument LaunchersFile = XDocument.Load($"{Folder}/LauncherInfo.xml");
 
-                Launchers = LaunchersFile.Descendants("Launcher")
+                Launchers = LaunchersFile.Descendants("Launcher") //chargement des launcher
                                       .Select(e => new Launcher()
                                       {
                                           Nom = e.Attribute("Nom").Value,
@@ -37,7 +37,7 @@ namespace DataManager
 
                 XDocument GamesFile = XDocument.Load($"{Folder}/GamesInfo.xml");
 
-                Games = GamesFile.Descendants("Jeu")
+                Games = GamesFile.Descendants("Jeu") //chargement des jeux
                                    .Select(e => new Jeu(
                                         e.Attribute("Nom").Value,
                                         e.Element("Dossier").Value,
@@ -56,7 +56,7 @@ namespace DataManager
 
                 if (Launchers.All(l => DirectoryDetected.Keys.Contains((LauncherName)Enum.Parse(typeof(LauncherName), l.Nom)))) //si on a bien tt les clé en rapport avec la sauvegarde
                 {
-                    foreach (LauncherName Launcher in DirectoryDetected.Keys)
+                    foreach (LauncherName Launcher in DirectoryDetected.Keys) //on itere sur les clés
                     {
                         List<string> ListeDossier;
                         if (DirectoryDetected.TryGetValue(Launcher, out ListeDossier))
@@ -67,13 +67,19 @@ namespace DataManager
                             }
                         }
                     }
+                    if (!NeedRecupGames)
+                    {
+                        foreach (Launcher launcher in Launchers) //on remplit la liste d'élément
+                        {
+                            Elements.Add(launcher);
+                            Elements.AddRange(Games.Take(launcher.NbJeux));
+                            Games.RemoveRange(0, launcher.NbJeux);
+                        }
+                    }
                 }
-
-                foreach (Launcher launcher in Launchers)
+                else
                 {
-                    Elements.Add(launcher);
-                    Elements.AddRange(Games.Take(launcher.NbJeux));
-                    Games.RemoveRange(0, launcher.NbJeux);
+                    NeedRecupGames = true;
                 }
             }
             else
@@ -110,7 +116,7 @@ namespace DataManager
                 }               
             }
            
-            foreach (Element element in Elements)
+            foreach (Element element in Elements) //on set les infos
             {
                 if (element.GetType() == typeof(Jeu))
                 {
