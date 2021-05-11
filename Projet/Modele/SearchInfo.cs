@@ -112,6 +112,9 @@ namespace Modele
 
             Reg = new Regex("[ ]");
             Nom = Reg.Replace(Nom, "-");
+
+            Reg = new Regex("[.]");
+            Nom = Reg.Replace(Nom, "-dot-"); //"." devient "-dot-" 
             return Nom;
         }
 

@@ -229,6 +229,10 @@ namespace Modele
                         string[] Lines = Line.Split('&');
                         string PathToFolder = Lines.Where(e => e.Contains("installpath=", System.StringComparison.OrdinalIgnoreCase) && e.Contains(":\\")).First(); //recuperation de la valeur qui nous interesse
                         PathToFolder = PathToFolder.Substring(PathToFolder.IndexOf(":\\") - 1); //suppression du "installpath="
+                        if (PathToFolder.Last() == '\\')
+                        {
+                            PathToFolder= PathToFolder.Remove(PathToFolder.Length-1);
+                        }
                         PathsToGameDirectory.Add(PathToFolder);
                     }
                 }

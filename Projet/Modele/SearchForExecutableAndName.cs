@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Microsoft.Win32;
 
 
@@ -182,6 +183,8 @@ namespace Modele
                         {
                             Nom = Line.Substring(Line.IndexOf(": \"") + 3); //recuperation du nom jusqua la fin de la ligne
                             Nom = Nom.Substring(0, Nom.Length - 2);  //suppression de l'apostrophe et de la virgule de fin de ligne
+                            Regex charToEmpty = new Regex("[®™]"); //le serveur ne supporte pas le caracteres echapé/speciaux
+                            Nom = charToEmpty.Replace(Nom, "");
                         }
                         else if (Line.Contains("InstallLocation")) //recuperation du chemin de dossier
                         {
