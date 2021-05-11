@@ -196,7 +196,9 @@ namespace Modele
 
         private static string GetFolderName(Jeu Jeu)
         {
-            return Path.GetFileName(Jeu.Dossier);
+            Regex Reg = new Regex("[<>:\"“/\\|?*]");
+            string Nom = Reg.Replace(Jeu.Nom, "");
+            return Path.GetFileName(Nom);
         }
 
         private static void CreateFolderStructure(Jeu Jeu)
