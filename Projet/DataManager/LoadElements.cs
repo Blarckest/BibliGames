@@ -1,4 +1,5 @@
-﻿using Modele;
+﻿using Logger;
+using Modele;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -122,6 +123,7 @@ namespace DataManager
             {
                 if (element.GetType() == typeof(Jeu))
                 {
+                    Logs.InfoLog($"Recherche des données pour {element.Nom}");
                     Thread thread = new Thread(new ParameterizedThreadStart(SearchInfo.SetInfo));
                     thread.Start(element);
                     threads.Add(thread);
@@ -132,6 +134,7 @@ namespace DataManager
                 thread.Join();
             }
 
+            Logs.InfoLog("Chargement des données");
             return Elements;
         }
 

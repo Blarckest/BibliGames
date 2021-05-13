@@ -1,4 +1,5 @@
-﻿using Modele;
+﻿using Logger;
+using Modele;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -65,6 +66,8 @@ namespace DataManager
                 }
             }            
             FichierAdditionalPaths.Close();
+            Logs.InfoLog("Sauvegarde de l'application");
+            Logs.SuppLog();
         }
 
         public override void Save(Manager Manager) //constructeur prenant un manager (fait la meme chose que l'autre)

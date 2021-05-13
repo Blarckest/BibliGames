@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logger;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
@@ -45,7 +46,7 @@ namespace Modele
                     NeedDescription = true;
                 }
 
-                if (NeedDescription || NeedIcone || NeedDescription)
+                if (NeedImage || NeedIcone || NeedDescription)
                 {
                     ExtractGameInfoFromWeb(JeuRecu, NeedImage, NeedIcone, NeedDescription);
                 }
@@ -161,7 +162,7 @@ namespace Modele
             }
             catch (Exception)
             {
-
+                Logs.WarningLog($"Aucune description trouvée pour {Jeu.Nom}");
                 return "No description found";
             }
         }
@@ -179,7 +180,7 @@ namespace Modele
             }
             catch (Exception)
             {
-
+                Logs.WarningLog($"Aucune image trouvée pour {Jeu.Nom}");
                 return false;
             }
         }
@@ -196,7 +197,7 @@ namespace Modele
             }
             catch (Exception)
             {
-
+                Logs.WarningLog($"Aucune icone trouvée pour {Jeu.Nom}");
                 return false;
             }
         }

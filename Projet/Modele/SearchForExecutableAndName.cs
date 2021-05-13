@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logger;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -92,6 +93,7 @@ namespace Modele
                 string[] NomExecutables = Directory.GetFiles(Dossier, "*.exe", SearchOption.AllDirectories); //recup tout les .exe dans tout les sous-dossier
                 Executable = Filter(NomExecutables, Nom, Launcher); //filtrage
                 Temp.Add(new Jeu(Nom, Dossier, Executable, Launcher));//ajout
+                Logs.InfoLog($"Ajout du jeu {Nom}");
             }
             Temp.Sort();
             Jeux.AddRange(Temp);
@@ -144,6 +146,7 @@ namespace Modele
                                 Jeu Jeu = SearchForExecutables(FolderName, LauncherName.Steam);
                                 Jeu.Nom = Nom;
                                 Temp.Add(Jeu);
+                                Logs.InfoLog($"Ajout du jeu {Nom}");
 
                             }
                         }
@@ -204,6 +207,7 @@ namespace Modele
                         Executable = Filter(NomExecutables, Nom); //filtrage
                     }
                     Temp.Add(new Jeu(Nom, Dossier, Executable, LauncherName.EpicGames));//ajout
+                    Logs.InfoLog($"Ajout du jeu {Nom}");
                 }
             }
             Temp.Sort();

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Logger;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -121,6 +122,7 @@ namespace Modele
                 if (PathsToGameDirectory.Count > 0)
                 {
                     Dossiers.Add(LauncherName.Steam, PathsToGameDirectory);
+                    Logs.InfoLog("Ajout du launcher Steam");
                 }
             }
         }
@@ -143,6 +145,7 @@ namespace Modele
                 if (PathsToGameDirectory.Count > 0)
                 {
                     Dossiers.Add(LauncherName.Uplay, PathsToGameDirectory);
+                    Logs.InfoLog("Ajout du launcher Uplay");
                 }
             }
         }
@@ -185,6 +188,7 @@ namespace Modele
                     if (PathsToGameDirectory.Count > 0)
                     {
                         Dossiers.Add(LauncherName.EpicGames, PathsToGameDirectory);
+                        Logs.InfoLog("Ajout du launcher Epic Games");
                     }  
                 }
             }
@@ -208,6 +212,7 @@ namespace Modele
             if (PathsToGameDirectory.Count>0)
             {
                 Dossiers.Add(LauncherName.Riot, PathsToGameDirectory);
+                Logs.InfoLog("Ajout du launcher Riot");
             }
         }
 
@@ -239,6 +244,7 @@ namespace Modele
                 if (PathsToGameDirectory.Count > 0)
                 {
                     Dossiers.Add(LauncherName.Origin, PathsToGameDirectory);
+                    Logs.InfoLog("Ajout du launcher Origin");
                 }
             }
         }
