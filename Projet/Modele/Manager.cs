@@ -68,15 +68,18 @@ namespace Modele
         /// <param name="Dossier"></param>
         public void AjouterDossier(string Dossier)
         {
-            Dossiers.Add(Dossier);
-            List<Jeu> Res = new List<Jeu>();
-            List<string> Folder = new List<string>();
-            Folder.Add(Dossier);
-            SearchForExecutableAndName.SearchForExecutables(Res, Folder);
-            foreach (Jeu Jeu in Res)
+            if (!Dossiers.Contains(Dossier))
             {
-                AjoutJeu(Jeu);
-            }
+                Dossiers.Add(Dossier);
+                List<Jeu> Res = new List<Jeu>();
+                List<string> Folder = new List<string>();
+                Folder.Add(Dossier);
+                SearchForExecutableAndName.SearchForExecutables(Res, Folder);
+                foreach (Jeu Jeu in Res)
+                {
+                    AjoutJeu(Jeu);
+                }
+            }            
         }
 
         public void SuppDossier(string Dossier)

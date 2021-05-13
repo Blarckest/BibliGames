@@ -94,13 +94,14 @@ namespace Modele
         {
             if (GoToGamePage(Jeu))
             {
+                string PathToFolderExec = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
                 if (NeedImage && ExctractImage(Jeu))
                 {
-                    Jeu.Image = @$".\Ressources\InfoJeux\{GetFolderName(Jeu)}\image.jpg";
+                    Jeu.Image = Path.Combine(PathToFolderExec, @$"Ressources\InfoJeux\{GetFolderName(Jeu)}\image.jpg");
                 }
                 if (NeedIcon && ExctractIcon(Jeu))
                 {
-                    Jeu.Icone = @$".\Ressources\InfoJeux\{GetFolderName(Jeu)}\icon.jpg";
+                    Jeu.Icone = Path.Combine(PathToFolderExec, @$"Ressources\InfoJeux\{GetFolderName(Jeu)}\icon.jpg");
                 }
                 if (NeedDescription)
                 {

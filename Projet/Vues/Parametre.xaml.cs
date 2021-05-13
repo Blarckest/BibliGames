@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Modele;
+using System.Collections.ObjectModel;
 
 namespace Vues
 {
@@ -21,8 +23,13 @@ namespace Vues
     /// </summary>
     public partial class Parametre : Window
     {
-        public Parametre()
+        public ObservableCollection<string> DossierAffiche { get; set; }
+        private Manager Manager;
+        public Parametre(Manager manager)
         {
+            Manager = manager;
+            DataContext = this;
+            DossierAffiche = new ObservableCollection<string>(manager.Dossiers);
             InitializeComponent();
         }
         public void ParcourirDossiers(object sender, MouseButtonEventArgs e)
@@ -30,29 +37,38 @@ namespace Vues
             FolderExplorerView FolderExplorer = new FolderExplorerView();
             FolderExplorer.ShowDialog();
             string Dossier = FolderExplorer.DossierSelectionner;
-            if (Dossier!=null)
+            if (Dossier != null)
             {
-                ListeFolder.Items.Add(Dossier);
+                DossierAffiche.Add(Dossier);
             }
         }
         private void Annuler(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+        private void Sauvegarder(object sender, RoutedEventArgs e)
+        {
+            foreach (string Dossier in DossierAffiche)
+            {
+                Manager.AjouterDossier(Dossier);
+            }          
+            this.Close();
+        }
 
         private void SupprimeChemin(object sender, MouseButtonEventArgs e)
         {
-            ListeFolder.Items.Remove(ListeFolder.SelectedItem);
+            DossierAffiche.Remove(ListeFolder.SelectedItem as string);
             //suppression du chemin selectionné
         }
+
         private void TextBoxChemin_TouchEnterPressed(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
             {
                 TextBox TextBoxChemin = sender as TextBox;
-                if (Directory.Exists(TextBoxChemin.Text) && !ListeFolder.Items.Contains(TextBoxChemin.Text)) //equivaut a si dossier exist/si on est pas deja a cet endroit
+                if (Directory.Exists(TextBoxChemin.Text) && !DossierAffiche.Contains(TextBoxChemin.Text)) //equivaut a si dossier exist/si on est pas deja a cet endroit
                 {
-                    ListeFolder.Items.Add(TextBoxChemin.Text.Trim()); //trim au cas ou l'utilisateur aurait decider de mettre des espaces a la fin du chemin
+                    DossierAffiche.Add(TextBoxChemin.Text.Trim()); //trim au cas ou l'utilisateur aurait decider de mettre des espaces a la fin du chemin
                 }
             }
         }

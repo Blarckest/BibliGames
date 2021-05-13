@@ -142,7 +142,7 @@ namespace DataManager
         {
             if (File.Exists($"{Folder}/AdditionalFolder.txt"))
             {
-                return File.ReadAllLines($"{Folder}/AdditionalFolder.txt"); //on recupere les dossier de recherche
+                return new List<string>(File.ReadAllLines($"{Folder}/AdditionalFolder.txt")); //on recupere les dossier de recherche
             }
             return new List<string>() { }; //si le fichier existait pas on retourne une liste vide
         }
