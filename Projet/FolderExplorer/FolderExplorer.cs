@@ -92,7 +92,7 @@ namespace FolderExplorerLogic
 
         public string GetRepertoireChoisi(LigneExplorateur Item)
         {
-            return Historique.Peek() + "\\" + Item.Nom;
+            return Historique.Peek()==null || Historique.Peek().Length<4 ? Historique.Peek()+Item.Nom : Historique.Peek() + "\\" + Item.Nom;  //on fait peek+Item quand on est au niveau des disque ou dans un descendant direct d'un disque
         }
 
         public void GoBackward() //fonction appeller pour revenir en arriere

@@ -60,7 +60,7 @@ namespace Vues
 
         private void Selectionner(object sender, RoutedEventArgs e) //appeller lors du clic sur le bouton selectionner
         {
-            if (VueDesDossiers.SelectedItem!=null) //on ferme uniquement si un dossier a été selectionner (peut-etre qu'il faudrait changer ce comportement)
+            if (VueDesDossiers.SelectedItem!=null) //on ferme uniquement si un dossier a été selectionner
             {
                 DossierSelectionner = FolderExplorer.GetRepertoireChoisi((LigneExplorateur)VueDesDossiers.SelectedItem);
                 this.Close();

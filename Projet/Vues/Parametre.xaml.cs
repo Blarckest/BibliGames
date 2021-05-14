@@ -66,7 +66,7 @@ namespace Vues
             if (e.Key == Key.Return)
             {
                 TextBox TextBoxChemin = sender as TextBox;
-                if (Directory.Exists(TextBoxChemin.Text) && !DossierAffiche.Contains(TextBoxChemin.Text)) //equivaut a si dossier exist/si on est pas deja a cet endroit
+                if (Directory.Exists(TextBoxChemin.Text) && !DossierAffiche.Contains(TextBoxChemin.Text,StringComparer.OrdinalIgnoreCase)) //equivaut a si dossier exist/si on est pas deja a cet endroit
                 {
                     DossierAffiche.Add(TextBoxChemin.Text.Trim()); //trim au cas ou l'utilisateur aurait decider de mettre des espaces a la fin du chemin
                 }
