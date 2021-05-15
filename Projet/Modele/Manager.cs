@@ -18,18 +18,25 @@ namespace Modele
         public IList<Element> Elements
         {
             get { return elements; }
-            set { elements = value; Affichage = value; }
+            set { elements = value; Affichage.Clear();
+                for (int i = 0; i < elements.Count; i++)
+                {
+                    Element element = elements[i];
+                    Affichage.Add(element);
+                }
+            }
         }
         public IList<string> Dossiers { get; set; }
         public Element ElementSelected { get; set; }
         public string Pattern { get; set; } = null;
-        public IList<Element> Affichage{ get; private set; }
+        public ObservableCollection<Element> Affichage{ get; private set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public event NotifyCollectionChangedEventHandler CollectionChanged;
 
         public Manager()
         {
+            Affichage = new ObservableCollection<Element>();
             PropertyChanged += UpdateAffichage;
         }
 
@@ -136,9 +143,14 @@ namespace Modele
         {
             if (e.PropertyName == "Elements")
             {
-                Affichage = Elements;
+                //Affichage = Elements;
+                Affichage.Clear();
+                foreach (Element element in Elements)
+                {
+                    Affichage.Add(element);
+                }                   
                 Recherche();
-                NotifyCollectionChanged();
+                //NotifyCollectionChanged();
             }
         }
 
