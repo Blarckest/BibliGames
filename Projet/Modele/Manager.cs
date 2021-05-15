@@ -5,32 +5,58 @@ using System.Text;
 using System.IO;
 using System.Threading;
 using System.Linq;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Collections.Specialized;
+using System.Collections.ObjectModel;
 
 namespace Modele
 {
-    public class Manager
+    public class Manager : INotifyPropertyChanged, INotifyCollectionChanged
     {
         private IList<Element> elements;
-        public IList<Element> Elements {
+        public IList<Element> Elements
+        {
             get { return elements; }
             set { elements = value; Affichage = value; }
         }
         public IList<string> Dossiers { get; set; }
         public Element ElementSelected { get; set; }
         public string Pattern { get; set; } = null;
-        public IList<Element> Affichage { get; private set; }
+        public IList<Element> Affichage{ get; private set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public event NotifyCollectionChangedEventHandler CollectionChanged;
+
+        public Manager()
+        {
+            PropertyChanged += UpdateAffichage;
+        }
+
+        private void NotifyCollectionChanged()
+        {
+            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(new NotifyCollectionChangedAction()));
+        }
+
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public void AjoutJeu(LauncherName Launcher, string Exec)
         {
             if (File.Exists(Exec))
             {
                 Jeu Jeu = SearchInfo.ExtractGameInfoFromExec(Exec);
                 InsertGame(Launcher, Jeu);
+                NotifyPropertyChanged("Elements");
             }
         }
 
         public void AjoutJeu(Jeu Jeu)
         {
             InsertGame(Jeu.Launcher, Jeu);
+            NotifyPropertyChanged("Elements");
         }
 
         public void ModifDetail(string Image, string Description, string Exec)
@@ -54,7 +80,9 @@ namespace Modele
         }
         public void SuppJeu()
         {
+            (Elements[GetLauncherIndex((ElementSelected as Jeu).Launcher)] as Launcher).NbJeux--; //on enleve un jeu au launcher concerné
             Elements.Remove(ElementSelected);
+            NotifyPropertyChanged("Elements");
         }
         public void LancerJeu()
         {
@@ -79,31 +107,41 @@ namespace Modele
                 {
                     AjoutJeu(Jeu);
                 }
+                NotifyPropertyChanged("Elements");
             }            
         }
 
         public void SuppDossier(string Dossier)
         {
-            int index = GetLauncherIndex(LauncherName.Autre);
-            if (index!=-1)
+            if (Dossiers.Contains(Dossier))
             {
-                for (int i = index; i < Elements.Count; i++)
+                int index = GetLauncherIndex(LauncherName.Autre);
+                if (index != -1)
                 {
-                    Jeu Jeu = Elements[i] as Jeu; //à revoir Jeu.dossier != dossier
-                    if (Directory.GetParent(Jeu.Dossier).FullName == Dossier)
+                    for (int i = index; i < Elements.Count; i++)
                     {
-                        Elements.Remove(Jeu);
+                        Jeu Jeu = Elements[i] as Jeu; //à revoir Jeu.dossier != dossier
+                        if (Directory.GetParent(Jeu.Dossier).FullName == Dossier)
+                        {
+                            Elements.Remove(Jeu);
+                        }
                     }
                 }
-            }
-           
+                NotifyPropertyChanged("Elements");
+            }           
         }
+
         //servira si jamais on a plus de filtre a appliquer sur les elements affichés
-        public void UpdateAffichage()
+        public void UpdateAffichage(object sender, PropertyChangedEventArgs e)
         {
-            Affichage = Elements;
-            Recherche();
+            if (e.PropertyName == "Elements")
+            {
+                Affichage = Elements;
+                Recherche();
+                NotifyCollectionChanged();
+            }
         }
+
         //effectue juste une suppression des elements non désiré (correspondant pas au pattern)
         public void Recherche()
         {

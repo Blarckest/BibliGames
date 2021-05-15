@@ -9,13 +9,13 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="200"/>
             <ColumnDefinition MinWidth="300"/>
         </Grid.ColumnDefinitions>
-        <ListBox x:Name="ListeJeu" Grid.Column="0" BorderThickness="0" ItemsSource="{Binding Affichage}" IsSynchronizedWithCurrentItem="False">
+        <ListBox x:Name="ListeJeu" Grid.Column="0" BorderThickness="0" ItemsSource="{Binding Affichage}" SelectedItem="{Binding ElementSelected, Mode=TwoWay}">
             <ListBox.Resources>
                 <DataTemplate DataType="{x:Type Modele:Jeu}">
-                    <User_Controls:VignetteJeu />
+                    <User_Controls:VignetteJeu Width="{Binding Path=ActualWidth, ElementName=ListeJeu}"/>
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type Modele:Launcher}">
                     <User_Controls:LauncherUC />

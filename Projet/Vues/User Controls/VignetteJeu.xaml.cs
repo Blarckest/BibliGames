@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Modele;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -27,7 +28,21 @@ namespace Vues.User_Controls
         {
             if (MessageBox.Show("Supprimer ce jeu?", "Suppression", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                //suppression
+                bool trouver = false;
+                var temp = VisualTreeHelper.GetParent(this);
+                while (!trouver)
+                {
+                    try
+                    {
+                        (temp.GetValue(DataContextProperty) as Manager).SuppJeu();
+                        trouver = true;
+                    }
+                    catch (NullReferenceException)
+                    {
+
+                        temp = VisualTreeHelper.GetParent(temp);
+                    }
+                }
             }
         }
 

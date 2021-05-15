@@ -10,10 +10,11 @@
         <Button DockPanel.Dock="Top" Content="Jouer" Click="LancerJeu" HorizontalAlignment="Right" Margin="20"/>
         <Button DockPanel.Dock="Bottom" Content="Modifier" Click="ModifierJeu" HorizontalAlignment="Right" Margin="20"/>
         <DockPanel>
-            <ScrollViewer DockPanel.Dock="Bottom" VerticalScrollBarVisibility="Auto" Margin="0,20,0,0">
-                <TextBlock x:Name="textBlockDescription" TextWrapping="Wrap" Text="{Binding Description}" FontSize="17" Margin="50,0,50,0"/>
+            <ScrollViewer DockPanel.Dock="Bottom" VerticalScrollBarVisibility="Auto" Margin="0,20,0,0" MaxHeight="100">
+                <TextBlock x:Name="textBlockDescription" TextWrapping="Wrap" Text="{Binding Description}"
+                           FontSize="17" Margin="50,0,50,0"/>
             </ScrollViewer>
-            <Image DockPanel.Dock="Top" Source="{Binding Image}" Margin="50,0,50,0" Stretch="Fill" />
+            <Image DockPanel.Dock="Top" Source="{Binding Image}" Stretch="Uniform" />
 
         </DockPanel>
     </DockPanel>
