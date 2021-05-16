@@ -135,7 +135,7 @@ namespace Modele
                 int index = GetLauncherIndex(LauncherName.Autre);
                 if (index != -1)
                 {
-                    for (int i = index; i < Elements.Count; i++)
+                    for (int i = index+1 ; i < Elements.Count; i++)
                     {
                         Jeu Jeu = Elements[i] as Jeu; 
                         if (Directory.GetParent(Jeu.Dossier).FullName == Dossier)
