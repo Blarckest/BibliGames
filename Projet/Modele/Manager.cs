@@ -176,7 +176,7 @@ namespace Modele
         //effectue juste une suppression des elements non désiré (correspondant pas au pattern)
         public void Recherche()
         {
-            if (Pattern != null && SearchActivated)
+            if (!(string.IsNullOrEmpty(Pattern) || Pattern=="Rechercher") && SearchActivated)
             {
                 int i = 0;
                 while (i<Affichage.Count)
