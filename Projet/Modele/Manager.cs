@@ -114,8 +114,7 @@ namespace Modele
                 Logs.InfoLog($"Ajout du dossier {Dossier}");
                 Dossiers.Add(Dossier);
                 List<Jeu> Res = new List<Jeu>();
-                List<string> Folder = new List<string>();
-                Folder.Add(Dossier);
+                List<string> Folder = new List<string>(Directory.GetDirectories(Dossier));
                 SearchForExecutableAndName.SearchForExecutables(Res, Folder);
                 foreach (Jeu Jeu in Res)
                 {
@@ -132,18 +131,24 @@ namespace Modele
             if (Dossiers.Contains(Dossier))
             {
                 Logs.InfoLog($"Suppression du dossier {Dossier}");
-                int index = GetLauncherIndex(LauncherName.Autre);
-                if (index != -1)
+                int indexLauncher = GetLauncherIndex(LauncherName.Autre);
+                if (indexLauncher != -1)
                 {
-                    for (int i = index+1 ; i < Elements.Count; i++)
+                    for (int i = indexLauncher+1; i < Elements.Count; i++)
                     {
                         Jeu Jeu = Elements[i] as Jeu; 
                         if (Directory.GetParent(Jeu.Dossier).FullName == Dossier)
                         {
-                            Elements.Remove(Jeu);
+                            Elements.RemoveAt(i);
+                            (Elements[indexLauncher] as Launcher).NbJeux--;
+                            if ((Elements[indexLauncher] as Launcher).NbJeux==0)
+                            {
+                                Elements.RemoveAt(indexLauncher);
+                            }
                         }
                     }
                 }
+                Dossiers.Remove(Dossier);
                 NotifyPropertyChanged("Elements");
             }
         }
