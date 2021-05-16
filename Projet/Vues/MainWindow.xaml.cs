@@ -30,7 +30,9 @@ namespace Vues
             manager.Dossiers = Loader.LoadAdditionalPath();
             DataContext = manager;
             InitializeComponent();
-            BarreDeRecherche.Text = "Recherche";
+            manager.SearchActivated = false;
+            BarreDeRecherche.Text = "Rechercher";
+            manager.SearchActivated = true;
         }
 
         private void AjoutJeu(object sender, RoutedEventArgs e)
@@ -45,17 +47,21 @@ namespace Vues
         }
         private void ChampRechEntre(object sender, RoutedEventArgs e)
         {
+            manager.SearchActivated = false;
             if (((TextBox)sender).Text =="Rechercher")
             {
                 ((TextBox)sender).Text = ""; //met a vide le champ 
             }
+            manager.SearchActivated = true;
         }
         private void ChampRechQuitter(object sender, RoutedEventArgs e)
         {
+            manager.SearchActivated = false;
             if (((TextBox)sender).Text == "")
             {
                 ((TextBox)sender).Text = "Rechercher";
             }
+            manager.SearchActivated = true;
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -63,10 +69,13 @@ namespace Vues
             Saver Saver = new SaveElements("Ressources/Sauvegarde");
             Saver.Save(manager);
         }
+
         private void Recherche(object sender, TextChangedEventArgs e)//appeler quand le texte de la barre de recherche change
         {
-            TextBox TextBox = sender as TextBox;
-            manager.UpdateAffichage();
+            if (manager.SearchActivated)
+            {
+                manager.UpdateAffichage();
+            }
         }
     }
 }

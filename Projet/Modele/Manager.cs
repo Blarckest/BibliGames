@@ -174,12 +174,15 @@ namespace Modele
         {
             if (Pattern != null && SearchActivated)
             {
-                foreach (Element Elem in Affichage)
+                int i = 0;
+                while (i<Affichage.Count)
                 {
-                    if (Elem.GetType() == typeof(Jeu) && !Elem.Nom.Contains(Pattern, StringComparison.OrdinalIgnoreCase)) //si on est sur on jeu et que il correspond pas au pattern
+                    if (Affichage[i].GetType() == typeof(Jeu) && !Affichage[i].Nom.Contains(Pattern, StringComparison.OrdinalIgnoreCase)) //si on est sur on jeu et que il correspond pas au pattern
                     {
-                        Affichage.Remove(Elem);
+                        Affichage.RemoveAt(i);
+                        continue;
                     }
+                    i++;
                 }
             }
         }
