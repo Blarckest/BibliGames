@@ -14,11 +14,14 @@ namespace Modele
 {
     public class Manager : INotifyPropertyChanged, INotifyCollectionChanged
     {
+        public bool SearchActivated = true;
         private IList<Element> elements;
         public IList<Element> Elements
         {
             get { return elements; }
-            set { elements = value; Affichage.Clear();
+            set
+            {
+                elements = value; Affichage.Clear();
                 for (int i = 0; i < elements.Count; i++)
                 {
                     Element element = elements[i];
@@ -29,7 +32,7 @@ namespace Modele
         public IList<string> Dossiers { get; set; }
         public Element ElementSelected { get; set; }
         public string Pattern { get; set; } = null;
-        public ObservableCollection<Element> Affichage{ get; private set; }
+        public ObservableCollection<Element> Affichage { get; private set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public event NotifyCollectionChangedEventHandler CollectionChanged;
@@ -85,6 +88,7 @@ namespace Modele
                 }
             }
         }
+
         public void SuppJeu()
         {
             (Elements[GetLauncherIndex((ElementSelected as Jeu).Launcher)] as Launcher).NbJeux--; //on enleve un jeu au launcher concerné
@@ -115,7 +119,7 @@ namespace Modele
                     AjoutJeu(Jeu);
                 }
                 NotifyPropertyChanged("Elements");
-            }            
+            }
         }
 
         public void SuppDossier(string Dossier)
@@ -135,7 +139,7 @@ namespace Modele
                     }
                 }
                 NotifyPropertyChanged("Elements");
-            }           
+            }
         }
 
         //servira si jamais on a plus de filtre a appliquer sur les elements affichés
@@ -143,21 +147,32 @@ namespace Modele
         {
             if (e.PropertyName == "Elements")
             {
-                //Affichage = Elements;
-                Affichage.Clear();
-                foreach (Element element in Elements)
-                {
-                    Affichage.Add(element);
-                }                   
-                Recherche();
-                //NotifyCollectionChanged();
+                ////Affichage = Elements;
+                //Affichage.Clear();
+                //foreach (Element element in Elements)
+                //{
+                //    Affichage.Add(element);
+                //}
+                //Recherche();
+                ////NotifyCollectionChanged();
+                UpdateAffichage();
             }
+        }
+
+        public void UpdateAffichage()
+        {
+            Affichage.Clear();
+            foreach (Element element in Elements)
+            {
+                Affichage.Add(element);
+            }
+            Recherche();
         }
 
         //effectue juste une suppression des elements non désiré (correspondant pas au pattern)
         public void Recherche()
         {
-            if (Pattern != null)
+            if (Pattern != null && SearchActivated)
             {
                 foreach (Element Elem in Affichage)
                 {
@@ -172,7 +187,7 @@ namespace Modele
 
         private void InsertGame(LauncherName Launcher, Jeu Jeu)
         {
-            if (Elements.Any(e => e.Nom.Equals(Launcher.ToString())))   
+            if (Elements.Any(e => e.Nom.Equals(Launcher.ToString())))
             {
                 int index = GetLauncherIndex(Launcher);
                 Launcher LauncherActuel = Elements[index] as Launcher; //garde en memoire l'instance du launcher
@@ -203,16 +218,16 @@ namespace Modele
         private void InsertLauncher(LauncherName Launcher)
         {
             int index = 0;
-            if (Elements.Count==0) //si c'est le premier element inserer
+            if (Elements.Count == 0) //si c'est le premier element inserer
             {
                 Elements.Add(new Launcher(Launcher));
                 return;
             }
-            if (Launcher!=LauncherName.Autre)
+            if (Launcher != LauncherName.Autre)
             {
                 while (index != Elements.Count && (Elements[index] as Launcher).Nom.CompareTo(Launcher.ToString()) < 0) //tant que le launcher est pas a sa place dans l'ordre alphabetique
                 {
-                    index += (Elements[index] as Launcher).NbJeux+1;
+                    index += (Elements[index] as Launcher).NbJeux + 1;
                 }
                 if (index >= Elements.Count) //si on est a la fin
                 {
@@ -227,7 +242,7 @@ namespace Modele
             {
                 Elements.Add(new Launcher(Launcher)); //launcher.autre est obligatoirement en dernier
             }
-            
+
         }
 
         private int GetLauncherIndex(LauncherName LauncherName)

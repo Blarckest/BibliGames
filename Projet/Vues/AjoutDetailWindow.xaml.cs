@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Modele;
 
 namespace Vues
 {
@@ -17,9 +18,19 @@ namespace Vues
     /// </summary>
     public partial class AjoutDetailWindow : Window
     {
-        public AjoutDetailWindow()
+        Jeu Jeu;
+        public string Executable { get; set; }
+        public string Image { get; set; }
+        public string Description { get; set; }
+        public AjoutDetailWindow(Jeu Jeu)
         {
-            InitializeComponent();
+            Executable = Jeu.Exec;
+            Image = Jeu.Image;
+            Description = Jeu.Description;
+            DataContext = this;
+            this.Jeu = Jeu;
+            InitializeComponent();  
+            
         }
 
         private void Annuler(object sender, RoutedEventArgs e)
@@ -30,6 +41,9 @@ namespace Vues
         private void Valider(object sender, RoutedEventArgs e)
         {
             //valider modif
+            Jeu.Exec = Executable;
+            Jeu.Image = Image;
+            Jeu.Description = Description;
             this.Close();
         }
         private void ChercherImage(object sender, MouseButtonEventArgs e)

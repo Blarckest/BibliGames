@@ -15,7 +15,6 @@
                            FontSize="17" Margin="50,0,50,0"/>
             </ScrollViewer>
             <Image DockPanel.Dock="Top" Source="{Binding Image}" Stretch="Uniform" />
-
         </DockPanel>
     </DockPanel>
 </UserControl>

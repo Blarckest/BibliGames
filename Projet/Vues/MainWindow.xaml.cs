@@ -30,6 +30,7 @@ namespace Vues
             manager.Dossiers = Loader.LoadAdditionalPath();
             DataContext = manager;
             InitializeComponent();
+            BarreDeRecherche.Text = "Recherche";
         }
 
         private void AjoutJeu(object sender, RoutedEventArgs e)
@@ -61,6 +62,11 @@ namespace Vues
         {
             Saver Saver = new SaveElements("Ressources/Sauvegarde");
             Saver.Save(manager);
+        }
+        private void Recherche(object sender, TextChangedEventArgs e)//appeler quand le texte de la barre de recherche change
+        {
+            TextBox TextBox = sender as TextBox;
+            manager.UpdateAffichage();
         }
     }
 }
