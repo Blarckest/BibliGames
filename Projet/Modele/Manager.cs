@@ -92,12 +92,14 @@ namespace Modele
         public void SuppJeu()
         {
             (Elements[GetLauncherIndex((ElementSelected as Jeu).Launcher)] as Launcher).NbJeux--; //on enleve un jeu au launcher concerné
+            Logs.InfoLog($"Suppression du jeu {ElementSelected.Nom}");
             Elements.Remove(ElementSelected);
             NotifyPropertyChanged("Elements");
         }
         public void LancerJeu()
         {
             var Elem = ElementSelected as Jeu;
+            Logs.InfoLog($"Lancement du jeu {Elem.Nom}");
             System.Diagnostics.Process.Start(Elem.Exec); //normalement ca marche a tester
         }
 
@@ -109,6 +111,7 @@ namespace Modele
         {
             if (!Dossiers.Contains(Dossier))
             {
+                Logs.InfoLog($"Ajout du dossier {Dossier}");
                 Dossiers.Add(Dossier);
                 List<Jeu> Res = new List<Jeu>();
                 List<string> Folder = new List<string>();
@@ -126,6 +129,7 @@ namespace Modele
         {
             if (Dossiers.Contains(Dossier))
             {
+                Logs.InfoLog($"Suppression du dossier {Dossier}");
                 int index = GetLauncherIndex(LauncherName.Autre);
                 if (index != -1)
                 {

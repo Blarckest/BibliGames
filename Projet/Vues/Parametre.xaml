@@ -26,7 +26,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.ColumnSpan="2"  Orientation="Horizontal" HorizontalAlignment="Center">
-            <TextBlock Text="Lien vers le jeu :"  Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" />
+            <TextBlock Text="Lien vers le dossier :"  Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" />
             <TextBox Width="450" Margin="5" KeyDown="TextBoxChemin_TouchEnterPressed" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" />
             <Image Source="/Icones;Component/parcourir.png" Width="30" Margin="2"
                    MouseLeftButtonDown="ParcourirDossiers"/>

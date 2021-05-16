@@ -10,7 +10,7 @@ namespace Logger
 
         private static void SaveLog(string Action, string Type)
         {
-            return;
+            //return;
             Directory.CreateDirectory(Dossier);
             StreamWriter Sw = new StreamWriter($"{Dossier}/FichierDeLogs.txt", true);
             Sw.WriteLine(Date);
@@ -36,14 +36,18 @@ namespace Logger
 
         public static void SuppLog()
         {
-            StreamReader Sr = new StreamReader($"{Dossier}/FichierDeLogs.txt");
-            string line = Sr.ReadLine();
-            Sr.Close();
-            line = line.Substring(0, 10);
-            DateTime date = DateTime.Today;
-            if (line != date.ToString("d"))
+            string Fichier = Dossier + "/FichierDeLogs.txt";
+            if (File.Exists(Fichier))
             {
-                File.Delete($"{Dossier}/FichierDeLogs.txt");
+                StreamReader Sr = new StreamReader($"{Dossier}/FichierDeLogs.txt");
+                string line = Sr.ReadLine();
+                Sr.Close();
+                line = line.Substring(0, 10);
+                DateTime date = DateTime.Today;
+                if (line != date.ToString("d"))
+                {
+                    File.Delete($"{Dossier}/FichierDeLogs.txt");
+                }
             }
         }
     }
