@@ -10,6 +10,7 @@ namespace Logger
 
         private static void SaveLog(string Action, string Type)
         {
+            return;
             Directory.CreateDirectory(Dossier);
             StreamWriter Sw = new StreamWriter($"{Dossier}/FichierDeLogs.txt", true);
             Sw.WriteLine(Date);

@@ -45,6 +45,10 @@ namespace Modele
                 {
                     NeedDescription = true;
                 }
+                else if (string.IsNullOrEmpty(JeuRecu.Description)) //si la description est vide on va la chercher dans le fichier
+                {
+                    JeuRecu.Description = File.ReadAllText(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\text.txt");
+                }
 
                 if (NeedImage || NeedIcone || NeedDescription)
                 {

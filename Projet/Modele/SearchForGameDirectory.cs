@@ -71,7 +71,7 @@ namespace Modele
         }
         private static bool IsDirectoryEmpty(string Path)
         {
-            return !(Directory.EnumerateFileSystemEntries(Path).Any() && (Directory.GetFiles(Path+"\\\\","*.exe",SearchOption.AllDirectories).Any()));//renvoie si le dossier et vide ou contient aucun executable (any renvoie un booleen true si il y a qq chose ds le IEnumerable renvoyer)
+            return !(Directory.EnumerateFileSystemEntries(Path).Any() || (Directory.GetFiles(Path+"\\\\","*.exe",SearchOption.AllDirectories).Any()));//renvoie si le dossier et vide ou contient aucun executable (any renvoie un booleen true si il y a qq chose ds le IEnumerable renvoyer)
         }
         private static void SearchSteamGames(Dictionary<LauncherName, List<string>> Dossiers)
         {

@@ -9,10 +9,21 @@ namespace Modele
 {
     public class Jeu : Element, INotifyPropertyChanged
     {
-        private string exec=null, description=null, image=null, note=null; 
-        public string Icone { get; set; } = null;
+        private string exec=null, description=null, image=null, note=null, icone=null;
         public string Dossier { get; set; } = null;
         public LauncherName Launcher { get; set; }
+        public string Icone
+        {
+            get
+            {
+                return icone;
+            }
+            set
+            {
+                icone = value;
+                NotifyPropertyChanged();
+            }
+        }
         public string Exec
         {
             get

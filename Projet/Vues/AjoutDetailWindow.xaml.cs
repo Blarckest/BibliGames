@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,11 +18,20 @@ namespace Vues
     /// <summary>
     /// Logique d'interaction pour AjoutDetailWindow.xaml
     /// </summary>
-    public partial class AjoutDetailWindow : Window
+    public partial class AjoutDetailWindow : Window, INotifyPropertyChanged
     {
         Jeu Jeu;
-        public string Executable { get; set; }
-        public string Image { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private string executable;
+        private string image;
+
+        public string Executable { get => executable; set { executable = value; NotifyPropertyChanged(); } }
+        public string Image { get => image; set { image = value; NotifyPropertyChanged(); } }
         public string Description { get; set; }
         public AjoutDetailWindow(Jeu Jeu)
         {
@@ -29,8 +40,8 @@ namespace Vues
             Description = Jeu.Description;
             DataContext = this;
             this.Jeu = Jeu;
-            InitializeComponent();  
-            
+            InitializeComponent();
+
         }
 
         private void Annuler(object sender, RoutedEventArgs e)
@@ -62,9 +73,8 @@ namespace Vues
             if (result == true)
             {
                 // Open document 
-                string filename = dlg.FileName;
-                textBoxLienImage.Text = filename;
-                //mettre filename 
+                Image = dlg.FileName;
+
             }
         }
 
@@ -84,9 +94,7 @@ namespace Vues
             if (result == true)
             {
                 // Open document 
-                string filename = dlg.FileName;
-                textBoxLienExecutable.Text = filename;
-                //mettre filename 
+                Executable = dlg.FileName;
             }
         }
     }

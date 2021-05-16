@@ -129,10 +129,10 @@ namespace DataManager
                     threads.Add(thread);
                 }
             }
-            foreach (Thread thread in threads)//on verifie que tout les thread sont fini avant de return
-            {
-                thread.Join();
-            }
+            //foreach (Thread thread in threads)//on verifie que tout les thread sont fini avant de return
+            //{
+            //    thread.Join();
+            //}
 
             Logs.InfoLog("Chargement des données");
             return Elements;
