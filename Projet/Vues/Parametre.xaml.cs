@@ -25,6 +25,7 @@ namespace Vues
     {
         public ObservableCollection<string> DossierAffiche { get; set; }
         private Manager Manager;
+        private IList<string> DossierSupp = new List<string>();
         public Parametre(Manager manager)
         {
             Manager = manager;
@@ -48,6 +49,13 @@ namespace Vues
         }
         private void Sauvegarder(object sender, RoutedEventArgs e)
         {
+            if (DossierSupp != null)
+            {
+                foreach(string Dossier in DossierSupp)
+                {
+                    Manager.SuppDossier(Dossier);
+                }
+            }
             foreach (string Dossier in DossierAffiche)
             {
                 Manager.AjouterDossier(Dossier);
@@ -57,6 +65,7 @@ namespace Vues
 
         private void SupprimeChemin(object sender, MouseButtonEventArgs e)
         {
+            DossierSupp.Add(ListeFolder.SelectedItem as string);
             DossierAffiche.Remove(ListeFolder.SelectedItem as string);
             //suppression du chemin selectionné
         }
