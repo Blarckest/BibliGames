@@ -118,7 +118,7 @@ namespace DataManager
                 }               
             }
 
-            List<Thread> threads= new List<Thread>(); //liste qui contient les threads
+            //List<Thread> threads= new List<Thread>(); //liste qui contient les threads
             foreach (Element element in Elements)//on set les infos
             {
                 if (element.GetType() == typeof(Jeu))
@@ -126,7 +126,7 @@ namespace DataManager
                     Logs.InfoLog($"Recherche des données pour {element.Nom}");
                     Thread thread = new Thread(new ParameterizedThreadStart(SearchInfo.SetInfo));
                     thread.Start(element);
-                    threads.Add(thread);
+                    //threads.Add(thread);
                 }
             }
             //foreach (Thread thread in threads)//on verifie que tout les thread sont fini avant de return

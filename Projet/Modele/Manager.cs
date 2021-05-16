@@ -120,6 +120,8 @@ namespace Modele
                 foreach (Jeu Jeu in Res)
                 {
                     AjoutJeu(Jeu);
+                    Thread thread = new Thread(new ParameterizedThreadStart(SearchInfo.SetInfo));
+                    thread.Start(Jeu);
                 }
                 NotifyPropertyChanged("Elements");
             }
@@ -135,7 +137,7 @@ namespace Modele
                 {
                     for (int i = index; i < Elements.Count; i++)
                     {
-                        Jeu Jeu = Elements[i] as Jeu; //à revoir Jeu.dossier != dossier
+                        Jeu Jeu = Elements[i] as Jeu; 
                         if (Directory.GetParent(Jeu.Dossier).FullName == Dossier)
                         {
                             Elements.Remove(Jeu);
