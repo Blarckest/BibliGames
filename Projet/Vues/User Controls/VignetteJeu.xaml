@@ -11,7 +11,7 @@
     <DockPanel>
         <Image DockPanel.Dock="Right" x:Name="CroixSupp" Source="/Icones;Component/cross-white.png" Visibility="Hidden"
                MouseLeftButtonDown="DemandeSuppression" Width="20" Margin="5,0,35,0"/>
-        <Image DockPanel.Dock="Left" Width="35" Source="{Binding Icone}" Stretch="UniformToFill"/>
+        <Image DockPanel.Dock="Left" Width="50" Source="{Binding Icone}" Stretch="UniformToFill"/>
         <TextBlock Text="{Binding Nom}" HorizontalAlignment="Left"
                     VerticalAlignment="Center" TextTrimming="CharacterEllipsis">
             <TextBlock.ToolTip>
