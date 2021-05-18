@@ -8,7 +8,7 @@ namespace DataManager
 {
     public class Stub :Loader
     {
-        public List<Element> Jeux { get; set; } = new List<Element>();
+        public Data Data { get; set; }
         public Stub(string Path=""):base(Path)
         {
             Directory.CreateDirectory("./Stub/Game1/Infos");
@@ -44,6 +44,7 @@ namespace DataManager
             File.Create("./Stub/Game9/Exec/game.exe");
             File.Create("./Stub/Game10/Exec/game.exe");
             File.Create("./Stub/Game11/Exec/game.exe");
+            List<Element> Jeux = new List<Element>();
             Jeux.Add(new Launcher(LauncherName.EpicGames));
             Jeux.Add(new Jeu("Game1", "./Stub/Game1/Exec/", "./Stub/Game1/Exec/game.exe", "./Stub/Game1/Infos/image.jpg", "./Stub/Game1/Infos/icon.jpg", "./Stub/Game1/Infos/note.txt", "./Stub/Game1/Infos/text.txt", LauncherName.EpicGames));
             Jeux.Add(new Jeu("Game2", "./Stub/Game2/Exec/", "./Stub/Game2/Exec/game.exe", "./Stub/Game2/Infos/image.jpg", "./Stub/Game2/Infos/icon.jpg", "./Stub/Game2/Infos/note.txt", "./Stub/Game2/Infos/text.txt", LauncherName.EpicGames));
@@ -61,11 +62,12 @@ namespace DataManager
             Jeux.Add(new Jeu("Game10", "./Stub/Game10/Exec/", "./Stub/Game10/Exec/game.exe", "./Stub/Game10/Infos/image.jpg", "./Stub/Game10/Infos/icon.jpg", "./Stub/Game10/Infos/note.txt", "./Stub/Game10/Infos/text.txt", LauncherName.Uplay));
             Jeux.Add(new Launcher(LauncherName.Autre));
             Jeux.Add(new Jeu("Game11", "./Stub/Game11/Exec/", "./Stub/Game11/Exec/game.exe", "./Stub/Game11/Infos/image.jpg", "./Stub/Game11/Infos/icon.jpg", "./Stub/Game11/Infos/note.txt", "./Stub/Game11/Infos/text.txt", LauncherName.Autre));
+            //Data.Elements=Jeux;
         }
 
-        public override IList<Element> Load()
+        public override Data Load()
         {
-            return Jeux;
+            return Data;
         }
 
         public override IList<string> LoadAdditionalPath()

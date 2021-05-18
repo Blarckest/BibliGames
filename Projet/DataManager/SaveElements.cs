@@ -70,9 +70,9 @@ namespace DataManager
             Logs.SuppLog();
         }
 
-        public override void Save(Manager Manager) //constructeur prenant un manager (fait la meme chose que l'autre)
+        public override void Save(Data Data) //constructeur prenant un manager (fait la meme chose que l'autre)
         {
-            Save(Manager.Elements, Manager.Dossiers);
+            Save(Data.Elements, Data.Dossiers);
         }
     }
 }

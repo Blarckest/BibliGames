@@ -30,7 +30,7 @@ namespace Vues
         {
             Manager = manager;
             DataContext = this;
-            DossierAffiche = new ObservableCollection<string>(manager.Dossiers);
+            DossierAffiche = new ObservableCollection<string>(manager.Data.Dossiers);
             InitializeComponent();
         }
         public void ParcourirDossiers(object sender, MouseButtonEventArgs e)

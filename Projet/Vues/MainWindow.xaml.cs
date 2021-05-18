@@ -22,12 +22,11 @@ namespace Vues
     /// </summary>
     public partial class MainWindow : Window
     {
-        public Manager manager = new Manager();
+        public Manager manager;
         public MainWindow()
         {
             Loader Loader = new LoadElements("Ressources/Sauvegarde");
-            manager.Elements = Loader.Load();
-            manager.Dossiers = Loader.LoadAdditionalPath();
+            manager = new Manager(Loader.Load());
             DataContext = manager;
             InitializeComponent();
             manager.SearchActivated = false;
@@ -67,14 +66,14 @@ namespace Vues
         private void Window_Closed(object sender, EventArgs e)
         {
             Saver Saver = new SaveElements("Ressources/Sauvegarde");
-            Saver.Save(manager);
+            Saver.Save(manager.Data);
         }
 
         private void Recherche(object sender, TextChangedEventArgs e)//appeler quand le texte de la barre de recherche change
         {
             if (manager.SearchActivated)
             {
-                manager.UpdateAffichage();
+                manager.UpdateRecherche();
             }
         }
     }

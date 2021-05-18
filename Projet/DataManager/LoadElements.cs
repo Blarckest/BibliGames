@@ -17,10 +17,10 @@ namespace DataManager
         {
         }
 
-        public override IList<Element> Load()
+        public override Data Load()
         {
             bool NeedRecupGames = true; //determine si on a besoin de recuperer les jeux a nouveaux
-            string[] AdditionalFolder;
+            string[] AdditionalFolder=null;
             List<Launcher> Launchers;
             List<Jeu> Games;
             List<Element> Elements=new List<Element>();
@@ -118,7 +118,6 @@ namespace DataManager
                 }               
             }
 
-            //List<Thread> threads= new List<Thread>(); //liste qui contient les threads
             foreach (Element element in Elements)//on set les infos
             {
                 if (element.GetType() == typeof(Jeu))
@@ -126,16 +125,22 @@ namespace DataManager
                     Logs.InfoLog($"Recherche des données pour {element.Nom}");
                     Thread thread = new Thread(new ParameterizedThreadStart(SearchInfo.SetInfo));
                     thread.Start(element);
-                    //threads.Add(thread);
                 }
             }
-            //foreach (Thread thread in threads)//on verifie que tout les thread sont fini avant de return
-            //{
-            //    thread.Join();
-            //}
 
             Logs.InfoLog("Chargement des données");
-            return Elements;
+
+            Data data;
+            if (AdditionalFolder!=null)
+            {
+                 data = new Data(Elements, AdditionalFolder.ToList());
+            }
+            else
+            {
+                data = new Data(Elements, LoadAdditionalPath());
+            }
+            
+            return data;
         }
 
         public override IList<string> LoadAdditionalPath()

@@ -14,7 +14,7 @@ namespace DataManager
             this.Folder = Folder;
             Directory.CreateDirectory(Folder);
         }
-        public abstract void Save(Manager Manager);
+        public abstract void Save(Data Manager);
         public abstract void Save(IList<Element> Elements, IList<string> AdditionalFolder);
     }
 }

@@ -11,7 +11,7 @@ namespace DataManager
         {
             this.Folder = Folder;
         }
-        public abstract IList<Element> Load();
+        public abstract Data Load();
         public abstract IList<string> LoadAdditionalPath();
     }
 }
