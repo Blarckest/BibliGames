@@ -1,4 +1,5 @@
 ﻿using DataManager;
+using Logger;
 using Modele;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace Vues
         public Manager manager;
         public MainWindow()
         {
+            Logs.SuppLog();
             Loader Loader = new LoadElements("Ressources/Sauvegarde");
             manager = new Manager(Loader.Load());
             DataContext = manager;

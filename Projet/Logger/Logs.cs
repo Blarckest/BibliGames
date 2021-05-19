@@ -13,10 +13,14 @@ namespace Logger
 
         private static void SaveLog()
         {
-            return;
+            //return;
+            string Log;
             Directory.CreateDirectory(Dossier);
             StreamWriter Sw = new StreamWriter($"{Dossier}/FichierDeLogs.txt", true);
-            Sw.WriteLine($"{Date} | {Type} : {Action}\n");
+            while (Queue.TryDequeue(out Log))
+            {
+                Sw.WriteLine(Log);
+            }
             Sw.Close();
         }
 
@@ -25,19 +29,29 @@ namespace Logger
             Queue.Enqueue($"{DateTime.Now} | Info : {Action}");
             if (!Thread.IsAlive)
             {
-
+                Thread = new Thread(SaveLog);
+                Thread.Start(); 
             }
-            SaveLog(Queue.TryDequeue());
         }
 
         public static void ErrorLog(string Action)
         {
             Queue.Enqueue($"{DateTime.Now} | Error : {Action}");
+            if (!Thread.IsAlive)
+            {
+                Thread = new Thread(SaveLog);
+                Thread.Start();
+            }
         }
 
         public static void WarningLog(string Action)
         {
             Queue.Enqueue($"{DateTime.Now} | Warning : {Action}");
+            if (!Thread.IsAlive)
+            {
+                Thread = new Thread(SaveLog);
+                Thread.Start();
+            }
         }
 
         public static void SuppLog()

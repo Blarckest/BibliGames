@@ -67,7 +67,6 @@ namespace DataManager
             }            
             FichierAdditionalPaths.Close();
             Logs.InfoLog("Sauvegarde de l'application");
-            Logs.SuppLog();
         }
 
         public override void Save(Data Data) //constructeur prenant un manager (fait la meme chose que l'autre)
