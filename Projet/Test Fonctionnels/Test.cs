@@ -9,7 +9,7 @@ namespace Test_Fonctionnels
     {
         public static void TestAfficherElements(Manager Modele)
         {
-            foreach (Element element in Modele.Elements)
+            foreach (Element element in Modele.Affichage)
             {
                 Console.WriteLine(element);
             }
@@ -59,19 +59,17 @@ namespace Test_Fonctionnels
             string path = "./Ressource/sauvegarde";
             Saver save = new SaveElements(path);
             Loader Loader = new Stub("");
-            IList<Element> Elements = Loader.Load();
+            var manager = new Manager(Loader.Load());
             IList<string> Add = new List<string>();
             Add.Add("zefzqf");
-            save.Save(Elements, Add);
+            save.Save(manager.Data.Elements, Add);
         }
 
         private static void TestLoad()
         {
             string path = "./Ressource/sauvegarde";
             Loader Loader = new LoadElements(path);
-            Manager Manager = new Manager() { Elements = Loader.Load(),
-                Dossiers = Loader.LoadAdditionalPath()
-            };
+            Manager Manager = new Manager(Loader.Load());
             TestAfficherElements(Manager);
         }
 
@@ -81,9 +79,8 @@ namespace Test_Fonctionnels
             {
                 Loader = new LoadElements("./Ressources/sauvegarde");
             }
-            Manager manager = new Manager();
-            manager.Elements=Loader.Load();
-            if (manager.Elements.Count==0)
+            Manager manager = new Manager(Loader.Load());
+            if (manager.Affichage.Count==0)
             {
                 manager.AjoutJeu(new Jeu("Riot1", "", "Valorant.exe", LauncherName.Riot));
                 manager.AjoutJeu(new Jeu("Riot2", "", "Valorant.exe", LauncherName.Riot));
@@ -92,7 +89,7 @@ namespace Test_Fonctionnels
             }
             TestAfficherElements(manager);
             Saver saver = new SaveElements("./Ressources/sauvegarde");
-            saver.Save(manager);
+            saver.Save(manager.Data);
         }
 
         static void Main(string[] args)
