@@ -13,7 +13,6 @@ namespace Logger
 
         private static void SaveLog()
         {
-            //return;
             string Log;
             Directory.CreateDirectory(Dossier);
             StreamWriter Sw = new StreamWriter($"{Dossier}/FichierDeLogs.txt", true);

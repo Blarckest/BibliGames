@@ -78,8 +78,15 @@ namespace Modele
         public void LancerJeu()
         {
             var Elem = ElementSelected as Jeu;
-            Logs.InfoLog($"Lancement du jeu {Elem.Nom}");
-            System.Diagnostics.Process.Start(Elem.Exec); //normalement ca marche a tester
+            try
+            {
+                Logs.InfoLog($"Lancement du jeu {Elem.Nom}");
+                System.Diagnostics.Process.Start(Elem.Exec); //normalement ca marche a tester
+            }
+            catch
+            {
+                return;
+            }
         }
 
         /// <summary>

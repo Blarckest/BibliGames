@@ -213,5 +213,30 @@ namespace Modele
             Temp.Sort();
             Jeux.AddRange(Temp);
         }
+
+        private static void SearchForRiotExecutables(List<Jeu> Jeux) // a vérifier avec les jeux
+        {
+            List<Jeu> Temp = new List<Jeu>();
+            string Nom = "";
+            string Executable = "";
+            string Dossier = "";
+            string RegKey = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall";
+            RegistryKey Key = Registry.CurrentUser.OpenSubKey(RegKey);
+            foreach (string SubKey in Key.GetSubKeyNames()) //parcour des sous-clé
+            {
+                if (SubKey.Contains("Riot Game")) //cas ou la sous-clé nous interesse
+                {
+                    RegistryKey KeyJeu = Registry.CurrentUser.OpenSubKey(RegKey + SubKey);
+                    Dossier = KeyJeu.GetValue("InstallLocation").ToString();
+                    Dossier = Dossier.Replace("/", "\\"); //certains jeux sont marque avec des / et d'autres avec des \\ donc on transforme ceux en / en \\
+                    Nom = KeyJeu.GetValue("DisplayName").ToString();
+                    Executable = $"{Dossier}\\{Nom}.exe";
+                    Temp.Add(new Jeu(Nom, Dossier, Executable, LauncherName.Riot));
+                    Logs.InfoLog($"Ajout du jeu {Nom}");
+                }
+            }
+            Temp.Sort();
+            Jeux.AddRange(Temp);
+        }
     }
 }
