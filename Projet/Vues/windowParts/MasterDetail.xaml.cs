@@ -26,13 +26,20 @@ namespace Vues.windowParts
 
         private void ListeJeu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ListeJeu.SelectedItem.GetType()==typeof(Launcher))
+            if (ListeJeu.SelectedItem!=null)
             {
-                Detail.Content = new User_Controls.DetailLauncher() { DataContext = this.DataContext };
+                if (ListeJeu.SelectedItem.GetType() == typeof(Launcher))
+                {
+                    Detail.Content = new User_Controls.DetailLauncher() { DataContext = this.DataContext };
+                }
+                else
+                {
+                    Detail.Content = new User_Controls.DetailsJeu() { DataContext = ListeJeu.SelectedItem };
+                }
             }
             else
             {
-                Detail.Content = new User_Controls.Details() { DataContext = ListeJeu.SelectedItem };
+                Detail.Content = null;
             }
         }
     }

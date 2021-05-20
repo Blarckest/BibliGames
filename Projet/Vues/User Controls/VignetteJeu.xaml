@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Vues.User_Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel Margin="40">
-        <Image Source="{Binding Icone}"/>
-        <TextBlock Text="{Binding Nom}"/>
-    </StackPanel>
+             d:DesignHeight="450" d:DesignWidth="800" MouseLeftButtonDown="VignetteClicked">
+    <DockPanel Margin="40">
+        <Image DockPanel.Dock="Top" Source="{Binding Icone}" Width="100"/>
+        <TextBlock DockPanel.Dock="Bottom" Text="{Binding Nom}" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+    </DockPanel>
 </UserControl>

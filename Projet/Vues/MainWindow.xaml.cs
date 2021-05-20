@@ -27,7 +27,7 @@ namespace Vues
         public MainWindow()
         {
             Logs.SuppLog();
-            Loader Loader = new Stub("Ressources/Sauvegarde");
+            Loader Loader = new LoadElements("Ressources/Sauvegarde");
             manager = new Manager(Loader.Load());
             DataContext = manager;
             InitializeComponent();

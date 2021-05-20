@@ -15,11 +15,11 @@ using Modele;
 namespace Vues.User_Controls
 {
     /// <summary>
-    /// Logique d'interaction pour Details.xaml
+    /// Logique d'interaction pour DetailsJeu.xaml
     /// </summary>
-    public partial class Details : UserControl
+    public partial class DetailsJeu : UserControl
     {
-        public Details()
+        public DetailsJeu()
         {
             InitializeComponent();
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Modele;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -21,6 +22,22 @@ namespace Vues.User_Controls
         public VignetteJeu()
         {
             InitializeComponent();
+        }
+
+        private void VignetteClicked(object sender, MouseButtonEventArgs e)
+        {
+            //on trouve le manager est on change l'item selected pour aller au bon endroit
+            bool trouver = false;
+            var temp = VisualTreeHelper.GetParent(this);
+            while (!trouver) //tant qu'on trouve pas un manager on remonte
+            {
+                if (temp.GetType() == typeof(windowParts.MasterDetail))
+                {
+                    (temp.GetValue(DataContextProperty) as Manager).ElementSelected = DataContext as Element;
+                    trouver = true;
+                }
+                temp = VisualTreeHelper.GetParent(temp);
+            }
         }
     }
 }

@@ -16,11 +16,13 @@ namespace Modele
     public class Manager : INotifyPropertyChanged
     {
         public bool SearchActivated = true;
+        private Element elementSelected;
+
         public IList<Element> Affichage
         {
             get
             {
-                var temp = Data.Elements;
+                var temp = Data.Elements.ToList(); //on recupere les elements et on applique recherche dessus
                 Recherche(temp);
                 return temp;
             }
@@ -36,16 +38,24 @@ namespace Modele
         {
             get
             {
-                if (ElementSelected.GetType()==typeof(Launcher))
+                if (ElementSelected.GetType() == typeof(Launcher))
                 {
                     Launcher launcher = ElementSelected as Launcher;
-                    var temp = Data.Elements.Skip(Data.GetLauncherIndex((LauncherName)Enum.Parse(typeof(LauncherName), launcher.Nom))+1).Take(launcher.NbJeux).ToList();
+                    var temp = Data.Elements.Skip(Data.GetLauncherIndex((LauncherName)Enum.Parse(typeof(LauncherName), launcher.Nom)) + 1).Take(launcher.NbJeux).ToList();
                     return temp;
                 }
-                return new List<Element>{ };
+                return new List<Element> { };
             }
         }
-        public Element ElementSelected { get; set; }
+        public Element ElementSelected
+        {
+            get => elementSelected;
+            set
+            {
+                elementSelected = value;
+                NotifyPropertyChanged();
+            }
+        }
         public string Pattern { get; set; } = null;
         public Data Data { get; set; }
 
@@ -110,7 +120,7 @@ namespace Modele
         /// <param name="Dossier"></param>
         public void AjouterDossier(string Dossier)
         {
-            Data.AjouterDossier(Dossier);            
+            Data.AjouterDossier(Dossier);
         }
 
         public void SuppDossier(string Dossier)

@@ -6,16 +6,18 @@
              xmlns:local="clr-namespace:Vues.User_Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <ItemsControl ItemsSource="{Binding JeuLauncherSelected}">
-        <ItemsControl.ItemTemplate>
-            <DataTemplate>
-                <local:VignetteJeu/>
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
-        <ItemsControl.ItemsPanel>
-            <ItemsPanelTemplate>
-                <WrapPanel/>
-            </ItemsPanelTemplate>
-        </ItemsControl.ItemsPanel>
-    </ItemsControl>
+    <ScrollViewer>
+        <ItemsControl ItemsSource="{Binding JeuLauncherSelected}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <local:VignetteJeu Width="200"/>                
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+    </ScrollViewer>
 </UserControl>
