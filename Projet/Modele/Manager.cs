@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.Specialized;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace Modele
 {
@@ -31,9 +32,23 @@ namespace Modele
                 return Data.Dossiers;
             }
         }
+        public List<Element> JeuLauncherSelected
+        {
+            get
+            {
+                if (ElementSelected.GetType()==typeof(Launcher))
+                {
+                    Launcher launcher = ElementSelected as Launcher;
+                    var temp = Data.Elements.Skip(Data.GetLauncherIndex((LauncherName)Enum.Parse(typeof(LauncherName), launcher.Nom))+1).Take(launcher.NbJeux).ToList();
+                    return temp;
+                }
+                return new List<Element>{ };
+            }
+        }
         public Element ElementSelected { get; set; }
         public string Pattern { get; set; } = null;
         public Data Data { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public Manager(Data data)

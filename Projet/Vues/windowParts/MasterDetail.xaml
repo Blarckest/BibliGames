@@ -12,10 +12,11 @@
             <ColumnDefinition Width="200"/>
             <ColumnDefinition MinWidth="300"/>
         </Grid.ColumnDefinitions>
-        <ListBox x:Name="ListeJeu" Grid.Column="0" BorderThickness="0" ItemsSource="{Binding Affichage}" SelectedItem="{Binding ElementSelected, Mode=TwoWay}">
+        <ListBox x:Name="ListeJeu" Grid.Column="0" BorderThickness="0" ItemsSource="{Binding Affichage}"
+                 SelectedItem="{Binding ElementSelected, Mode=TwoWay}" SelectionChanged="ListeJeu_SelectionChanged">
             <ListBox.Resources>
                 <DataTemplate DataType="{x:Type Modele:Jeu}">
-                    <User_Controls:VignetteJeu Width="{Binding Path=ActualWidth, ElementName=ListeJeu}"/>
+                    <User_Controls:JeuUC Width="{Binding Path=ActualWidth, ElementName=ListeJeu}"/>
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type Modele:Launcher}">
                     <User_Controls:LauncherUC />
@@ -23,6 +24,8 @@
             </ListBox.Resources>
         </ListBox>
         <GridSplitter Width="2" VerticalAlignment="Stretch" ShowsPreview="True"/>
-        <User_Controls:Details DataContext="{Binding SelectedItem, ElementName=ListeJeu}" Grid.Column="1"/>
+        <ContentControl x:Name="Detail" Grid.Column="1">
+            <!--<User_Controls:Details DataContext="{Binding SelectedItem, ElementName=ListeJeu}" />-->
+        </ContentControl>
     </Grid>
 </UserControl>

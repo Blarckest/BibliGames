@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Modele;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -21,6 +22,18 @@ namespace Vues.windowParts
         public MasterDetail()
         {
             InitializeComponent();
+        }
+
+        private void ListeJeu_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ListeJeu.SelectedItem.GetType()==typeof(Launcher))
+            {
+                Detail.Content = new User_Controls.DetailLauncher() { DataContext = this.DataContext };
+            }
+            else
+            {
+                Detail.Content = new User_Controls.Details() { DataContext = ListeJeu.SelectedItem };
+            }
         }
     }
 }

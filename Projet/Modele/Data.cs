@@ -170,7 +170,7 @@ namespace Modele
 
         }
 
-        private int GetLauncherIndex(LauncherName LauncherName)
+        public int GetLauncherIndex(LauncherName LauncherName)
         {
             Launcher Temp = new Launcher(LauncherName);
             return Elements.IndexOf(Temp);
