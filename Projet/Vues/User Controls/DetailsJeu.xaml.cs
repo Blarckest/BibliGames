@@ -33,17 +33,7 @@ namespace Vues.User_Controls
         private void LancerJeu(object sender, RoutedEventArgs e)
         {
             //lancer le jeu
-            bool trouver = false;
-            var temp = VisualTreeHelper.GetParent(this);
-            while (!trouver) //tant qu'on trouve pas un manager on remonte
-            {
-                if (temp.GetType() == typeof(windowParts.MasterDetail))
-                {
-                    (temp.GetValue(DataContextProperty) as Manager).LancerJeu();
-                    trouver = true;
-                }
-                temp = VisualTreeHelper.GetParent(temp);
-            }
+            (App.Current as App).Navigator.Manager.LancerJeu();
         }
     }
 }

@@ -10,23 +10,22 @@ namespace Vues
 {
     public class Navigator
     {
-        private Manager manager;
+        public Manager Manager { get; set; }
         public void Setup(out Manager manager)
         {
             Logs.SuppLog();
-            Loader Loader = new Stub("Ressources/Sauvegarde");
+            Loader Loader = new LoadElements("Ressources/Sauvegarde");
             manager = new Manager(Loader.Load()); //on load la ssauvegarde
-            this.manager = manager; //on recupere le manager
-            (App.Current as App).Navigator = new Navigator();//pour que les enfants de la vue puisse acceder au navigator
+            Manager = manager; //on recupere le manager
         }
         public void Save()
         {
             Saver Saver = new SaveElements("Ressources/Sauvegarde"); 
-            Saver.Save(manager.Data);//on save
+            Saver.Save(Manager.Data);//on save
         }
         public void OpenParametre()
         {
-            Parametre window = new Parametre(manager);
+            Parametre window = new Parametre(Manager);
             window.ShowDialog();
         }
         public void OpenAjoutJeu()
@@ -41,7 +40,7 @@ namespace Vues
             {
                 if (listeJeu.SelectedItem.GetType() == typeof(Launcher))
                 {
-                    detail.Content = new User_Controls.DetailLauncher() { DataContext = manager };
+                    detail.Content = new User_Controls.DetailLauncher() { DataContext = Manager };
                 }
                 else
                 {

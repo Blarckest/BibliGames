@@ -26,18 +26,8 @@ namespace Vues.User_Controls
 
         private void VignetteClicked(object sender, MouseButtonEventArgs e)
         {
-            //on trouve le manager est on change l'item selected pour aller au bon endroit
-            bool trouver = false;
-            var temp = VisualTreeHelper.GetParent(this);
-            while (!trouver) //tant qu'on trouve pas un manager on remonte
-            {
-                if (temp.GetType() == typeof(windowParts.MasterDetail))
-                {
-                    (temp.GetValue(DataContextProperty) as Manager).ElementSelected = DataContext as Element;
-                    trouver = true;
-                }
-                temp = VisualTreeHelper.GetParent(temp);
-            }
+            //on change l'item selected pour aller au bon endroit
+            (App.Current as App).Navigator.Manager.ElementSelected = DataContext as Element;
         }
     }
 }

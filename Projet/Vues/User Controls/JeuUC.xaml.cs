@@ -40,17 +40,7 @@ namespace Vues.User_Controls
 
             if (MessageBox.Show("Supprimer ce jeu?", "Suppression", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                trouver = false;
-                temp = VisualTreeHelper.GetParent(this);
-                while (!trouver) //tant qu'on trouve pas un manager on remonte
-                {
-                    if (temp.GetType() == typeof(ListBox))
-                    {
-                        (temp.GetValue(DataContextProperty) as Manager).SuppJeu();
-                        trouver = true;
-                    }
-                    temp = VisualTreeHelper.GetParent(temp);
-                }
+                (App.Current as App).Navigator.Manager.SuppJeu();
             }
         }
 
