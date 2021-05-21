@@ -110,6 +110,7 @@ namespace Modele
             }
             catch
             {
+                Logs.ErrorLog($"Lancement du jeu {Elem.Nom} imposssible");
                 return;
             }
         }
