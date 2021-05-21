@@ -26,11 +26,10 @@ namespace Vues
         public Manager manager;
         public MainWindow()
         {
-            Logs.SuppLog();
-            Loader Loader = new Stub("Ressources/Sauvegarde");
-            manager = new Manager(Loader.Load());
+            (App.Current as App).Navigator.Setup(out manager);
             DataContext = manager;
             InitializeComponent();
+            (App.Current as App).Navigator.SetupMasterDetail(MasterDetailCC);
             manager.SearchActivated = false;
             BarreDeRecherche.Text = "Rechercher";
             manager.SearchActivated = true;
@@ -38,13 +37,11 @@ namespace Vues
 
         private void AjoutJeu(object sender, RoutedEventArgs e)
         {
-            AjoutJeuWindow Window = new AjoutJeuWindow();
-            Window.ShowDialog();
+            (App.Current as App).Navigator.OpenAjoutJeu();
         }
         private void OuvrirParametre(object sender, MouseButtonEventArgs e)
         {
-            Parametre window = new Parametre(manager);
-            window.ShowDialog();
+            (App.Current as App).Navigator.OpenParametre();
         }
         private void ChampRechEntre(object sender, RoutedEventArgs e)
         {
@@ -67,8 +64,7 @@ namespace Vues
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            Saver Saver = new SaveElements("Ressources/Sauvegarde");
-            Saver.Save(manager.Data);
+            (App.Current as App).Navigator.Save();
         }
 
         private void Recherche(object sender, TextChangedEventArgs e)//appeler quand le texte de la barre de recherche change

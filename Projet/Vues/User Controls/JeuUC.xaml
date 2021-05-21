@@ -20,6 +20,5 @@
                 </ToolTip>
             </TextBlock.ToolTip>
         </TextBlock>
-
     </DockPanel>
 </UserControl>

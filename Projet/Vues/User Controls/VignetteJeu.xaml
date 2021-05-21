@@ -8,6 +8,12 @@
              d:DesignHeight="450" d:DesignWidth="800" MouseLeftButtonDown="VignetteClicked">
     <DockPanel Margin="40">
         <Image DockPanel.Dock="Top" Source="{Binding Icone}" Width="100"/>
-        <TextBlock DockPanel.Dock="Bottom" Text="{Binding Nom}" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+        <TextBlock DockPanel.Dock="Bottom" Text="{Binding Nom}" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis">
+            <TextBlock.ToolTip>
+                <ToolTip>
+                    <TextBlock Text="{Binding Nom}"/>
+                </ToolTip>
+            </TextBlock.ToolTip>
+        </TextBlock>
     </DockPanel>
 </UserControl>

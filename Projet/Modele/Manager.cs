@@ -38,13 +38,17 @@ namespace Modele
         {
             get
             {
-                if (ElementSelected.GetType() == typeof(Launcher))
+                if (ElementSelected!=null)
                 {
-                    Launcher launcher = ElementSelected as Launcher;
-                    var temp = Data.Elements.Skip(Data.GetLauncherIndex((LauncherName)Enum.Parse(typeof(LauncherName), launcher.Nom)) + 1).Take(launcher.NbJeux).ToList();
-                    return temp;
+                    if (ElementSelected.GetType() == typeof(Launcher))
+                    {
+                        Launcher launcher = ElementSelected as Launcher;
+                        var temp = Data.Elements.Skip(Data.GetLauncherIndex((LauncherName)Enum.Parse(typeof(LauncherName), launcher.Nom)) + 1).Take(launcher.NbJeux).ToList();
+                        return temp;
+                    }
+                    return new List<Element> { }; 
                 }
-                return new List<Element> { };
+                return null;
             }
         }
         public Element ElementSelected

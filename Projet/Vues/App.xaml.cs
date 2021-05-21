@@ -13,6 +13,6 @@ namespace Vues
     /// </summary>
     public partial class App : Application
     {
-
+        public Navigator Navigator { get; set; } = new Navigator();
     }
 }
