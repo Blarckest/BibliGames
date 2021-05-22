@@ -24,12 +24,14 @@ namespace Modele
         public void AjoutJeu(LauncherName Launcher, string Exec)
         {
             Jeu Jeu = SearchInfo.ExtractGameInfoFromExec(Exec);
+            Jeu.IsManuallyAdded = true;
             InsertGame(Launcher, Jeu);
         }
 
         public void AjoutJeu(Jeu Jeu)
         {
             InsertGame(Jeu.Launcher, Jeu);
+            Jeu.IsManuallyAdded = true;
         }
 
         public void ModifDetail(string Image, string Description, string Exec, Jeu Elementselected)

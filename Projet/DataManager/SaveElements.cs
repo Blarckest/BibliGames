@@ -47,7 +47,8 @@ namespace DataManager
                              new XElement("Description", e.Description),
                              new XElement("Note", e.Note),
                              new XElement("Image", e.Image),
-                             new XElement("Icone", e.Icone)));
+                             new XElement("Icone", e.Icone),
+                             new XElement("IsManuallyAdded",e.IsManuallyAdded)));
 
             Fichier.Add(new XElement("Jeux", Jeux));
 

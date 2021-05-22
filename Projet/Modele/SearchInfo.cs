@@ -33,21 +33,39 @@ namespace Modele
                 WebClient = new WebClient();
                 bool NeedImage = false, NeedIcone = false, NeedDescription = false;
                 CreateFolderStructure(JeuRecu);
-                if (!File.Exists(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\image.jpg") || new FileInfo(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\image.jpg").Length == 0 || JeuRecu.Image == null) //si fichier existe pas ou qu'il est vide
+                string PathToFolderExec = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);//si jamais on en a besoin
+                if (string.IsNullOrEmpty(JeuRecu.Image))
                 {
-                    NeedImage = true;
+                    if (!File.Exists(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\image.jpg") || new FileInfo(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\image.jpg").Length == 0) //si fichier existe pas ou qu'il est vide
+                    {
+                        NeedImage = true;
+                    }
+                    else//si la description est vide on va la chercher dans le fichier
+                    {
+                        JeuRecu.Image = Path.Combine(PathToFolderExec, @$"Ressources\InfoJeux\{GetFolderName(JeuRecu)}\image.jpg");
+                    } 
                 }
-                if (!File.Exists(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\icon.jpg") || new FileInfo(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\icon.jpg").Length == 0 || JeuRecu.Icone == null) //si fichier existe pas ou qu'il est vide
+                if (string.IsNullOrEmpty(JeuRecu.Icone))
                 {
-                    NeedIcone = true;
+                    if (!File.Exists(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\icon.jpg") || new FileInfo(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\icon.jpg").Length == 0) //si fichier existe pas ou qu'il est vide
+                    {
+                        NeedIcone = true;
+                    }
+                    else//si la description est vide on va la chercher dans le fichier
+                    {
+                        JeuRecu.Icone = Path.Combine(PathToFolderExec, @$"Ressources\InfoJeux\{GetFolderName(JeuRecu)}\icon.jpg");
+                    } 
                 }
-                if (!File.Exists(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\text.txt") || new FileInfo(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\text.txt").Length == 0 || JeuRecu.Description == null) //si fichier existe pas ou qu'il est vide
+                if (string.IsNullOrEmpty(JeuRecu.Description))
                 {
-                    NeedDescription = true;
-                }
-                else if (string.IsNullOrEmpty(JeuRecu.Description)) //si la description est vide on va la chercher dans le fichier
-                {
-                    JeuRecu.Description = File.ReadAllText(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\text.txt");
+                    if (!File.Exists(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\text.txt") || new FileInfo(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\text.txt").Length == 0) //si fichier existe pas ou qu'il est vide
+                    {
+                        NeedDescription = true;
+                    }
+                    else //si la description est vide on va la chercher dans le fichier
+                    {
+                        JeuRecu.Description = File.ReadAllText(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\text.txt");
+                    } 
                 }
 
                 if (NeedImage || NeedIcone || NeedDescription)

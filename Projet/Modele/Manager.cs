@@ -80,11 +80,13 @@ namespace Modele
             if (File.Exists(Exec))
             {
                 Data.AjoutJeu(Launcher, Exec);
+                NotifyPropertyChanged("Affichage");
             }
         }
 
         public void AjoutJeu(Jeu Jeu)
         {
+            //notify se fait dans la fonction appeler
             Data.AjoutJeu(Jeu);
         }
 
@@ -101,6 +103,7 @@ namespace Modele
             if (ElementSelected.GetType() == typeof(Jeu))
             {
                 Data.SuppJeu(ElementSelected as Jeu);
+                NotifyPropertyChanged("Affichage");
             }
         }
 
@@ -126,11 +129,13 @@ namespace Modele
         public void AjouterDossier(string Dossier)
         {
             Data.AjouterDossier(Dossier);
+            NotifyPropertyChanged("Affichage");
         }
 
         public void SuppDossier(string Dossier)
         {
             Data.SuppDossier(Dossier);
+            NotifyPropertyChanged("Affichage");
         }
 
         public void UpdateRecherche()

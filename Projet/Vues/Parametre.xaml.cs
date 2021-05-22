@@ -24,13 +24,11 @@ namespace Vues
     public partial class Parametre : Window
     {
         public ObservableCollection<string> DossierAffiche { get; set; }
-        private Manager Manager;
         private IList<string> DossierSupp = new List<string>();
-        public Parametre(Manager manager)
+        public Parametre()
         {
-            Manager = manager;
             DataContext = this;
-            DossierAffiche = new ObservableCollection<string>(manager.Data.Dossiers);
+            DossierAffiche = new ObservableCollection<string>((App.Current as App).Navigator.Manager.Data.Dossiers);
             InitializeComponent();
         }
         public void ParcourirDossiers(object sender, MouseButtonEventArgs e)
@@ -53,21 +51,21 @@ namespace Vues
             {
                 foreach(string Dossier in DossierSupp)
                 {
-                    Manager.SuppDossier(Dossier);
+                    (App.Current as App).Navigator.Manager.SuppDossier(Dossier);
                 }
             }
             foreach (string Dossier in DossierAffiche)
             {
-                Manager.AjouterDossier(Dossier);
+                (App.Current as App).Navigator.Manager.AjouterDossier(Dossier);
             }          
             this.Close();
         }
 
         private void SupprimeChemin(object sender, MouseButtonEventArgs e)
         {
-            DossierSupp.Add(ListeFolder.SelectedItem as string);
-            DossierAffiche.Remove(ListeFolder.SelectedItem as string);
             //suppression du chemin selectionné
+            DossierSupp.Add(ListeFolder.SelectedItem as string);
+            DossierAffiche.Remove(ListeFolder.SelectedItem as string);            
         }
 
         private void TextBoxChemin_TouchEnterPressed(object sender, KeyEventArgs e)

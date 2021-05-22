@@ -48,13 +48,27 @@ namespace DataManager
                                         e.Element("Icone").Value,
                                         e.Element("Note").Value,
                                         e.Element("Description").Value,
-                                        (LauncherName)Enum.Parse(typeof(LauncherName), e.Element("Launcher").Value)))
+                                        (LauncherName)Enum.Parse(typeof(LauncherName), e.Element("Launcher").Value),
+                                        Convert.ToBoolean(e.Element("IsManuallyAdded").Value)))
                                    .ToList();
 
 
 
                 AdditionalFolder = System.IO.File.ReadAllLines($"{Folder}/AdditionalFolder.txt"); //on recupere les dossier de recherche
                 DirectoryDetected = SearchForGameDirectory.GetAllGameDirectory(AdditionalFolder.ToList()); //get les directory qu'est censer avoir la sauvegarde
+                var JeuxManuallyAdded = Games.Where(j => j.IsManuallyAdded); //on recup les jeux ajouter manuellement
+                if (JeuxManuallyAdded.Count()!=0)
+                {
+                    var DossierJeuxManuallyAdded = JeuxManuallyAdded.Select(j => j.Dossier).ToList(); //on recup leurs dossier pour que la detection de mise a jour se passe bien
+                    if (DirectoryDetected.ContainsKey(LauncherName.Autre))
+                    {
+                        DirectoryDetected[LauncherName.Autre].AddRange(DossierJeuxManuallyAdded); //on append si la clé était deja defini
+                    }
+                    else
+                    {
+                        DirectoryDetected.Add(LauncherName.Autre, DossierJeuxManuallyAdded); //on defini la clé si elle l'eteit pas avant
+                    }
+                }
 
                 if (Launchers.All(l => DirectoryDetected.Keys.Contains((LauncherName)Enum.Parse(typeof(LauncherName), l.Nom)))) //si on a bien tt les clé en rapport avec la sauvegarde
                 {

@@ -25,7 +25,7 @@ namespace Vues
         }
         public void OpenParametre()
         {
-            Parametre window = new Parametre(Manager);
+            Parametre window = new Parametre();
             window.ShowDialog();
         }
         public void OpenAjoutJeu()

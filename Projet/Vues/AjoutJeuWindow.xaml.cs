@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Modele;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -28,6 +29,7 @@ namespace Vues
         private void Valider(object sender, RoutedEventArgs e)
         {
             //valider modif
+            (App.Current as App).Navigator.Manager.AjoutJeu((LauncherName)ListeLuncher.SelectedItem, textBoxLienExe.Text);
             this.Close();
         }
 

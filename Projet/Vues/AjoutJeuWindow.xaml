@@ -38,9 +38,8 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Text="Luncher associé: " VerticalAlignment="Center"/>
-            <ComboBox Width="570" ItemsSource="{Binding Source={StaticResource LauncherName}}">
-                <!--liste des luncher via data binding-->
-            </ComboBox>
+            <ComboBox x:Name="ListeLuncher" Width="570" ItemsSource="{Binding Source={StaticResource LauncherName}}"/>
+            <!--liste des luncher via data binding-->
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,7">
             <TextBlock Text="Lien vers l'executable: " VerticalAlignment="Center"/>

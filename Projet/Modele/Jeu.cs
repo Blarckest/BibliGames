@@ -10,6 +10,7 @@ namespace Modele
     public class Jeu : Element, INotifyPropertyChanged
     {
         private string exec=null, description=null, image=null, note=null, icone=null;
+        public bool IsManuallyAdded { get; set; } = false;
         public string Dossier { get; set; } = null;
         public LauncherName Launcher { get; set; }
         public string Icone
@@ -81,12 +82,13 @@ namespace Modele
             this.Launcher = Launcher;
         }
 
-        public Jeu(string Nom, string Dossier, string Exec, string Image, string Icone, string Note,string Description, LauncherName Launcher = LauncherName.Autre) : this(Nom, Dossier,Exec,Launcher)
+        public Jeu(string Nom, string Dossier, string Exec, string Image, string Icone, string Note,string Description, LauncherName Launcher = LauncherName.Autre, bool IsManuallyAdded=false) : this(Nom, Dossier,Exec,Launcher)
         {
             this.Icone = Icone;
             this.Image = Image;
             this.Note = Note;
             this.Description = Description;
+            this.IsManuallyAdded = IsManuallyAdded;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
