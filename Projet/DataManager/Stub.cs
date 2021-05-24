@@ -10,33 +10,33 @@ namespace DataManager
     public class Stub :Loader
     {
         public Data Data { get; set; }
-        public Stub(string Path = "") : base(Path)
+        public Stub(string path = "") : base(path)
         {
-            List<Element> Elements = new List<Element>();
-            List<Jeu> Games = new List<Jeu>();
-            string[] PathToTest = { "../../../../../Test" }; //on va au dossier de test
-            SearchForExecutableAndName.SearchForExecutables(Games, SearchForGameDirectory.GetGameDirectoryFromPaths(PathToTest)); //on charge
-            if (Games.Count > 0)//si l'utilisateur a des jeux
+            List<Element> elements = new List<Element>();
+            List<Jeu> games = new List<Jeu>();
+            string[] pathToTest = { "../../../../../Test" }; //on va au dossier de test
+            SearchForExecutableAndName.SearchForExecutables(games, SearchForGameDirectory.GetGameDirectoryFromPaths(pathToTest)); //on charge
+            if (games.Count > 0)//si l'utilisateur a des jeux
             {
-                Launcher Actuel = new Launcher(Games[0].Launcher);
-                Elements.Add(Actuel);
-                for (int i = 0; i < Games.Count; i++)
+                Launcher actuel = new Launcher(games[0].Launcher);
+                elements.Add(actuel);
+                for (int i = 0; i < games.Count; i++)
                 {
-                    if (Games[i].Launcher.ToString() == Actuel.ToString()) //on est dans le meme launcher
+                    if (games[i].Launcher.ToString() == actuel.ToString()) //on est dans le meme launcher
                     {
-                        Elements.Add(Games[i]);
-                        Actuel.NbJeux++;//on augmente le nb de jeu
+                        elements.Add(games[i]);
+                        actuel.NbJeux++;//on augmente le nb de jeu
                     }
                     else
                     {
-                        Actuel = new Launcher(Games[i].Launcher); //on ajoute le launcher
-                        Elements.Add(Actuel);
-                        Elements.Add(Games[i]);
-                        Actuel.NbJeux++;//on augmente le nb de jeu
+                        actuel = new Launcher(games[i].Launcher); //on ajoute le launcher
+                        elements.Add(actuel);
+                        elements.Add(games[i]);
+                        actuel.NbJeux++;//on augmente le nb de jeu
                     }
                 }
             }
-            foreach (Element element in Elements)//on set les infos
+            foreach (Element element in elements)//on set les infos
             {
                 if (element.GetType() == typeof(Jeu))
                 {
@@ -44,7 +44,7 @@ namespace DataManager
                     thread.Start(element);
                 }
             }
-            Data = new Data(Elements,new List<string>{ });
+            Data = new Data(elements,new List<string>{ });
         }
 
         public override Data Load()

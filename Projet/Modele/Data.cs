@@ -14,86 +14,86 @@ namespace Modele
         public IList<Element> Elements { get; set; }
         public IList<string> Dossiers { get; set; }
 
-        public Data(IList<Element> Elements, IList<string> Dossiers)
+        public Data(IList<Element> elements, IList<string> dossiers)
         {
-            this.Elements = new ObservableCollection<Element>(Elements);
-            this.Dossiers = Dossiers;
+            this.Elements = new ObservableCollection<Element>(elements);
+            this.Dossiers = dossiers;
         }
 
 
-        public void AjoutJeu(LauncherName Launcher, string Exec)
+        public void AjoutJeu(LauncherName launcher, string exec)
         {
-            Jeu Jeu = SearchInfo.ExtractGameInfoFromExec(Exec);
-            Jeu.IsManuallyAdded = true;
-            InsertGame(Launcher, Jeu);
+            Jeu jeu = SearchInfo.ExtractGameInfoFromExec(exec);
+            jeu.IsManuallyAdded = true;
+            InsertGame(launcher, jeu);
         }
 
-        public void AjoutJeu(Jeu Jeu)
+        public void AjoutJeu(Jeu jeu)
         {
-            InsertGame(Jeu.Launcher, Jeu);
-            Jeu.IsManuallyAdded = true;
+            InsertGame(jeu.Launcher, jeu);
+            jeu.IsManuallyAdded = true;
         }
 
-        public void ModifDetail(string Image, string Description, string Exec, Jeu Elementselected)
+        public void ModifDetail(string image, string description, string exec, Jeu elementselected)
         {
-            var Element = Elementselected as Jeu;
-            if (Element.Image != Image && File.Exists(Image))
+            var element = elementselected as Jeu;
+            if (element.Image != image && File.Exists(image))
             {
-                Element.Image = Image;
+                element.Image = image;
             }
-            if (Element.Description != Description)
+            if (element.Description != description)
             {
-                Element.Description = Description;
+                element.Description = description;
             }
-            if (Element.Exec != Exec && File.Exists(Exec))
+            if (element.Exec != exec && File.Exists(exec))
             {
-                Element.Exec = Exec;
+                element.Exec = exec;
             }
         }
 
-        public void SuppJeu(Jeu Elementselected)
+        public void SuppJeu(Jeu elementselected)
         {
-            (Elements[GetLauncherIndex(Elementselected.Launcher)] as Launcher).NbJeux--; //on enleve un jeu au launcher concerné
-            Logs.InfoLog($"Suppression du jeu {Elementselected.Nom}");
-            Elements.Remove(Elementselected);
+            (Elements[GetLauncherIndex(elementselected.Launcher)] as Launcher).NbJeux--; //on enleve un jeu au launcher concerné
+            Logs.InfoLog($"Suppression du jeu {elementselected.Nom}");
+            Elements.Remove(elementselected);
         }
 
         /// <summary>
         /// Appeller lors de l'ajout d'un dossier dans les parametre
         /// </summary>
-        /// <param name="Dossier"></param>
-        public bool AjouterDossier(string Dossier)
+        /// <param name="dossier"></param>
+        public bool AjouterDossier(string dossier)
         {
-            if (!Dossiers.Contains(Dossier))
+            if (!Dossiers.Contains(dossier))
             {
-                Logs.InfoLog($"Ajout du dossier {Dossier}");
-                Dossiers.Add(Dossier);
-                List<Jeu> Res = new List<Jeu>();
-                List<string> Folder = new List<string>(Directory.GetDirectories(Dossier));
-                SearchForExecutableAndName.SearchForExecutables(Res, Folder);
-                foreach (Jeu Jeu in Res)
+                Logs.InfoLog($"Ajout du dossier {dossier}");
+                Dossiers.Add(dossier);
+                List<Jeu> res = new List<Jeu>();
+                List<string> folder = new List<string>(Directory.GetDirectories(dossier));
+                SearchForExecutableAndName.SearchForExecutables(res, folder);
+                foreach (Jeu jeu in res)
                 {
-                    AjoutJeu(Jeu);
+                    AjoutJeu(jeu);
                     Thread thread = new Thread(new ParameterizedThreadStart(SearchInfo.SetInfo));
-                    thread.Start(Jeu);
+                    thread.Start(jeu);
                 }
                 return true;
             }
             return false;
         }
 
-        public bool SuppDossier(string Dossier)
+        public bool SuppDossier(string dossier)
         {
-            if (Dossiers.Contains(Dossier))
+            if (Dossiers.Contains(dossier))
             {
-                Logs.InfoLog($"Suppression du dossier {Dossier}");
+                Logs.InfoLog($"Suppression du dossier {dossier}");
                 int indexLauncher = GetLauncherIndex(LauncherName.Autre);
                 if (indexLauncher != -1)
                 {
                     for (int i = indexLauncher + 1; i < Elements.Count; i++)
                     {
-                        Jeu Jeu = Elements[i] as Jeu;
-                        if (Directory.GetParent(Jeu.Dossier).FullName == Dossier)
+                        Jeu jeu = Elements[i] as Jeu;
+                        if (Directory.GetParent(jeu.Dossier).FullName == dossier)
                         {
                             Elements.RemoveAt(i);
                             (Elements[indexLauncher] as Launcher).NbJeux--;
@@ -104,7 +104,7 @@ namespace Modele
                         }
                     }
                 }
-                Dossiers.Remove(Dossier);
+                Dossiers.Remove(dossier);
                 return true;
             }
             return false;
@@ -112,70 +112,70 @@ namespace Modele
 
 
 
-        private void InsertGame(LauncherName Launcher, Jeu Jeu)
+        private void InsertGame(LauncherName launcher, Jeu jeu)
         {
-            if (Elements.Any(e => e.Nom.Equals(Launcher.ToString())))
+            if (Elements.Any(e => e.Nom.Equals(launcher.ToString())))
             {
-                int index = GetLauncherIndex(Launcher);
-                Launcher LauncherActuel = Elements[index] as Launcher; //garde en memoire l'instance du launcher
+                int index = GetLauncherIndex(launcher);
+                Launcher launcherActuel = Elements[index] as Launcher; //garde en memoire l'instance du launcher
                 index++;
-                while (index != Elements.Count && Elements[index].GetType() == typeof(Jeu) && Elements[index].CompareTo(Jeu as Element) < 0)
+                while (index != Elements.Count && Elements[index].GetType() == typeof(Jeu) && Elements[index].CompareTo(jeu as Element) < 0)
                 {
                     index++; //tant que l'ordre alphabetique est pas respecté
                 }
                 if (index >= Elements.Count) //si on est a la fin
                 {
-                    Elements.Add(Jeu);
+                    Elements.Add(jeu);
                 }
                 else
                 {
-                    Elements.Insert(index, Jeu);
+                    Elements.Insert(index, jeu);
                 }
-                (Elements[index] as Jeu).Launcher = Launcher; //on set le launcher associé au jeu
-                (Elements.Where(e => ReferenceEquals(e, LauncherActuel)).First() as Launcher).NbJeux++; //on ajoute un jeu
+                (Elements[index] as Jeu).Launcher = launcher; //on set le launcher associé au jeu
+                (Elements.Where(e => ReferenceEquals(e, launcherActuel)).First() as Launcher).NbJeux++; //on ajoute un jeu
             }
             else
             {
-                InsertLauncher(Launcher); //on insert le launcher
-                InsertGame(Launcher, Jeu); //on relance et on va se retrouver dans le code au dessus car cette fois-ci le launcher existe
+                InsertLauncher(launcher); //on insert le launcher
+                InsertGame(launcher, jeu); //on relance et on va se retrouver dans le code au dessus car cette fois-ci le launcher existe
             }
 
         }
 
-        private void InsertLauncher(LauncherName Launcher)
+        private void InsertLauncher(LauncherName launcher)
         {
             int index = 0;
             if (Elements.Count == 0) //si c'est le premier element inserer
             {
-                Elements.Add(new Launcher(Launcher));
+                Elements.Add(new Launcher(launcher));
                 return;
             }
-            if (Launcher != LauncherName.Autre)
+            if (launcher != LauncherName.Autre)
             {
-                while (index != Elements.Count && (Elements[index] as Launcher).Nom.CompareTo(Launcher.ToString()) < 0) //tant que le launcher est pas a sa place dans l'ordre alphabetique
+                while (index != Elements.Count && (Elements[index] as Launcher).Nom.CompareTo(launcher.ToString()) < 0) //tant que le launcher est pas a sa place dans l'ordre alphabetique
                 {
                     index += (Elements[index] as Launcher).NbJeux + 1;
                 }
                 if (index >= Elements.Count) //si on est a la fin
                 {
-                    Elements.Add(new Launcher(Launcher));
+                    Elements.Add(new Launcher(launcher));
                 }
                 else
                 {
-                    Elements.Insert(index, new Launcher(Launcher));
+                    Elements.Insert(index, new Launcher(launcher));
                 }
             }
             else
             {
-                Elements.Add(new Launcher(Launcher)); //launcher.autre est obligatoirement en dernier
+                Elements.Add(new Launcher(launcher)); //launcher.autre est obligatoirement en dernier
             }
 
         }
 
-        public int GetLauncherIndex(LauncherName LauncherName)
+        public int GetLauncherIndex(LauncherName launcherName)
         {
-            Launcher Temp = new Launcher(LauncherName);
-            return Elements.IndexOf(Temp);
+            Launcher temp = new Launcher(launcherName);
+            return Elements.IndexOf(temp);
         }
     }
 }

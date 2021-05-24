@@ -23,13 +23,13 @@ namespace Modele
                 }
             }
         }
-        public Launcher(LauncherName Name=LauncherName.Autre):base(Name.ToString())
+        public Launcher(LauncherName name=LauncherName.Autre):base(name.ToString())
         {
 
         }
-        public Launcher(int NbJeux, LauncherName Name = LauncherName.Autre):this(Name)
+        public Launcher(int nbJeux, LauncherName name = LauncherName.Autre):this(name)
         {
-            this.NbJeux = NbJeux;
+            this.NbJeux = nbJeux;
         }
     }
 }

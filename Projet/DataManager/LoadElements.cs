@@ -13,23 +13,23 @@ namespace DataManager
 {
     public class LoadElements : Loader
     {
-        public LoadElements(string Folder) : base(Folder)
+        public LoadElements(string folder) : base(folder)
         {
         }
 
         public override Data Load()
         {
-            bool NeedRecupGames = true; //determine si on a besoin de recuperer les jeux a nouveaux
-            string[] AdditionalFolder=null;
-            List<Launcher> Launchers;
-            List<Jeu> Games;
-            List<Element> Elements=new List<Element>();
-            Dictionary<LauncherName, List<string>> DirectoryDetected;
+            bool needRecupGames = true; //determine si on a besoin de recuperer les jeux a nouveaux
+            string[] additionalFolder=null;
+            List<Launcher> launchers;
+            List<Jeu> games;
+            List<Element> elements=new List<Element>();
+            Dictionary<LauncherName, List<string>> directoryDetected;
             if (File.Exists($"{Folder}/LauncherInfo.xml") && File.Exists($"{Folder}/GamesInfo.xml") && File.Exists($"{Folder}/AdditionalFolder.txt") && new FileInfo($"{Folder}/LauncherInfo.xml").Length != 0) //si la sauvegarde existe et que les fichiers sont pas vide si AdditionalFolder.txt est vide c pas grave
             {
-                XDocument LaunchersFile = XDocument.Load($"{Folder}/LauncherInfo.xml");
+                XDocument launchersFile = XDocument.Load($"{Folder}/LauncherInfo.xml");
 
-                Launchers = LaunchersFile.Descendants("Launcher") //chargement des launcher
+                launchers = launchersFile.Descendants("Launcher") //chargement des launcher
                                       .Select(e => new Launcher()
                                       {
                                           Nom = e.Attribute("Nom").Value,
@@ -37,9 +37,9 @@ namespace DataManager
                                       })
                                       .ToList();
 
-                XDocument GamesFile = XDocument.Load($"{Folder}/GamesInfo.xml");
+                XDocument gamesFile = XDocument.Load($"{Folder}/GamesInfo.xml");
 
-                Games = GamesFile.Descendants("Jeu") //chargement des jeux
+                games = gamesFile.Descendants("Jeu") //chargement des jeux
                                    .Select(e => new Jeu(
                                         e.Attribute("Nom").Value,
                                         e.Element("Dossier").Value,
@@ -54,85 +54,85 @@ namespace DataManager
 
 
 
-                AdditionalFolder = System.IO.File.ReadAllLines($"{Folder}/AdditionalFolder.txt"); //on recupere les dossier de recherche
-                DirectoryDetected = SearchForGameDirectory.GetAllGameDirectory(AdditionalFolder.ToList()); //get les directory qu'est censer avoir la sauvegarde
-                var JeuxManuallyAdded = Games.Where(j => j.IsManuallyAdded); //on recup les jeux ajouter manuellement
-                if (JeuxManuallyAdded.Count()!=0)
+                additionalFolder = System.IO.File.ReadAllLines($"{Folder}/AdditionalFolder.txt"); //on recupere les dossier de recherche
+                directoryDetected = SearchForGameDirectory.GetAllGameDirectory(additionalFolder.ToList()); //get les directory qu'est censer avoir la sauvegarde
+                var jeuxManuallyAdded = games.Where(j => j.IsManuallyAdded); //on recup les jeux ajouter manuellement
+                if (jeuxManuallyAdded.Count()!=0)
                 {
-                    var DossierJeuxManuallyAdded = JeuxManuallyAdded.Select(j => j.Dossier).ToList(); //on recup leurs dossier pour que la detection de mise a jour se passe bien
-                    if (DirectoryDetected.ContainsKey(LauncherName.Autre))
+                    var dossierJeuxManuallyAdded = jeuxManuallyAdded.Select(j => j.Dossier).ToList(); //on recup leurs dossier pour que la detection de mise a jour se passe bien
+                    if (directoryDetected.ContainsKey(LauncherName.Autre))
                     {
-                        DirectoryDetected[LauncherName.Autre].AddRange(DossierJeuxManuallyAdded); //on append si la clé était deja defini
+                        directoryDetected[LauncherName.Autre].AddRange(dossierJeuxManuallyAdded); //on append si la clé était deja defini
                     }
                     else
                     {
-                        DirectoryDetected.Add(LauncherName.Autre, DossierJeuxManuallyAdded); //on defini la clé si elle l'eteit pas avant
+                        directoryDetected.Add(LauncherName.Autre, dossierJeuxManuallyAdded); //on defini la clé si elle l'eteit pas avant
                     }
                 }
 
-                if (Launchers.All(l => DirectoryDetected.Keys.Contains((LauncherName)Enum.Parse(typeof(LauncherName), l.Nom)))) //si on a bien tt les clé en rapport avec la sauvegarde
+                if (launchers.All(l => directoryDetected.Keys.Contains((LauncherName)Enum.Parse(typeof(LauncherName), l.Nom)))) //si on a bien tt les clé en rapport avec la sauvegarde
                 {
-                    foreach (LauncherName Launcher in DirectoryDetected.Keys) //on itere sur les clés
+                    foreach (LauncherName launcher in directoryDetected.Keys) //on itere sur les clés
                     {
-                        List<string> ListeDossier;
-                        if (DirectoryDetected.TryGetValue(Launcher, out ListeDossier))
+                        List<string> listeDossier;
+                        if (directoryDetected.TryGetValue(launcher, out listeDossier))
                         {
-                            if (Games.Where(e => e.Launcher == Launcher).All(e => ListeDossier.Contains(e.Dossier))) //on regarde si chaque jeu a son dossier dans les dossiers retourné par GetAllGameDirectory
+                            if (games.Where(e => e.Launcher == launcher).All(e => listeDossier.Contains(e.Dossier))) //on regarde si chaque jeu a son dossier dans les dossiers retourné par GetAllGameDirectory
                             {
-                                NeedRecupGames = false;
+                                needRecupGames = false;
                             }
                         }
                     }
-                    if (!NeedRecupGames)
+                    if (!needRecupGames)
                     {
-                        foreach (Launcher launcher in Launchers) //on remplit la liste d'élément
+                        foreach (Launcher launcher in launchers) //on remplit la liste d'élément
                         {
-                            Elements.Add(launcher);
-                            Elements.AddRange(Games.Take(launcher.NbJeux));
-                            Games.RemoveRange(0, launcher.NbJeux);
+                            elements.Add(launcher);
+                            elements.AddRange(games.Take(launcher.NbJeux));
+                            games.RemoveRange(0, launcher.NbJeux);
                         }
                     }
                 }
                 else
                 {
-                    NeedRecupGames = true;
+                    needRecupGames = true;
                 }
             }
             else
             {
-                NeedRecupGames = true;
-                DirectoryDetected = SearchForGameDirectory.GetAllGameDirectory();
+                needRecupGames = true;
+                directoryDetected = SearchForGameDirectory.GetAllGameDirectory();
             }
 
 
 
 
-            if (NeedRecupGames) //si on a besoin de recuperer les jeux
+            if (needRecupGames) //si on a besoin de recuperer les jeux
             {
-                Games = SearchForExecutableAndName.GetExecutableAndNameFromGameDirectory(DirectoryDetected);
-                if (Games.Count>0)//si l'utilisateur a des jeux
+                games = SearchForExecutableAndName.GetExecutableAndNameFromGameDirectory(directoryDetected);
+                if (games.Count>0)//si l'utilisateur a des jeux
                 {
-                    Launcher Actuel = new Launcher(Games[0].Launcher);
-                    Elements.Add(Actuel);
-                    for (int i = 0; i < Games.Count; i++)
+                    Launcher actuel = new Launcher(games[0].Launcher);
+                    elements.Add(actuel);
+                    for (int i = 0; i < games.Count; i++)
                     {
-                        if (Games[i].Launcher.ToString() == Actuel.ToString()) //on est dans le meme launcher
+                        if (games[i].Launcher.ToString() == actuel.ToString()) //on est dans le meme launcher
                         {
-                            Elements.Add(Games[i]);
-                            Actuel.NbJeux++;//on augmente le nb de jeu
+                            elements.Add(games[i]);
+                            actuel.NbJeux++;//on augmente le nb de jeu
                         }
                         else
                         {
-                            Actuel = new Launcher(Games[i].Launcher); //on ajoute le launcher
-                            Elements.Add(Actuel);
-                            Elements.Add(Games[i]);
-                            Actuel.NbJeux++;//on augmente le nb de jeu
+                            actuel = new Launcher(games[i].Launcher); //on ajoute le launcher
+                            elements.Add(actuel);
+                            elements.Add(games[i]);
+                            actuel.NbJeux++;//on augmente le nb de jeu
                         }
                     }
                 }               
             }
 
-            foreach (Element element in Elements)//on set les infos
+            foreach (Element element in elements)//on set les infos
             {
                 if (element.GetType() == typeof(Jeu))
                 {
@@ -145,13 +145,13 @@ namespace DataManager
             Logs.InfoLog("Chargement des données");
 
             Data data;
-            if (AdditionalFolder!=null)
+            if (additionalFolder!=null)
             {
-                 data = new Data(Elements, AdditionalFolder.ToList());
+                 data = new Data(elements, additionalFolder.ToList());
             }
             else
             {
-                data = new Data(Elements, LoadAdditionalPath());
+                data = new Data(elements, LoadAdditionalPath());
             }
             
             return data;

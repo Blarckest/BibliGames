@@ -13,19 +13,19 @@ namespace Logger
 
         private static void SaveLog()
         {
-            string Log;
+            string log;
             Directory.CreateDirectory(Dossier);
-            StreamWriter Sw = new StreamWriter($"{Dossier}/FichierDeLogs.txt", true);
-            while (Queue.TryDequeue(out Log))
+            StreamWriter sw = new StreamWriter($"{Dossier}/FichierDeLogs.txt", true);
+            while (Queue.TryDequeue(out log))
             {
-                Sw.WriteLine(Log);
+                sw.WriteLine(log);
             }
-            Sw.Close();
+            sw.Close();
         }
 
-        public static void InfoLog(string Action)
+        public static void InfoLog(string action)
         {
-            Queue.Enqueue($"{DateTime.Now} | Info : {Action}");
+            Queue.Enqueue($"{DateTime.Now} | Info : {action}");
             if (!Thread.IsAlive)
             {
                 Thread = new Thread(SaveLog);
@@ -33,9 +33,9 @@ namespace Logger
             }
         }
 
-        public static void ErrorLog(string Action)
+        public static void ErrorLog(string action)
         {
-            Queue.Enqueue($"{DateTime.Now} | Error : {Action}");
+            Queue.Enqueue($"{DateTime.Now} | Error : {action}");
             if (!Thread.IsAlive)
             {
                 Thread = new Thread(SaveLog);
@@ -43,9 +43,9 @@ namespace Logger
             }
         }
 
-        public static void WarningLog(string Action)
+        public static void WarningLog(string action)
         {
-            Queue.Enqueue($"{DateTime.Now} | Warning : {Action}");
+            Queue.Enqueue($"{DateTime.Now} | Warning : {action}");
             if (!Thread.IsAlive)
             {
                 Thread = new Thread(SaveLog);
@@ -55,12 +55,12 @@ namespace Logger
 
         public static void SuppLog()
         {
-            string Fichier = Dossier + "/FichierDeLogs.txt";
-            if (File.Exists(Fichier))
+            string fichier = Dossier + "/FichierDeLogs.txt";
+            if (File.Exists(fichier))
             {
-                StreamReader Sr = new StreamReader($"{Dossier}/FichierDeLogs.txt");
-                string line = Sr.ReadLine();
-                Sr.Close();
+                StreamReader sr = new StreamReader($"{Dossier}/FichierDeLogs.txt");
+                string line = sr.ReadLine();
+                sr.Close();
                 line = line.Substring(0, 10);
                 DateTime date = DateTime.Today;
                 if (line != date.ToString("d"))

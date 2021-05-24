@@ -18,44 +18,44 @@ namespace Modele
         /// <returns>Dictionary<Launcher, List<string>></returns>
         public static Dictionary<LauncherName, List<string>> GetAllGameDirectory()
         {
-            Dictionary<LauncherName, List<string>> Dossiers = new Dictionary<LauncherName, List<string>>();
-            SearchEpicGames(Dossiers);
-            SearchOriginGames(Dossiers);
-            SearchRiotGames(Dossiers);
-            SearchSteamGames(Dossiers);
-            SearchUplayGames(Dossiers);
-            return Dossiers;
+            Dictionary<LauncherName, List<string>> dossiers = new Dictionary<LauncherName, List<string>>();
+            SearchEpicGames(dossiers);
+            SearchOriginGames(dossiers);
+            SearchRiotGames(dossiers);
+            SearchSteamGames(dossiers);
+            SearchUplayGames(dossiers);
+            return dossiers;
         }
 
-        public static Dictionary<LauncherName, List<string>> GetAllGameDirectory(List<string> Paths)
+        public static Dictionary<LauncherName, List<string>> GetAllGameDirectory(List<string> paths)
         {
-            Dictionary<LauncherName, List<string>> Dossiers = new Dictionary<LauncherName, List<string>>();
-            SearchEpicGames(Dossiers);
-            SearchOriginGames(Dossiers);
-            SearchRiotGames(Dossiers);
-            SearchSteamGames(Dossiers);
-            SearchUplayGames(Dossiers);
-            if (Paths!=null && Paths.Count!=0)
+            Dictionary<LauncherName, List<string>> dossiers = new Dictionary<LauncherName, List<string>>();
+            SearchEpicGames(dossiers);
+            SearchOriginGames(dossiers);
+            SearchRiotGames(dossiers);
+            SearchSteamGames(dossiers);
+            SearchUplayGames(dossiers);
+            if (paths!=null && paths.Count!=0)
             {
-                Dossiers.Add(LauncherName.Autre, GetGameDirectoryFromPaths(Paths.ToArray()));
+                dossiers.Add(LauncherName.Autre, GetGameDirectoryFromPaths(paths.ToArray()));
             }
-            return Dossiers;
+            return dossiers;
         }
 
-        public static List<string> GetGameDirectoryFromPaths(string[] Paths)
+        public static List<string> GetGameDirectoryFromPaths(string[] paths)
         {
-            List<string> Dossiers = new List<string>();
-            foreach (string Path in Paths)
+            List<string> dossiers = new List<string>();
+            foreach (string path in paths)
             {
-                if (Directory.Exists(Path))
+                if (Directory.Exists(path))
                 {
-                    foreach (string Dir in Directory.GetDirectories(Path))
+                    foreach (string dir in Directory.GetDirectories(path))
                     {
                         try //getfiles peut lancer une exception si il n'a pas les droits suffisants
                         {
-                            if (!IsDirectoryEmpty(Dir)) //on verifie que il y a un executable dans le dossier et que le dossier n'est pas vide
+                            if (!IsDirectoryEmpty(dir)) //on verifie que il y a un executable dans le dossier et que le dossier n'est pas vide
                             {
-                                Dossiers.Add(Dir);
+                                dossiers.Add(dir);
                             }
                         }
                         catch (Exception)
@@ -67,183 +67,183 @@ namespace Modele
                     }
                 }
             }
-            return Dossiers;
+            return dossiers;
         }
-        private static bool IsDirectoryEmpty(string Path)
+        private static bool IsDirectoryEmpty(string path)
         {
-            return !(Directory.EnumerateFileSystemEntries(Path).Any() || (Directory.GetFiles(Path+"\\\\","*.exe",SearchOption.AllDirectories).Any()));//renvoie si le dossier et vide ou contient aucun executable (any renvoie un booleen true si il y a qq chose ds le IEnumerable renvoyer)
+            return !(Directory.EnumerateFileSystemEntries(path).Any() || (Directory.GetFiles(path+"\\\\","*.exe",SearchOption.AllDirectories).Any()));//renvoie si le dossier et vide ou contient aucun executable (any renvoie un booleen true si il y a qq chose ds le IEnumerable renvoyer)
         }
-        private static void SearchSteamGames(Dictionary<LauncherName, List<string>> Dossiers)
+        private static void SearchSteamGames(Dictionary<LauncherName, List<string>> dossiers)
         {
-            List<string> Paths = new List<string>();
-            List<string> PathsToGameDirectory = new List<string>();
-            string Steam = "SOFTWARE\\Wow6432Node\\Valve\\Steam\\";
-            string SteamPath;
-            string ConfigPath;
-            RegistryKey Key;
-            if ((Key = Registry.LocalMachine.OpenSubKey(Steam))!=null)
+            List<string> paths = new List<string>();
+            List<string> pathsToGameDirectory = new List<string>();
+            string steam = "SOFTWARE\\Wow6432Node\\Valve\\Steam\\";
+            string steamPath;
+            string configPath;
+            RegistryKey key;
+            if ((key = Registry.LocalMachine.OpenSubKey(steam))!=null)
             {
-                SteamPath = Key.GetValue("InstallPath").ToString(); //cle contenant le chemin jusqu'au dossier steam
-                ConfigPath = SteamPath + "/steamapps/libraryfolders.vdf"; //fichier de config
-                string RegexChemin = @"[A-Z]:\\"; //cherche pour un debut de chemin ex: D:\\
-                if (File.Exists(ConfigPath))
+                steamPath = key.GetValue("InstallPath").ToString(); //cle contenant le chemin jusqu'au dossier steam
+                configPath = steamPath + "/steamapps/libraryfolders.vdf"; //fichier de config
+                string regexChemin = @"[A-Z]:\\"; //cherche pour un debut de chemin ex: D:\\
+                if (File.Exists(configPath))
                 {
-                    string[] configLines = File.ReadAllLines(ConfigPath);
-                    foreach (string Line in configLines)
+                    string[] configLines = File.ReadAllLines(configPath);
+                    foreach (string line in configLines)
                     {
-                        Match Res = Regex.Match(Line, RegexChemin);
-                        if (Line != string.Empty && Res.Success)
+                        Match res = Regex.Match(line, regexChemin);
+                        if (line != string.Empty && res.Success)
                         {
-                            string matched = Res.ToString();  //recupere la partie qui a trigger la regex ex D:\\
-                            string Path = Line.Substring(Line.IndexOf(matched)); //prend a partir de D:\\ jusqua la fin de la ligne
-                            Path = Path.Replace("\\\\", "\\");  //tout les  \ sont echapé on a donc besoin d'en enlever 
-                            Path = Path.Replace("\"", "\\");  //met les dernier \ à \\
-                            if (Directory.Exists(Path + "steamapps\\common"))
+                            string matched = res.ToString();  //recupere la partie qui a trigger la regex ex D:\\
+                            string path = line.Substring(line.IndexOf(matched)); //prend a partir de D:\\ jusqua la fin de la ligne
+                            path = path.Replace("\\\\", "\\");  //tout les  \ sont echapé on a donc besoin d'en enlever 
+                            path = path.Replace("\"", "\\");  //met les dernier \ à \\
+                            if (Directory.Exists(path + "steamapps\\common"))
                             {
-                                Path += "steamapps\\common\\";
-                                Paths.Add(Path);
+                                path += "steamapps\\common\\";
+                                paths.Add(path);
                             }
                         }
                     }
-                    Paths.Add(SteamPath + "\\steamapps\\common\\");
+                    paths.Add(steamPath + "\\steamapps\\common\\");
                 }
 
-                foreach (string Path in Paths)
+                foreach (string path in paths)
                 {
-                    string[] AllDir = Directory.GetDirectories(Path);
-                    foreach (string Directory in AllDir)
+                    string[] allDir = Directory.GetDirectories(path);
+                    foreach (string directory in allDir)
                     {
-                        if (!(IsDirectoryEmpty(Directory) || Directory.Contains("Steamworks Shared"))) //on veux pas de certains dossier
+                        if (!(IsDirectoryEmpty(directory) || directory.Contains("Steamworks Shared"))) //on veux pas de certains dossier
                         {
-                            PathsToGameDirectory.Add(Directory);
+                            pathsToGameDirectory.Add(directory);
                         }
                     }
                 }
-                if (PathsToGameDirectory.Count > 0)
+                if (pathsToGameDirectory.Count > 0)
                 {
-                    Dossiers.Add(LauncherName.Steam, PathsToGameDirectory);
+                    dossiers.Add(LauncherName.Steam, pathsToGameDirectory);
                     Logs.InfoLog("Ajout du launcher Steam");
                 }
             }
         }
 
-        private static void SearchUplayGames(Dictionary<LauncherName, List<string>> Dossiers)
+        private static void SearchUplayGames(Dictionary<LauncherName, List<string>> dossiers)
         {
-            List<string> PathsToGameDirectory = new List<string>();
-            string RegKey = "SOFTWARE\\WOW6432Node\\Ubisoft\\Launcher\\Installs";
-            RegistryKey Key;
-            if ((Key = Registry.LocalMachine.OpenSubKey(RegKey))!=null)
+            List<string> pathsToGameDirectory = new List<string>();
+            string regKey = "SOFTWARE\\WOW6432Node\\Ubisoft\\Launcher\\Installs";
+            RegistryKey key;
+            if ((key = Registry.LocalMachine.OpenSubKey(regKey))!=null)
             {
-                foreach (string Jeu in Key.GetSubKeyNames()) //parcours les cle de tout les jeux
+                foreach (string jeu in key.GetSubKeyNames()) //parcours les cle de tout les jeux
                 {
-                    RegistryKey Valeurs = Key.OpenSubKey(Jeu);
-                    string Path = Valeurs.GetValue("InstallDir").ToString(); //get le dossier
-                    Path = Path.Substring(0, Path.Length - 1);
-                    Path = Path.Replace("/", "\\"); //pour avoir une sortie pareil pour tout les launcher ex d:\\path\\to\\directory
-                    PathsToGameDirectory.Add(Path);
+                    RegistryKey valeurs = key.OpenSubKey(jeu);
+                    string path = valeurs.GetValue("InstallDir").ToString(); //get le dossier
+                    path = path.Substring(0, path.Length - 1);
+                    path = path.Replace("/", "\\"); //pour avoir une sortie pareil pour tout les launcher ex d:\\path\\to\\directory
+                    pathsToGameDirectory.Add(path);
                 }
-                if (PathsToGameDirectory.Count > 0)
+                if (pathsToGameDirectory.Count > 0)
                 {
-                    Dossiers.Add(LauncherName.Uplay, PathsToGameDirectory);
+                    dossiers.Add(LauncherName.Uplay, pathsToGameDirectory);
                     Logs.InfoLog("Ajout du launcher Uplay");
                 }
             }
         }
 
-        private static void SearchEpicGames(Dictionary<LauncherName, List<string>> Dossiers)
+        private static void SearchEpicGames(Dictionary<LauncherName, List<string>> dossiers)
         {
-            List<string> PathsToGameDirectory = new List<string>();
-            string Temp;
-            string RegKey = "SOFTWARE\\WOW6432Node\\Epic Games\\EpicGamesLauncher";
-            RegistryKey Key;
-            if ((Key = Registry.LocalMachine.OpenSubKey(RegKey))!=null) //si la cle existe on continue
+            List<string> pathsToGameDirectory = new List<string>();
+            string temp;
+            string regKey = "SOFTWARE\\WOW6432Node\\Epic Games\\EpicGamesLauncher";
+            RegistryKey key;
+            if ((key = Registry.LocalMachine.OpenSubKey(regKey))!=null) //si la cle existe on continue
             {
-                string Path = Key.GetValue("AppDataPath").ToString(); //get location du dossier ou epic stock les infos utiles
-                Path += "Manifests\\";
-                if (Directory.Exists(Path))
+                string path = key.GetValue("AppDataPath").ToString(); //get location du dossier ou epic stock les infos utiles
+                path += "Manifests\\";
+                if (Directory.Exists(path))
                 {
-                    string[] AllFiles = Directory.GetFiles(Path, "*.item"); //ce dossier contient tout les fichiers de config de tout les jeux
-                    foreach (string Item in AllFiles)
+                    string[] allFiles = Directory.GetFiles(path, "*.item"); //ce dossier contient tout les fichiers de config de tout les jeux
+                    foreach (string item in allFiles)
                     {
-                        if (File.Exists(Item))
+                        if (File.Exists(item))
                         {
-                            string[] Lines = File.ReadAllLines(Item);
-                            foreach (string Line in Lines) //parcour du fichier
+                            string[] lines = File.ReadAllLines(item);
+                            foreach (string line in lines) //parcour du fichier
                             {
-                                if (Line.Contains("InstallLocation")) //traitement sur la ligne qui nous interesse
+                                if (line.Contains("InstallLocation")) //traitement sur la ligne qui nous interesse
                                 {
-                                    Temp = Line.Substring(Line.IndexOf(":\\") - 1); //recuperation du debut du chemin jusqua la fin de la ligne
-                                    Temp = Temp.Substring(0, Temp.Length - 1);  //suppression de la virgule de fin de ligne
-                                    Temp = Temp.Replace("\\\\", "\\");  //tout les  \ sont echapé on a donc besoin d'en enlever 
-                                    Temp = Temp.Replace("\"", "");  //enleve les caracteres de fin qu'on ne veut pas
-                                    if (Directory.Exists(Temp))
+                                    temp = line.Substring(line.IndexOf(":\\") - 1); //recuperation du debut du chemin jusqua la fin de la ligne
+                                    temp = temp.Substring(0, temp.Length - 1);  //suppression de la virgule de fin de ligne
+                                    temp = temp.Replace("\\\\", "\\");  //tout les  \ sont echapé on a donc besoin d'en enlever 
+                                    temp = temp.Replace("\"", "");  //enleve les caracteres de fin qu'on ne veut pas
+                                    if (Directory.Exists(temp))
                                     {
-                                        PathsToGameDirectory.Add(Temp);
+                                        pathsToGameDirectory.Add(temp);
                                     }
                                     break;
                                 }
                             }
                         }
                     }
-                    if (PathsToGameDirectory.Count > 0)
+                    if (pathsToGameDirectory.Count > 0)
                     {
-                        Dossiers.Add(LauncherName.EpicGames, PathsToGameDirectory);
+                        dossiers.Add(LauncherName.EpicGames, pathsToGameDirectory);
                         Logs.InfoLog("Ajout du launcher Epic Games");
                     }  
                 }
             }
         }
 
-        private static void SearchRiotGames(Dictionary<LauncherName, List<string>> Dossiers)
+        private static void SearchRiotGames(Dictionary<LauncherName, List<string>> dossiers)
         {
-            List<string> PathsToGameDirectory = new List<string>();
-            string RegKey = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\"; //tout les chemin des jeux riot sont dispo ici
-            RegistryKey Key = Registry.CurrentUser.OpenSubKey(RegKey);
-            foreach (string SubKey in Key.GetSubKeyNames()) //parcour des sous-clé
+            List<string> pathsToGameDirectory = new List<string>();
+            string regKey = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\"; //tout les chemin des jeux riot sont dispo ici
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(regKey);
+            foreach (string subKey in key.GetSubKeyNames()) //parcour des sous-clé
             {
-                if (SubKey.Contains("Riot Game")) //cas ou la sous-clé nous interesse
+                if (subKey.Contains("Riot Game")) //cas ou la sous-clé nous interesse
                 {
-                    RegistryKey KeyJeu = Registry.CurrentUser.OpenSubKey(RegKey+SubKey);
-                    string Path = KeyJeu.GetValue("InstallLocation").ToString();
-                    Path = Path.Replace("/", "\\"); //certains jeux sont marque avec des / et d'autres avec des \\ donc on transforme ceux en / en \\
-                    PathsToGameDirectory.Add(Path);
+                    RegistryKey keyJeu = Registry.CurrentUser.OpenSubKey(regKey+subKey);
+                    string path = keyJeu.GetValue("InstallLocation").ToString();
+                    path = path.Replace("/", "\\"); //certains jeux sont marque avec des / et d'autres avec des \\ donc on transforme ceux en / en \\
+                    pathsToGameDirectory.Add(path);
                 }
             }
-            if (PathsToGameDirectory.Count>0)
+            if (pathsToGameDirectory.Count>0)
             {
-                Dossiers.Add(LauncherName.Riot, PathsToGameDirectory);
+                dossiers.Add(LauncherName.Riot, pathsToGameDirectory);
                 Logs.InfoLog("Ajout du launcher Riot");
             }
         }
 
-        private static void SearchOriginGames(Dictionary<LauncherName, List<string>> Dossiers)
+        private static void SearchOriginGames(Dictionary<LauncherName, List<string>> dossiers)
         {
-            List<string> PathsToGameDirectory = new List<string>();
-            string PathToProgramData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-            string Path = PathToProgramData+"\\Origin\\LocalContent\\"; //dossier qui nous interesse
-            if (Directory.Exists(Path))
+            List<string> pathsToGameDirectory = new List<string>();
+            string pathToProgramData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            string path = pathToProgramData+"\\Origin\\LocalContent\\"; //dossier qui nous interesse
+            if (Directory.Exists(path))
             {
-                string[] Dirs = Directory.GetDirectories(Path);
-                foreach (string Dir in Dirs)
+                string[] dirs = Directory.GetDirectories(path);
+                foreach (string dir in dirs)
                 {
-                    string Fichier = Directory.GetFiles(Dir, "*.mfst").Count() == 1 ? Directory.GetFiles(Dir, "*.mfst").First() : null; //fichier .mfst contient les infos utile
-                    if (File.Exists(Fichier))
+                    string fichier = Directory.GetFiles(dir, "*.mfst").Count() == 1 ? Directory.GetFiles(dir, "*.mfst").First() : null; //fichier .mfst contient les infos utile
+                    if (File.Exists(fichier))
                     {
-                        string Line = File.ReadAllLines(Fichier).First(); //le fichier contient qu'une ligne
-                        Line = System.Uri.UnescapeDataString(Line); //la ligne est au format web " "==%20 par ex
-                        string[] Lines = Line.Split('&');
-                        string PathToFolder = Lines.Where(e => e.Contains("installpath=", System.StringComparison.OrdinalIgnoreCase) && e.Contains(":\\")).First(); //recuperation de la valeur qui nous interesse
-                        PathToFolder = PathToFolder.Substring(PathToFolder.IndexOf(":\\") - 1); //suppression du "installpath="
-                        if (PathToFolder.Last() == '\\')
+                        string line = File.ReadAllLines(fichier).First(); //le fichier contient qu'une ligne
+                        line = System.Uri.UnescapeDataString(line); //la ligne est au format web " "==%20 par ex
+                        string[] lines = line.Split('&');
+                        string pathToFolder = lines.Where(e => e.Contains("installpath=", System.StringComparison.OrdinalIgnoreCase) && e.Contains(":\\")).First(); //recuperation de la valeur qui nous interesse
+                        pathToFolder = pathToFolder.Substring(pathToFolder.IndexOf(":\\") - 1); //suppression du "installpath="
+                        if (pathToFolder.Last() == '\\')
                         {
-                            PathToFolder= PathToFolder.Remove(PathToFolder.Length-1);
+                            pathToFolder= pathToFolder.Remove(pathToFolder.Length-1);
                         }
-                        PathsToGameDirectory.Add(PathToFolder);
+                        pathsToGameDirectory.Add(pathToFolder);
                     }
                 }
-                if (PathsToGameDirectory.Count > 0)
+                if (pathsToGameDirectory.Count > 0)
                 {
-                    Dossiers.Add(LauncherName.Origin, PathsToGameDirectory);
+                    dossiers.Add(LauncherName.Origin, pathsToGameDirectory);
                     Logs.InfoLog("Ajout du launcher Origin");
                 }
             }

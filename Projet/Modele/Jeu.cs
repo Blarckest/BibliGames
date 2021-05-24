@@ -75,20 +75,20 @@ namespace Modele
         }
         
 
-        public Jeu(string Nom,string Dossier,string Exec,LauncherName Launcher=LauncherName.Autre) : base(Nom)
+        public Jeu(string nom,string dossier,string exec,LauncherName launcher=LauncherName.Autre) : base(nom)
         {
-            this.Dossier = Dossier;
-            this.Exec = Exec;
-            this.Launcher = Launcher;
+            this.Dossier = dossier;
+            this.Exec = exec;
+            this.Launcher = launcher;
         }
 
-        public Jeu(string Nom, string Dossier, string Exec, string Image, string Icone, string Note,string Description, LauncherName Launcher = LauncherName.Autre, bool IsManuallyAdded=false) : this(Nom, Dossier,Exec,Launcher)
+        public Jeu(string nom, string dossier, string exec, string image, string icone, string note,string description, LauncherName launcher = LauncherName.Autre, bool isManuallyAdded=false) : this(nom, dossier,exec,launcher)
         {
-            this.Icone = Icone;
-            this.Image = Image;
-            this.Note = Note;
-            this.Description = Description;
-            this.IsManuallyAdded = IsManuallyAdded;
+            this.Icone = icone;
+            this.Image = image;
+            this.Note = note;
+            this.Description = description;
+            this.IsManuallyAdded = isManuallyAdded;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -16,9 +16,9 @@ namespace Vues.User_Controls
     /// <summary>
     /// Logique d'interaction pour LuncherUC.xaml
     /// </summary>
-    public partial class LauncherUC : UserControl
+    public partial class LauncherUc : UserControl
     {
-        public LauncherUC()
+        public LauncherUc()
         {
             InitializeComponent();
         }

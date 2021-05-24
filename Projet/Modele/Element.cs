@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Modele
@@ -8,14 +9,18 @@ namespace Modele
     public abstract class Element : IEquatable<Element>,IComparable<Element>
     {
         public string Nom { get; set;} = null;
-        protected Element(string Nom)
+        protected Element(string nom)
         {
-            this.Nom = Nom;
+            this.Nom = nom;
         }
 
         public virtual bool Equals([AllowNull] Element other)
         {
-            return Nom.Equals(other.Nom);
+            if (other != null)
+            {
+                return Nom.Equals(other.Nom);
+            }
+            return false;
         }
 
         public virtual int CompareTo([AllowNull] Element other)

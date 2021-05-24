@@ -7,9 +7,9 @@ namespace Test_Fonctionnels
 {
     class Test
     {
-        public static void TestAfficherElements(Manager Modele)
+        public static void TestAfficherElements(Manager modele)
         {
-            foreach (Element element in Modele.Affichage)
+            foreach (Element element in modele.Affichage)
             {
                 Console.WriteLine(element);
             }
@@ -17,7 +17,7 @@ namespace Test_Fonctionnels
 
         public static void TestStub()
         {
-            Loader Loader = new Stub("");
+            Loader loader = new Stub("");
         }
 
         public static Dictionary<LauncherName, List<string>> TestGameDirectory()
@@ -46,11 +46,11 @@ namespace Test_Fonctionnels
             dossiers =TestGameDirectory();
             Console.WriteLine("--------------------------------");
             Console.WriteLine("DOSSIER  LAUNCHER  EXECUTABLE");
-            List<Jeu> Jeux;
-            Jeux =SearchForExecutableAndName.GetExecutableAndNameFromGameDirectory(dossiers);
-            foreach(Jeu Jeu in Jeux)
+            List<Jeu> jeux;
+            jeux =SearchForExecutableAndName.GetExecutableAndNameFromGameDirectory(dossiers);
+            foreach(Jeu jeu in jeux)
             {
-                Console.WriteLine($"{Jeu.Nom},  {Jeu.Launcher},  {Jeu.Exec}");
+                Console.WriteLine($"{jeu.Nom},  {jeu.Launcher},  {jeu.Exec}");
             }
         }
 
@@ -58,28 +58,28 @@ namespace Test_Fonctionnels
         {
             string path = "./Ressource/sauvegarde";
             Saver save = new SaveElements(path);
-            Loader Loader = new Stub("");
-            var manager = new Manager(Loader.Load());
-            IList<string> Add = new List<string>();
-            Add.Add("zefzqf");
-            save.Save(manager.Data.Elements, Add);
+            Loader loader = new Stub("");
+            var manager = new Manager(loader.Load());
+            IList<string> add = new List<string>();
+            add.Add("zefzqf");
+            save.Save(manager.Data.Elements, add);
         }
 
         private static void TestLoad()
         {
             string path = "./Ressource/sauvegarde";
-            Loader Loader = new LoadElements(path);
-            Manager Manager = new Manager(Loader.Load());
-            TestAfficherElements(Manager);
+            Loader loader = new LoadElements(path);
+            Manager manager = new Manager(loader.Load());
+            TestAfficherElements(manager);
         }
 
-        private static void TestLoadAfficheSave(Loader Loader=null)
+        private static void TestLoadAfficheSave(Loader loader=null)
         {
-            if (Loader==null)
+            if (loader==null)
             {
-                Loader = new LoadElements("./Ressources/sauvegarde");
+                loader = new LoadElements("./Ressources/sauvegarde");
             }
-            Manager manager = new Manager(Loader.Load());
+            Manager manager = new Manager(loader.Load());
             if (manager.Affichage.Count==0)
             {
                 manager.AjoutJeu(new Jeu("Riot1", "", "Valorant.exe", LauncherName.Riot));

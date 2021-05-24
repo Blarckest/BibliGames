@@ -13,25 +13,25 @@ namespace FolderExplorerLogic
         public string Nom { get; set; }
         public string Path { get; set; }
 
-        public LigneExplorateur(string PathImage, string Text, bool IsTextPath = false)
+        public LigneExplorateur(string pathImage, string text, bool isTextPath = false)
         {
-            Image = PathImage;
-            if (IsTextPath)
+            Image = pathImage;
+            if (isTextPath)
             {
-                Path = Text;
-                Nom = System.IO.Path.GetFileName(Text);
+                Path = text;
+                Nom = System.IO.Path.GetFileName(text);
             }
             else
             {
-                Nom = Text;
-                Path = Text; //pour garantir qu'un clique dans acces rapide sur un lecteur ouvre le lecteur
+                Nom = text;
+                Path = text; //pour garantir qu'un clique dans acces rapide sur un lecteur ouvre le lecteur
             }
         }
-        public LigneExplorateur(string PathImage, string Text, string Path)
+        public LigneExplorateur(string pathImage, string text, string path)
         {
-            Image = PathImage;
-            Nom = Text;
-            this.Path = Path; //pour garantir qu'un clique dans acces rapide sur un lecteur ouvre le lecteur
+            Image = pathImage;
+            Nom = text;
+            this.Path = path; //pour garantir qu'un clique dans acces rapide sur un lecteur ouvre le lecteur
 
         }
     }

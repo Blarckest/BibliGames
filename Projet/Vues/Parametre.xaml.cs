@@ -33,12 +33,12 @@ namespace Vues
         }
         public void ParcourirDossiers(object sender, MouseButtonEventArgs e)
         {
-            FolderExplorerView FolderExplorer = new FolderExplorerView();
-            FolderExplorer.ShowDialog();
-            string Dossier = FolderExplorer.DossierSelectionner;
-            if (Dossier != null)
+            FolderExplorerView folderExplorer = new FolderExplorerView();
+            folderExplorer.ShowDialog();
+            string dossier = folderExplorer.DossierSelectionner;
+            if (dossier != null)
             {
-                DossierAffiche.Add(Dossier);
+                DossierAffiche.Add(dossier);
             }
         }
         private void Annuler(object sender, RoutedEventArgs e)
@@ -49,14 +49,14 @@ namespace Vues
         {
             if (DossierSupp != null)
             {
-                foreach(string Dossier in DossierSupp)
+                foreach(string dossier in DossierSupp)
                 {
-                    (App.Current as App).Navigator.Manager.SuppDossier(Dossier);
+                    (App.Current as App).Navigator.Manager.SuppDossier(dossier);
                 }
             }
-            foreach (string Dossier in DossierAffiche)
+            foreach (string dossier in DossierAffiche)
             {
-                (App.Current as App).Navigator.Manager.AjouterDossier(Dossier);
+                (App.Current as App).Navigator.Manager.AjouterDossier(dossier);
             }          
             this.Close();
         }
@@ -72,10 +72,10 @@ namespace Vues
         {
             if (e.Key == Key.Return)
             {
-                TextBox TextBoxChemin = sender as TextBox;
-                if (Directory.Exists(TextBoxChemin.Text) && !DossierAffiche.Contains(TextBoxChemin.Text,StringComparer.OrdinalIgnoreCase)) //equivaut a si dossier exist/si on est pas deja a cet endroit
+                TextBox textBoxChemin = sender as TextBox;
+                if (Directory.Exists(textBoxChemin.Text) && !DossierAffiche.Contains(textBoxChemin.Text,StringComparer.OrdinalIgnoreCase)) //equivaut a si dossier exist/si on est pas deja a cet endroit
                 {
-                    DossierAffiche.Add(TextBoxChemin.Text.Trim()); //trim au cas ou l'utilisateur aurait decider de mettre des espaces a la fin du chemin
+                    DossierAffiche.Add(textBoxChemin.Text.Trim()); //trim au cas ou l'utilisateur aurait decider de mettre des espaces a la fin du chemin
                 }
             }
         }

@@ -105,8 +105,8 @@ namespace Vues
 
         private void Recherche(object sender, TextChangedEventArgs e)//appeler quand le texte de la barre de recherche change
         {
-            TextBox TextBox = sender as TextBox;
-            FolderExplorer.Recherche(TextBox.Text);
+            TextBox textBox = sender as TextBox;
+            FolderExplorer.Recherche(textBox.Text);
         }
     }
 }

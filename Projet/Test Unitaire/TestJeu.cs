@@ -12,10 +12,10 @@ namespace TestUnitaire
         [InlineData("Rocket League")]
         [InlineData("League of Legends")]
         [InlineData("Valorant")]
-        public void TestNomJeu(string Nom)
+        public void TestNomJeu(string nom)
         {
-            jeu.Nom = Nom;
-            Assert.Equal(Nom,jeu.Nom);
+            jeu.Nom = nom;
+            Assert.Equal(nom,jeu.Nom);
         }
 
         [Theory]

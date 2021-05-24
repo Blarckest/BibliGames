@@ -84,15 +84,15 @@ namespace FolderExplorerLogic
             QuickAccess.Add(new LigneExplorateur("/Icones;Component/music.png", Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), true));
             QuickAccess.Add(new LigneExplorateur("/Icones;Component/movie.png", Environment.GetFolderPath(Environment.SpecialFolder.MyVideos), true));
             QuickAccess.Add(new LigneExplorateur("/Icones;Component/computer.png", "Ce PC", null));
-            foreach (string Name in GetDrives())
+            foreach (string name in GetDrives())
             {
-                QuickAccess.Add(new LigneExplorateur("/Icones;Component/disk.png", Name));
+                QuickAccess.Add(new LigneExplorateur("/Icones;Component/disk.png", name));
             }
         }
 
-        public string GetRepertoireChoisi(LigneExplorateur Item)
+        public string GetRepertoireChoisi(LigneExplorateur item)
         {
-            return Historique.Peek()==null || Historique.Peek().Length<4 ? Historique.Peek()+Item.Nom : Historique.Peek() + "\\" + Item.Nom;  //on fait peek+Item quand on est au niveau des disque ou dans un descendant direct d'un disque
+            return Historique.Peek()==null || Historique.Peek().Length<4 ? Historique.Peek()+item.Nom : Historique.Peek() + "\\" + item.Nom;  //on fait peek+Item quand on est au niveau des disque ou dans un descendant direct d'un disque
         }
 
         public void GoBackward() //fonction appeller pour revenir en arriere
@@ -134,33 +134,33 @@ namespace FolderExplorerLogic
             Chemin = Historique.Peek() == null ? "/" : Historique.Peek();
         }
 
-        public void TouchEnterPressed(string Text) //la textbox a ete modifier cette fonction sert a voir si on peux aller a l'endroit demander
+        public void TouchEnterPressed(string text) //la textbox a ete modifier cette fonction sert a voir si on peux aller a l'endroit demander
         {
-            if (Directory.Exists(Text) && Text != DossierSelectionner) //equivaut a si dossier exist/si on est pas deja a cet endroit
+            if (Directory.Exists(text) && text != DossierSelectionner) //equivaut a si dossier exist/si on est pas deja a cet endroit
             {
-                Historique.Push(Text.Trim()); //trim au cas ou l'utilisateur aurait decider de mettre des espaces a la fin du chemin
+                Historique.Push(text.Trim()); //trim au cas ou l'utilisateur aurait decider de mettre des espaces a la fin du chemin
                 SetDirectories(); //update
             }
 
         }
 
-        public bool UpdateVue(LigneExplorateur Item) //appeler lors d'un double clique sur un element, retourne si l'action a été possible ou pas
+        public bool UpdateVue(LigneExplorateur item) //appeler lors d'un double clique sur un element, retourne si l'action a été possible ou pas
         {
-            string Path;
-            Path = Historique.Peek() == null ? "" : Historique.Peek().Length == 3 ? Historique.Peek() : Historique.Peek() + "\\"; //un peu complexe mais je trouvais ca marrant equivaut a if(count==1){if length==3 -> peek else -> peek+"\\"}
-            Path += Item != null ? Item.Nom : ""; //si pas goback alors on rajoute le nom du dossier selectionner au chemin actuelle
-            Historique.Push(Path);
-            bool Res = SetDirectories();
-            if (!Res) //on a pas pu rentrer dans le dossier choisi 
+            string path;
+            path = Historique.Peek() == null ? "" : Historique.Peek().Length == 3 ? Historique.Peek() : Historique.Peek() + "\\"; //un peu complexe mais je trouvais ca marrant equivaut a if(count==1){if length==3 -> peek else -> peek+"\\"}
+            path += item != null ? item.Nom : ""; //si pas goback alors on rajoute le nom du dossier selectionner au chemin actuelle
+            Historique.Push(path);
+            bool res = SetDirectories();
+            if (!res) //on a pas pu rentrer dans le dossier choisi 
             {
                 Historique.Pop(); //on annule
             }
-            return Res;
+            return res;
         }
 
-        public void QuickAccessUsed(LigneExplorateur Item) //appeler lors d'un selection dans le QuickAccess
+        public void QuickAccessUsed(LigneExplorateur item) //appeler lors d'un selection dans le QuickAccess
         {
-            Historique.Push(Item.Path);
+            Historique.Push(item.Path);
             ForwardHistorique.Clear();//n'a pas de sens de revenir a un endroit peutetre jamais decouvert
             SetDirectories();
         }
@@ -169,59 +169,59 @@ namespace FolderExplorerLogic
         /// update la vue en consequence 
         /// </summary>
         /// <returns>true si pas d'erreur false si une erreur est apparu</returns>
-        private bool SetDirectories(string Containing = null)
+        private bool SetDirectories(string containing = null)
         {
-            bool ErrorOccur = false;
+            bool errorOccur = false;
             MessageError = "";
-            string Path = Historique.Peek();
+            string path = Historique.Peek();
             if (Historique.Peek() == null)
             {
                 FillVueWithDrives();
-                Path = null;
+                path = null;
             }
             else
             {
                 try
                 {
-                    string[] Dirs = Directory.GetDirectories(Path); //recupere les dossiers
-                    Dirs = Filter(Dirs); //filtre les dossiers indesirables
-                    if (Containing != null) //cas ou il s'agit d'une recherche
+                    string[] dirs = Directory.GetDirectories(path); //recupere les dossiers
+                    dirs = Filter(dirs); //filtre les dossiers indesirables
+                    if (containing != null) //cas ou il s'agit d'une recherche
                     {
-                        Containing = Containing.Trim(); //enleve de potentiel espace a la fin et au debut de la recherche
-                        Dirs = Dirs.Where(d => d.Contains(Containing, StringComparison.OrdinalIgnoreCase)).ToArray(); //update les dirs a affiché
+                        containing = containing.Trim(); //enleve de potentiel espace a la fin et au debut de la recherche
+                        dirs = dirs.Where(d => d.Contains(containing, StringComparison.OrdinalIgnoreCase)).ToArray(); //update les dirs a affiché
                     }
                     ListeDossier.Clear(); //vide la vue
-                    foreach (string Dir in Dirs) //rempli la vue
+                    foreach (string dir in dirs) //rempli la vue
                     {
-                        ListeDossier.Add(new LigneExplorateur("/Icones;Component/folder.png", System.IO.Path.GetFileName(Dir)));
+                        ListeDossier.Add(new LigneExplorateur("/Icones;Component/folder.png", System.IO.Path.GetFileName(dir)));
                     }
-                    if (Path.Last() == '\\' && Path.Length > 3) //permet d'enlever les \\ a la fin si jamais il y en a
+                    if (path.Last() == '\\' && path.Length > 3) //permet d'enlever les \\ a la fin si jamais il y en a
                     {
-                        Path = Directory.GetParent(Path).FullName;
+                        path = Directory.GetParent(path).FullName;
                     }
                 }
                 catch (Exception) //probleme en general il s'agit soit d'un manque de droit soit d'un bug(normalement yen a plus) d'ou le acces refuse
                 {
-                    Path = null;
-                    ErrorOccur = true;
+                    path = null;
+                    errorOccur = true;
                     MessageError = "Acces refusé";
                     //VueDesDossiers.SelectedItem = null;
                 }
             }
-            if (!ErrorOccur && Containing == null) //pas besoin de mettre a jour si erreur ou recherche
+            if (!errorOccur && containing == null) //pas besoin de mettre a jour si erreur ou recherche
             {
-                DossierSelectionner = Path; //met a jour le dossier actuel
+                DossierSelectionner = path; //met a jour le dossier actuel
                 UpdatePathTextBox();
             }
-            return !ErrorOccur;
+            return !errorOccur;
         }
 
         private void FillVueWithDrives() //rempli la vue avec les disques
         {
             ListeDossier.Clear();
-            foreach (string Name in GetDrives()) //ajoute chaque disque a la liste
+            foreach (string name in GetDrives()) //ajoute chaque disque a la liste
             {
-                ListeDossier.Add(new LigneExplorateur("/Icones;Component/disk.png", Name));
+                ListeDossier.Add(new LigneExplorateur("/Icones;Component/disk.png", name));
             }
         }
 
@@ -230,18 +230,18 @@ namespace FolderExplorerLogic
             return DriveInfo.GetDrives().Select(d => d.Name).ToArray();
         } //recupere les nom des disque presents sur l'ordi
 
-        private string[] Filter(string[] Dirs) //filtre les dossiers indesirables
+        private string[] Filter(string[] dirs) //filtre les dossiers indesirables
         {
-            return Dirs.Where(d => !(System.IO.Path.GetFileName(d).StartsWith(".") || System.IO.Path.GetFileName(d).StartsWith("$") || (char.IsDigit(System.IO.Path.GetFileName(d)[0]) && char.IsDigit(d.Last()))
+            return dirs.Where(d => !(System.IO.Path.GetFileName(d).StartsWith(".") || System.IO.Path.GetFileName(d).StartsWith("$") || (char.IsDigit(System.IO.Path.GetFileName(d)[0]) && char.IsDigit(d.Last()))
                    || System.IO.Path.GetFileName(d).Contains("MSOCache") || System.IO.Path.GetFileName(d).Contains("System Volume Information") || System.IO.Path.GetFileName(d).Contains("Documents and Settings")
                    || System.IO.Path.GetFileName(d).Contains("Recovery") || System.IO.Path.GetFileName(d).Contains("ProgramData"))).ToArray();
         }
 
-        public void Recherche(string Text)//appeler quand le texte de la barre de recherche change
+        public void Recherche(string text)//appeler quand le texte de la barre de recherche change
         {
             if (SearchActivated)
             {
-                SetDirectories(Text);
+                SetDirectories(text);
             }
         }
     }

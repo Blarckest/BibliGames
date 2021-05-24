@@ -12,32 +12,32 @@ namespace DataManager
 {
     public class SaveElements : Saver
     {
-        public SaveElements(string Folder) : base(Folder)
+        public SaveElements(string folder) : base(folder)
         {
            
         }
 
-        public override void Save(IList<Element> Elements, IList<string> AdditionalFolder)
+        public override void Save(IList<Element> elements, IList<string> additionalFolder)
         {
-            XDocument Fichier = new XDocument();
+            XDocument fichier = new XDocument();
 
-            var Launchers = Elements.Where(e => e.GetType() == typeof(Launcher)) //sauvegarde des launchers
+            var launchers = elements.Where(e => e.GetType() == typeof(Launcher)) //sauvegarde des launchers
                                     .Select(e => e as Launcher)
                                     .Select(e => new XElement("Launcher",
                                     new XAttribute("Nom", e.Nom),               
                                     new XElement("NbJeux", e.NbJeux)));
 
-            Fichier.Add(new XElement("Launchers", Launchers));
-            XmlWriterSettings Settings = new XmlWriterSettings();
-            Settings.Indent = true; //on active l'indatage du fichier
-            TextWriter TextWriter = File.CreateText($"{Folder}/LauncherInfo.xml");
-            XmlWriter Writer = XmlWriter.Create(TextWriter, Settings);
-            Fichier.Save(Writer); //on ecrit
-            Writer.Close();
-            TextWriter.Close();
+            fichier.Add(new XElement("Launchers", launchers));
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true; //on active l'indatage du fichier
+            TextWriter textWriter = File.CreateText($"{Folder}/LauncherInfo.xml");
+            XmlWriter writer = XmlWriter.Create(textWriter, settings);
+            fichier.Save(writer); //on ecrit
+            writer.Close();
+            textWriter.Close();
 
-            Fichier = new XDocument();
-            var Jeux = Elements.Where(e => e.GetType() == typeof(Jeu)) //sauvegarde des jeux
+            fichier = new XDocument();
+            var jeux = elements.Where(e => e.GetType() == typeof(Jeu)) //sauvegarde des jeux
                              .Select(e => e as Jeu)
                              .Select(e => new XElement("Jeu",
                              new XAttribute("Nom", e.Nom),
@@ -50,29 +50,29 @@ namespace DataManager
                              new XElement("Icone", e.Icone),
                              new XElement("IsManuallyAdded",e.IsManuallyAdded)));
 
-            Fichier.Add(new XElement("Jeux", Jeux));
+            fichier.Add(new XElement("Jeux", jeux));
 
-            TextWriter = File.CreateText($"{Folder}/GamesInfo.xml");
-            Writer = XmlWriter.Create(TextWriter, Settings);
-            Fichier.Save(Writer); //on ecrit
-            Writer.Close();
-            TextWriter.Close();
+            textWriter = File.CreateText($"{Folder}/GamesInfo.xml");
+            writer = XmlWriter.Create(textWriter, settings);
+            fichier.Save(writer); //on ecrit
+            writer.Close();
+            textWriter.Close();
 
-            TextWriter FichierAdditionalPaths = new StreamWriter($"{Folder}/AdditionalFolder.txt");
-            if (AdditionalFolder!=null)
+            TextWriter fichierAdditionalPaths = new StreamWriter($"{Folder}/AdditionalFolder.txt");
+            if (additionalFolder!=null)
             {
-                foreach (string Path in AdditionalFolder)
+                foreach (string path in additionalFolder)
                 {
-                    FichierAdditionalPaths.WriteLine(Path); //on copie chaque dossier supplementaire dans unfichier
+                    fichierAdditionalPaths.WriteLine(path); //on copie chaque dossier supplementaire dans unfichier
                 }
             }            
-            FichierAdditionalPaths.Close();
+            fichierAdditionalPaths.Close();
             Logs.InfoLog("Sauvegarde de l'application");
         }
 
-        public override void Save(Data Data) //constructeur prenant un manager (fait la meme chose que l'autre)
+        public override void Save(Data data) //constructeur prenant un manager (fait la meme chose que l'autre)
         {
-            Save(Data.Elements, Data.Dossiers);
+            Save(data.Elements, data.Dossiers);
         }
     }
 }

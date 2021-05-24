@@ -17,9 +17,9 @@ namespace Vues.User_Controls
     /// <summary>
     /// Logique d'interaction pour JeuUC.xaml
     /// </summary>
-    public partial class JeuUC : UserControl
+    public partial class JeuUc : UserControl
     {
-        public JeuUC()
+        public JeuUc()
         {
             InitializeComponent();
         }

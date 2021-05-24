@@ -9,12 +9,12 @@ namespace DataManager
     public abstract class Saver
     {
         protected string Folder;
-        protected Saver(string Folder)
+        protected Saver(string folder)
         {
-            this.Folder = Folder;
-            Directory.CreateDirectory(Folder);
+            this.Folder = folder;
+            Directory.CreateDirectory(folder);
         }
-        public abstract void Save(Data Manager);
-        public abstract void Save(IList<Element> Elements, IList<string> AdditionalFolder);
+        public abstract void Save(Data manager);
+        public abstract void Save(IList<Element> elements, IList<string> additionalFolder);
     }
 }

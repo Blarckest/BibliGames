@@ -7,9 +7,9 @@ namespace DataManager
     public abstract class Loader
     {
         protected string Folder;
-        protected Loader(string Folder)
+        protected Loader(string folder)
         {
-            this.Folder = Folder;
+            this.Folder = folder;
         }
         public abstract Data Load();
         public abstract IList<string> LoadAdditionalPath();

@@ -16,10 +16,10 @@
                  SelectedItem="{Binding ElementSelected, Mode=TwoWay}" SelectionChanged="ListeJeu_SelectionChanged">
             <ListBox.Resources>
                 <DataTemplate DataType="{x:Type Modele:Jeu}">
-                    <User_Controls:JeuUC Width="{Binding Path=ActualWidth, ElementName=ListeJeu}"/>
+                    <User_Controls:JeuUc Width="{Binding Path=ActualWidth, ElementName=ListeJeu}"/>
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type Modele:Launcher}">
-                    <User_Controls:LauncherUC />
+                    <User_Controls:LauncherUc />
                 </DataTemplate>
             </ListBox.Resources>
         </ListBox>

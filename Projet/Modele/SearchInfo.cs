@@ -24,73 +24,73 @@ namespace Modele
         [ThreadStatic] private static Random Rand;
         [ThreadStatic] private static WebClient WebClient;
 
-        public static void SetInfo(object Jeu) //on recoit un objet pour etre en accord avec le deleguate de ParameterizedThreadStart
+        public static void SetInfo(object jeu) //on recoit un objet pour etre en accord avec le deleguate de ParameterizedThreadStart
         {
-            if (Jeu.GetType()==typeof(Jeu))
+            if (jeu.GetType()==typeof(Jeu))
             {
-                Jeu JeuRecu = Jeu as Jeu;
+                Jeu jeuRecu = jeu as Jeu;
                 Rand = new Random();//on est obligé d'instancier les variables threadStatic
                 WebClient = new WebClient();
-                bool NeedImage = false, NeedIcone = false, NeedDescription = false;
-                CreateFolderStructure(JeuRecu);
-                string PathToFolderExec = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);//si jamais on en a besoin
-                if (string.IsNullOrEmpty(JeuRecu.Image))
+                bool needImage = false, needIcone = false, needDescription = false;
+                CreateFolderStructure(jeuRecu);
+                string pathToFolderExec = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);//si jamais on en a besoin
+                if (string.IsNullOrEmpty(jeuRecu.Image))
                 {
-                    if (!File.Exists(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\image.jpg") || new FileInfo(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\image.jpg").Length == 0) //si fichier existe pas ou qu'il est vide
+                    if (!File.Exists(@$".\Ressources\InfoJeux\{GetFolderName(jeuRecu)}\image.jpg") || new FileInfo(@$".\Ressources\InfoJeux\{GetFolderName(jeuRecu)}\image.jpg").Length == 0) //si fichier existe pas ou qu'il est vide
                     {
-                        NeedImage = true;
+                        needImage = true;
                     }
                     else//si la description est vide on va la chercher dans le fichier
                     {
-                        JeuRecu.Image = Path.Combine(PathToFolderExec, @$"Ressources\InfoJeux\{GetFolderName(JeuRecu)}\image.jpg");
+                        jeuRecu.Image = Path.Combine(pathToFolderExec, @$"Ressources\InfoJeux\{GetFolderName(jeuRecu)}\image.jpg");
                     } 
                 }
-                if (string.IsNullOrEmpty(JeuRecu.Icone))
+                if (string.IsNullOrEmpty(jeuRecu.Icone))
                 {
-                    if (!File.Exists(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\icon.jpg") || new FileInfo(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\icon.jpg").Length == 0) //si fichier existe pas ou qu'il est vide
+                    if (!File.Exists(@$".\Ressources\InfoJeux\{GetFolderName(jeuRecu)}\icon.jpg") || new FileInfo(@$".\Ressources\InfoJeux\{GetFolderName(jeuRecu)}\icon.jpg").Length == 0) //si fichier existe pas ou qu'il est vide
                     {
-                        NeedIcone = true;
+                        needIcone = true;
                     }
                     else//si la description est vide on va la chercher dans le fichier
                     {
-                        JeuRecu.Icone = Path.Combine(PathToFolderExec, @$"Ressources\InfoJeux\{GetFolderName(JeuRecu)}\icon.jpg");
+                        jeuRecu.Icone = Path.Combine(pathToFolderExec, @$"Ressources\InfoJeux\{GetFolderName(jeuRecu)}\icon.jpg");
                     } 
                 }
-                if (string.IsNullOrEmpty(JeuRecu.Description))
+                if (string.IsNullOrEmpty(jeuRecu.Description))
                 {
-                    if (!File.Exists(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\text.txt") || new FileInfo(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\text.txt").Length == 0) //si fichier existe pas ou qu'il est vide
+                    if (!File.Exists(@$".\Ressources\InfoJeux\{GetFolderName(jeuRecu)}\text.txt") || new FileInfo(@$".\Ressources\InfoJeux\{GetFolderName(jeuRecu)}\text.txt").Length == 0) //si fichier existe pas ou qu'il est vide
                     {
-                        NeedDescription = true;
+                        needDescription = true;
                     }
                     else //si la description est vide on va la chercher dans le fichier
                     {
-                        JeuRecu.Description = File.ReadAllText(@$".\Ressources\InfoJeux\{GetFolderName(JeuRecu)}\text.txt");
+                        jeuRecu.Description = File.ReadAllText(@$".\Ressources\InfoJeux\{GetFolderName(jeuRecu)}\text.txt");
                     } 
                 }
 
-                if (NeedImage || NeedIcone || NeedDescription)
+                if (needImage || needIcone || needDescription)
                 {
-                    ExtractGameInfoFromWeb(JeuRecu, NeedImage, NeedIcone, NeedDescription);
+                    ExtractGameInfoFromWeb(jeuRecu, needImage, needIcone, needDescription);
                 }
             } 
         }
 
-        public static Jeu ExtractGameInfoFromExec(string Exec)
+        public static Jeu ExtractGameInfoFromExec(string exec)
         {
-            string Dossier = Directory.GetParent(Exec).FullName;
-            string Nom = Path.GetFileName(Directory.GetParent(Exec).FullName);
-            return new Jeu(Nom,Dossier,Exec);
+            string dossier = Directory.GetParent(exec).FullName;
+            string nom = Path.GetFileName(Directory.GetParent(exec).FullName);
+            return new Jeu(nom,dossier,exec);
         }
 
-        private static string Translate(string Original)
+        private static string Translate(string original)
         {
-            Original = Original.Replace("\n", "\\n");
+            original = original.Replace("\n", "\\n");
             Regex charToApostrophe = new Regex("[\"”’“]");
             Regex charToEmpty = new Regex("[®™]"); //le serveur ne supporte pas le caracteres echapé/speciaux
-            Original = charToApostrophe.Replace(Original, "'");
-            Original = charToEmpty.Replace(Original, "");
+            original = charToApostrophe.Replace(original, "'");
+            original = charToEmpty.Replace(original, "");
             WebRequest request = WebRequest.Create("https://api.pons.com/text-translation-web/v4/translate?locale=fr");
-            string postsourcedata = $"{{\"impressionId\":\"e69edd59-88af-47de-aba6-e40d065b838d\",\"sourceLanguage\":\"en\",\"targetLanguage\":\"fr\",\"text\":\"{Original}\"}}"; //requete post a envoyer
+            string postsourcedata = $"{{\"impressionId\":\"e69edd59-88af-47de-aba6-e40d065b838d\",\"sourceLanguage\":\"en\",\"targetLanguage\":\"fr\",\"text\":\"{original}\"}}"; //requete post a envoyer
             request.Method = "POST"; //parametre de la requete
             request.ContentType = "application/json; charset=UTF-8"; //parametre de la requete
             request.ContentLength = postsourcedata.Length;  //parametre de la requete
@@ -104,56 +104,56 @@ namespace Modele
             WebResponse response = request.GetResponse(); //recup de la reponse
             Stream responseStream = response.GetResponseStream();
             StreamReader readStream = new StreamReader(responseStream, Encoding.UTF8); //extraction de la reponse
-            string Page = readStream.ReadToEnd();
-            Page = Page.Substring(Page.IndexOf("text\":\"")+ "text\":\"".Length); //exctraction de la partie qui nous interesse
-            Page = Page.Substring(0, Page.IndexOf("\",\"links\":"));
-            Page = Page.Replace("\\n ", "\n"); //on remet les saut de lignes
-            Page = Page.Replace("\\n", "\n");
-            return Page;
+            string page = readStream.ReadToEnd();
+            page = page.Substring(page.IndexOf("text\":\"")+ "text\":\"".Length); //exctraction de la partie qui nous interesse
+            page = page.Substring(0, page.IndexOf("\",\"links\":"));
+            page = page.Replace("\\n ", "\n"); //on remet les saut de lignes
+            page = page.Replace("\\n", "\n");
+            return page;
         }
 
-        private static void ExtractGameInfoFromWeb(Jeu Jeu,bool NeedImage,bool NeedIcon,bool NeedDescription)
+        private static void ExtractGameInfoFromWeb(Jeu jeu,bool needImage,bool needIcon,bool needDescription)
         {
-            if (GoToGamePage(Jeu))
+            if (GoToGamePage(jeu))
             {
-                string PathToFolderExec = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-                if (NeedImage && ExctractImage(Jeu))
+                string pathToFolderExec = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                if (needImage && ExctractImage(jeu))
                 {
-                    Jeu.Image = Path.Combine(PathToFolderExec, @$"Ressources\InfoJeux\{GetFolderName(Jeu)}\image.jpg");
+                    jeu.Image = Path.Combine(pathToFolderExec, @$"Ressources\InfoJeux\{GetFolderName(jeu)}\image.jpg");
                 }
-                if (NeedIcon && ExctractIcon(Jeu))
+                if (needIcon && ExctractIcon(jeu))
                 {
-                    Jeu.Icone = Path.Combine(PathToFolderExec, @$"Ressources\InfoJeux\{GetFolderName(Jeu)}\icon.jpg");
+                    jeu.Icone = Path.Combine(pathToFolderExec, @$"Ressources\InfoJeux\{GetFolderName(jeu)}\icon.jpg");
                 }
-                if (NeedDescription)
+                if (needDescription)
                 {
-                    Jeu.Description = ExtractDescription(Jeu);
+                    jeu.Description = ExtractDescription(jeu);
                 }
             }
             
         }
-        private static string ReplaceName(Jeu Jeu)
+        private static string ReplaceName(Jeu jeu)
         {
             //aller directement a la page du jeux en allant https://www.igdb.com/games/+(jeux en minuscule et espace remplacer par '-' tt les caracteres speciaux sont supprimé)
-            string Nom=Jeu.Nom;
-            Nom = Nom.ToLower();
-            Regex Reg = new Regex("[*':\",_&#^@]");
-            Nom = Reg.Replace(Nom, string.Empty);
+            string nom=jeu.Nom;
+            nom = nom.ToLower();
+            Regex reg = new Regex("[*':\",_&#^@]");
+            nom = reg.Replace(nom, string.Empty);
 
-            Reg = new Regex("[ ]");
-            Nom = Reg.Replace(Nom, "-");
+            reg = new Regex("[ ]");
+            nom = reg.Replace(nom, "-");
 
-            Reg = new Regex("[.]");
-            Nom = Reg.Replace(Nom, "-dot-"); //"." devient "-dot-" 
-            return Nom;
+            reg = new Regex("[.]");
+            nom = reg.Replace(nom, "-dot-"); //"." devient "-dot-" 
+            return nom;
         }
 
-        private static bool GoToGamePage(Jeu Jeu)
+        private static bool GoToGamePage(Jeu jeu)
         {
             try
             {
-                HtmlWeb Web = new HtmlWeb();
-                HtmlDocument doc = Web.Load(@$"https://www.igdb.com/games/{ReplaceName(Jeu)}");
+                HtmlWeb web = new HtmlWeb();
+                HtmlDocument doc = web.Load(@$"https://www.igdb.com/games/{ReplaceName(jeu)}");
                 string texte = doc.Text;
                 texte = texte.Replace("><", ">\n<");
                 LinesOfTheWebPage = texte.Split("\n");
@@ -166,76 +166,76 @@ namespace Modele
             }
         }
 
-        private static string ExtractDescription(Jeu Jeu)
+        private static string ExtractDescription(Jeu jeu)
         {
             try
             {
-                string Texte = LinesOfTheWebPage.Where(l => l.Contains("<div data-react-class=\"GamePageHeader\" data-react-props")).First(); //get la ligne qui nous interesse
-                Texte = System.Web.HttpUtility.HtmlDecode(Texte);  //transforme les caractere speciaux au html en ascii
-                Texte = Regex.Unescape(Texte); //on met les \003u en < et autre 
-                Texte = Texte.Substring(Texte.IndexOf("<p>"));
-                Texte = Texte.Substring(0, Texte.IndexOf("</p>\",\"websites\":"));
-                Regex Reg = new Regex("<.?.?..?>");
-                Texte = Reg.Replace(Texte, string.Empty); //on supp toutes les balise de paragraphes et break
-                Texte = Translate(Texte);
-                StreamWriter fichier = new StreamWriter(@$".\Ressources\Infojeux\{GetFolderName(Jeu)}\text.txt");
-                fichier.WriteLine(Texte);
+                string texte = LinesOfTheWebPage.Where(l => l.Contains("<div data-react-class=\"GamePageHeader\" data-react-props")).First(); //get la ligne qui nous interesse
+                texte = System.Web.HttpUtility.HtmlDecode(texte);  //transforme les caractere speciaux au html en ascii
+                texte = Regex.Unescape(texte); //on met les \003u en < et autre 
+                texte = texte.Substring(texte.IndexOf("<p>"));
+                texte = texte.Substring(0, texte.IndexOf("</p>\",\"websites\":"));
+                Regex reg = new Regex("<.?.?..?>");
+                texte = reg.Replace(texte, string.Empty); //on supp toutes les balise de paragraphes et break
+                texte = Translate(texte);
+                StreamWriter fichier = new StreamWriter(@$".\Ressources\Infojeux\{GetFolderName(jeu)}\text.txt");
+                fichier.WriteLine(texte);
                 fichier.Close();
-                return Texte;
+                return texte;
             }
             catch (Exception)
             {
-                Logs.WarningLog($"Aucune description trouvée pour {Jeu.Nom}");
+                Logs.WarningLog($"Aucune description trouvée pour {jeu.Nom}");
                 return "No description found";
             }
         }
 
-        private static bool ExctractImage(Jeu Jeu)
+        private static bool ExctractImage(Jeu jeu)
         {
             try
             {
-                var Images = LinesOfTheWebPage.Where(l => l.Contains("<a href=\"https://images.igdb.com/igdb/image/upload/t_original/")).ToList();  //get les lignes qui nous interesse          
-                string Image = Images[Rand.Next(Images.Count())]; //on en choisis une au hasard
-                Image = Image.Substring(Image.IndexOf("http"));
-                Image = Image.Substring(0, Image.IndexOf(".jpg") + 4);
-                WebClient.DownloadFile(new Uri(Image), @$".\Ressources\InfoJeux\{GetFolderName(Jeu)}\image.jpg"); //on telecharge
+                var images = LinesOfTheWebPage.Where(l => l.Contains("<a href=\"https://images.igdb.com/igdb/image/upload/t_original/")).ToList();  //get les lignes qui nous interesse          
+                string image = images[Rand.Next(images.Count())]; //on en choisis une au hasard
+                image = image.Substring(image.IndexOf("http"));
+                image = image.Substring(0, image.IndexOf(".jpg") + 4);
+                WebClient.DownloadFile(new Uri(image), @$".\Ressources\InfoJeux\{GetFolderName(jeu)}\image.jpg"); //on telecharge
                 return true;
             }
             catch (Exception)
             {
-                Logs.WarningLog($"Aucune image trouvée pour {Jeu.Nom}");
+                Logs.WarningLog($"Aucune image trouvée pour {jeu.Nom}");
                 return false;
             }
         }
 
-        private static bool ExctractIcon(Jeu Jeu)
+        private static bool ExctractIcon(Jeu jeu)
         {
             try
             {
-                string Icon = LinesOfTheWebPage.Where(l => l.Contains("<meta content=\"https://images.igdb.com/igdb/image/upload/t_cover_big/")).First();
-                Icon = Icon.Substring(Icon.IndexOf("http"));
-                Icon = Icon.Substring(0, Icon.IndexOf(".jpg") + 4);
-                WebClient.DownloadFile(new Uri(Icon), @$".\Ressources\InfoJeux\{GetFolderName(Jeu)}\icon.jpg");
+                string icon = LinesOfTheWebPage.Where(l => l.Contains("<meta content=\"https://images.igdb.com/igdb/image/upload/t_cover_big/")).First();
+                icon = icon.Substring(icon.IndexOf("http"));
+                icon = icon.Substring(0, icon.IndexOf(".jpg") + 4);
+                WebClient.DownloadFile(new Uri(icon), @$".\Ressources\InfoJeux\{GetFolderName(jeu)}\icon.jpg");
                 return true;
             }
             catch (Exception)
             {
-                Logs.WarningLog($"Aucune icone trouvée pour {Jeu.Nom}");
+                Logs.WarningLog($"Aucune icone trouvée pour {jeu.Nom}");
                 return false;
             }
         }
 
-        private static string GetFolderName(Jeu Jeu)
+        private static string GetFolderName(Jeu jeu)
         {
-            Regex Reg = new Regex("[<>:\"“/\\|?*]");
-            string Nom = Reg.Replace(Jeu.Nom, "");
-            return Path.GetFileName(Nom);
+            Regex reg = new Regex("[<>:\"“/\\|?*]");
+            string nom = reg.Replace(jeu.Nom, "");
+            return Path.GetFileName(nom);
         }
 
-        private static void CreateFolderStructure(Jeu Jeu)
+        private static void CreateFolderStructure(Jeu jeu)
         {
 
-            Directory.CreateDirectory(@$".\Ressources\Infojeux\{GetFolderName(Jeu)}");
+            Directory.CreateDirectory(@$".\Ressources\Infojeux\{GetFolderName(jeu)}");
         }
     }
 }

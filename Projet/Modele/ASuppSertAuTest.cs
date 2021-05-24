@@ -8,8 +8,8 @@ namespace Modele
     {
         public static void Main(string[] args)
         {
-            Jeu Test = new Jeu("Among Us", @"D:\Jeux\Steam\steamapps\common", @"D:\Jeux\Steam\steamapps\common\Among Us\Among US.exe");
-            SearchInfo.SetInfo(Test);
+            Jeu test = new Jeu("Among Us", @"D:\Jeux\Steam\steamapps\common", @"D:\Jeux\Steam\steamapps\common\Among Us\Among US.exe");
+            SearchInfo.SetInfo(test);
             /*var res = SearchForGameDirectory.GetAllGameDirectory();
             string[] dossiers = { "G:\\", "D:\\Jeux\\battle.net" };
             res.Add(LauncherName.Autre, SearchForGameDirectory.GetGameDirectoryFromPaths(dossiers));

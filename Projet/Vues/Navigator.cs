@@ -14,14 +14,14 @@ namespace Vues
         public void Setup(out Manager manager)
         {
             Logs.SuppLog();
-            Loader Loader = new LoadElements("Ressources/Sauvegarde");
-            manager = new Manager(Loader.Load()); //on load la ssauvegarde
+            Loader loader = new LoadElements("Ressources/Sauvegarde");
+            manager = new Manager(loader.Load()); //on load la ssauvegarde
             Manager = manager; //on recupere le manager
         }
         public void Save()
         {
-            Saver Saver = new SaveElements("Ressources/Sauvegarde"); 
-            Saver.Save(Manager.Data);//on save
+            Saver saver = new SaveElements("Ressources/Sauvegarde"); 
+            saver.Save(Manager.Data);//on save
         }
         public void OpenParametre()
         {
@@ -30,8 +30,8 @@ namespace Vues
         }
         public void OpenAjoutJeu()
         {
-            AjoutJeuWindow Window = new AjoutJeuWindow();
-            Window.ShowDialog();
+            AjoutJeuWindow window = new AjoutJeuWindow();
+            window.ShowDialog();
         }
 
         public void UpdateDetail(ListBox listeJeu, ContentControl detail)
@@ -53,9 +53,9 @@ namespace Vues
             }
         }
 
-        public void SetupMasterDetail(ContentControl masterDetailCC)
+        public void SetupMasterDetail(ContentControl masterDetailCc)
         {
-            masterDetailCC.Content = new windowParts.MasterDetail();
+            masterDetailCc.Content = new windowParts.MasterDetail();
         }
     }
 }

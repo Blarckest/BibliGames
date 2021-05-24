@@ -33,13 +33,13 @@ namespace Vues
         public string Executable { get => executable; set { executable = value; NotifyPropertyChanged(); } }
         public string Image { get => image; set { image = value; NotifyPropertyChanged(); } }
         public string Description { get; set; }
-        public AjoutDetailWindow(Jeu Jeu)
+        public AjoutDetailWindow(Jeu jeu)
         {
-            Executable = Jeu.Exec;
-            Image = Jeu.Image;
-            Description = Jeu.Description;
+            Executable = jeu.Exec;
+            Image = jeu.Image;
+            Description = jeu.Description;
             DataContext = this;
-            this.Jeu = Jeu;
+            this.Jeu = jeu;
             InitializeComponent();
 
         }

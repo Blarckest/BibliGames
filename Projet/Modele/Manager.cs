@@ -75,26 +75,26 @@ namespace Modele
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void AjoutJeu(LauncherName Launcher, string Exec)
+        public void AjoutJeu(LauncherName launcher, string exec)
         {
-            if (File.Exists(Exec))
+            if (File.Exists(exec))
             {
-                Data.AjoutJeu(Launcher, Exec);
+                Data.AjoutJeu(launcher, exec);
                 NotifyPropertyChanged("Affichage");
             }
         }
 
-        public void AjoutJeu(Jeu Jeu)
+        public void AjoutJeu(Jeu jeu)
         {
             //notify se fait dans la fonction appeler
-            Data.AjoutJeu(Jeu);
+            Data.AjoutJeu(jeu);
         }
 
-        public void ModifDetail(string Image, string Description, string Exec)
+        public void ModifDetail(string image, string description, string exec)
         {
             if (ElementSelected.GetType() == typeof(Jeu))
             {
-                Data.ModifDetail(Image, Description, Exec, ElementSelected as Jeu);
+                Data.ModifDetail(image, description, exec, ElementSelected as Jeu);
             }
         }
 
@@ -109,15 +109,15 @@ namespace Modele
 
         public void LancerJeu()
         {
-            var Elem = ElementSelected as Jeu;
+            var elem = ElementSelected as Jeu;
             try
             {
-                Logs.InfoLog($"Lancement du jeu {Elem.Nom}");
-                System.Diagnostics.Process.Start(Elem.Exec); //normalement ca marche a tester
+                Logs.InfoLog($"Lancement du jeu {elem.Nom}");
+                System.Diagnostics.Process.Start(elem.Exec); //normalement ca marche a tester
             }
             catch
             {
-                Logs.ErrorLog($"Lancement du jeu {Elem.Nom} imposssible");
+                Logs.ErrorLog($"Lancement du jeu {elem.Nom} imposssible");
                 return;
             }
         }
@@ -125,16 +125,16 @@ namespace Modele
         /// <summary>
         /// Appeller lors de l'ajout d'un dossier dans les parametre
         /// </summary>
-        /// <param name="Dossier"></param>
-        public void AjouterDossier(string Dossier)
+        /// <param name="dossier"></param>
+        public void AjouterDossier(string dossier)
         {
-            Data.AjouterDossier(Dossier);
+            Data.AjouterDossier(dossier);
             NotifyPropertyChanged("Affichage");
         }
 
-        public void SuppDossier(string Dossier)
+        public void SuppDossier(string dossier)
         {
-            Data.SuppDossier(Dossier);
+            Data.SuppDossier(dossier);
             NotifyPropertyChanged("Affichage");
         }
 
