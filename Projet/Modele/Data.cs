@@ -26,12 +26,14 @@ namespace Modele
             Jeu jeu = SearchInfo.ExtractGameInfoFromExec(exec);
             jeu.IsManuallyAdded = true;
             InsertGame(launcher, jeu);
+            SetInfo(jeu);
         }
 
         public void AjoutJeu(Jeu jeu)
         {
             InsertGame(jeu.Launcher, jeu);
             jeu.IsManuallyAdded = true;
+            SetInfo(jeu);
         }
 
         public void ModifDetail(string image, string description, string exec, Jeu elementselected)
@@ -73,9 +75,8 @@ namespace Modele
                 SearchForExecutableAndName.SearchForExecutables(res, folder);
                 foreach (Jeu jeu in res)
                 {
-                    AjoutJeu(jeu);
-                    Thread thread = new Thread(new ParameterizedThreadStart(SearchInfo.SetInfo));
-                    thread.Start(jeu);
+                    InsertGame(jeu.Launcher, jeu);
+                    SetInfo(jeu);
                 }
                 return true;
             }
@@ -176,6 +177,12 @@ namespace Modele
         {
             Launcher temp = new Launcher(launcherName);
             return Elements.IndexOf(temp);
+        }
+
+        private void SetInfo(Jeu jeu)
+        {
+            Thread thread = new Thread(SearchInfo.SetInfo);
+            thread.Start(jeu);
         }
     }
 }
