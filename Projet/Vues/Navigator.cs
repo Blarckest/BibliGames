@@ -10,12 +10,11 @@ namespace Vues
 {
     public class Navigator
     {
-        public void Setup(out Manager manager)
+        public void Setup()
         {
             Logs.SuppLog();
             Loader loader = new LoadElements("Ressources/Sauvegarde");
-            manager = new Manager(loader.Load()); //on load la ssauvegarde
-            (App.Current as App).Manager = manager;//on recupere le manager
+            (App.Current as App).Manager = new Manager(loader.Load()); //on load la ssauvegarde
         }
         public void Save()
         {

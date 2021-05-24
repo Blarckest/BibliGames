@@ -137,7 +137,7 @@ namespace DataManager
                 if (element.GetType() == typeof(Jeu))
                 {
                     Logs.InfoLog($"Recherche des données pour {element.Nom}");
-                    Thread thread = new Thread(new ParameterizedThreadStart(SearchInfo.SetInfo));
+                    Thread thread = new Thread(SearchInfo.SetInfo);
                     thread.Start(element);
                 }
             }

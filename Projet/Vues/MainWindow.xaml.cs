@@ -23,16 +23,15 @@ namespace Vues
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Manager manager;
         public MainWindow()
         {
-            (App.Current as App).Navigator.Setup(out manager);
-            DataContext = manager;
+            (App.Current as App).Navigator.Setup();
+            DataContext = (App.Current as App).Manager;
             InitializeComponent();
             (App.Current as App).Navigator.SetupMasterDetail(MasterDetailCC);
-            manager.SearchActivated = false;
+            (App.Current as App).Manager.SearchActivated = false;
             BarreDeRecherche.Text = "Rechercher";
-            manager.SearchActivated = true;
+            (App.Current as App).Manager.SearchActivated = true;
         }
 
         private void AjoutJeu(object sender, RoutedEventArgs e)
@@ -45,21 +44,21 @@ namespace Vues
         }
         private void ChampRechEntre(object sender, RoutedEventArgs e)
         {
-            manager.SearchActivated = false;
+            (App.Current as App).Manager.SearchActivated = false;
             if (((TextBox)sender).Text =="Rechercher")
             {
                 ((TextBox)sender).Text = ""; //met a vide le champ 
             }
-            manager.SearchActivated = true;
+            (App.Current as App).Manager.SearchActivated = true;
         }
         private void ChampRechQuitter(object sender, RoutedEventArgs e)
         {
-            manager.SearchActivated = false;
+            (App.Current as App).Manager.SearchActivated = false;
             if (((TextBox)sender).Text == "")
             {
                 ((TextBox)sender).Text = "Rechercher";
             }
-            manager.SearchActivated = true;
+            (App.Current as App).Manager.SearchActivated = true;
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -69,9 +68,9 @@ namespace Vues
 
         private void Recherche(object sender, TextChangedEventArgs e)//appeler quand le texte de la barre de recherche change
         {
-            if (manager.SearchActivated)
+            if ((App.Current as App).Manager.SearchActivated)
             {
-                manager.UpdateRecherche();
+                (App.Current as App).Manager.UpdateRecherche();
             }
         }
     }
