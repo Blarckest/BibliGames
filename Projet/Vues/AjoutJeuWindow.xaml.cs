@@ -29,7 +29,7 @@ namespace Vues
         private void Valider(object sender, RoutedEventArgs e)
         {
             //valider modif
-            (App.Current as App).Navigator.Manager.AjoutJeu((LauncherName)ListeLuncher.SelectedItem, textBoxLienExe.Text);
+            (App.Current as App).Manager.AjoutJeu((LauncherName)ListeLuncher.SelectedItem, textBoxLienExe.Text);
             this.Close();
         }
 

@@ -27,7 +27,7 @@ namespace Vues.User_Controls
         private void VignetteClicked(object sender, MouseButtonEventArgs e)
         {
             //on change l'item selected pour aller au bon endroit
-            (App.Current as App).Navigator.Manager.ElementSelected = DataContext as Element;
+            (App.Current as App).Manager.ElementSelected = DataContext as Element;
         }
     }
 }

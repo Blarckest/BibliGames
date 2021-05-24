@@ -26,14 +26,13 @@ namespace Vues.User_Controls
 
         private void ModifierJeu(object sender, RoutedEventArgs e)
         {
-            AjoutDetailWindow window = new AjoutDetailWindow(DataContext as Jeu);
-            window.ShowDialog();
+            (App.Current as App).Navigator.OpenAjoutDetail(DataContext as Jeu);
         }
 
         private void LancerJeu(object sender, RoutedEventArgs e)
         {
             //lancer le jeu
-            (App.Current as App).Navigator.Manager.LancerJeu();
+            (App.Current as App).Manager.LancerJeu();
         }
     }
 }

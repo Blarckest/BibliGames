@@ -28,7 +28,7 @@ namespace Vues
         public Parametre()
         {
             DataContext = this;
-            DossierAffiche = new ObservableCollection<string>((App.Current as App).Navigator.Manager.Data.Dossiers);
+            DossierAffiche = new ObservableCollection<string>((App.Current as App).Manager.Data.Dossiers);
             InitializeComponent();
         }
         public void ParcourirDossiers(object sender, MouseButtonEventArgs e)
@@ -51,12 +51,12 @@ namespace Vues
             {
                 foreach(string dossier in DossierSupp)
                 {
-                    (App.Current as App).Navigator.Manager.SuppDossier(dossier);
+                    (App.Current as App).Manager.SuppDossier(dossier);
                 }
             }
             foreach (string dossier in DossierAffiche)
             {
-                (App.Current as App).Navigator.Manager.AjouterDossier(dossier);
+                (App.Current as App).Manager.AjouterDossier(dossier);
             }          
             this.Close();
         }

@@ -26,22 +26,11 @@ namespace Vues.User_Controls
 
         private void DemandeSuppression(object sender, MouseButtonEventArgs e)
         {
-            //on cherche la listbox pour mettre l'itemselected au jeux cliquer
-            bool trouver = false;
-            var temp = VisualTreeHelper.GetParent(this);
-            while (!trouver) //on set le selecteditem a l'item courant
-            {
-                if (temp.GetType() == typeof(ListBox))
-                {
-                    (temp as ListBox).SelectedItem = DataContext;
-                    trouver = true;
-                }
-                temp = VisualTreeHelper.GetParent(temp);
-            }
-
+            //on met l'itemselected au jeux clique
+            (App.Current as App).Manager.ElementSelected = DataContext as Element;
             if (MessageBox.Show("Supprimer ce jeu?", "Suppression", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                (App.Current as App).Navigator.Manager.SuppJeu();
+                (App.Current as App).Manager.SuppJeu(); //on supp si oui
             }
         }
 

@@ -10,18 +10,17 @@ namespace Vues
 {
     public class Navigator
     {
-        public Manager Manager { get; private set; }
         public void Setup(out Manager manager)
         {
             Logs.SuppLog();
             Loader loader = new LoadElements("Ressources/Sauvegarde");
             manager = new Manager(loader.Load()); //on load la ssauvegarde
-            Manager = manager; //on recupere le manager
+            (App.Current as App).Manager = manager;//on recupere le manager
         }
         public void Save()
         {
             Saver saver = new SaveElements("Ressources/Sauvegarde"); 
-            saver.Save(Manager.Data);//on save
+            saver.Save((App.Current as App).Manager.Data);//on save
         }
         public void OpenParametre()
         {
@@ -33,6 +32,11 @@ namespace Vues
             AjoutJeuWindow window = new AjoutJeuWindow();
             window.ShowDialog();
         }
+        public void OpenAjoutDetail(Jeu jeu)
+        {
+            AjoutDetailWindow window = new AjoutDetailWindow(jeu);
+            window.ShowDialog();
+        }
 
         public void UpdateDetail(ListBox listeJeu, ContentControl detail)
         {
@@ -40,7 +44,7 @@ namespace Vues
             {
                 if (listeJeu.SelectedItem.GetType() == typeof(Launcher))
                 {
-                    detail.Content = new User_Controls.DetailLauncher() { DataContext = Manager };
+                    detail.Content = new User_Controls.DetailLauncher() { DataContext = (App.Current as App).Manager };
                 }
                 else
                 {

@@ -30,7 +30,6 @@ namespace Modele
             if (dossiers.TryGetValue(LauncherName.Riot, out dossiersLauncher)) //recup dossiers du launcher riot et recherche d'executable si il y en a
                 SearchForRiotExecutables(jeux); // tout est situé dans les fichiers de config
 
-
             if (dossiers.TryGetValue(LauncherName.Steam, out dossiersLauncher)) //recup dossiers du launcher steam et recherche d'executable si il y en a
                 SearchForSteamExecutables(jeux, dossiersLauncher);
 

@@ -15,9 +15,8 @@ namespace Modele
 {
     public class Manager : INotifyPropertyChanged
     {
-        public bool SearchActivated = true;
         private Element elementSelected;
-
+        public bool SearchActivated { get; set; } = true;
         public IList<Element> Affichage
         {
             get
@@ -28,7 +27,6 @@ namespace Modele
             }
         }
         public IList<string> Dossiers => Data.Dossiers;
-
         public List<Element> JeuLauncherSelected
         {
             get

@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Modele;
 
 namespace Vues
 {
@@ -14,5 +15,6 @@ namespace Vues
     public partial class App : Application
     {
         public Navigator Navigator { get; set; } = new Navigator();
+        public Manager Manager { get; set; }
     }
 }
