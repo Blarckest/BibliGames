@@ -31,9 +31,9 @@ namespace Vues
             AjoutJeuWindow window = new AjoutJeuWindow();
             window.ShowDialog();
         }
-        public void OpenAjoutDetail(Jeu jeu)
+        public void OpenAjoutDetail()
         {
-            AjoutDetailWindow window = new AjoutDetailWindow(jeu);
+            AjoutDetailWindow window = new AjoutDetailWindow();
             window.ShowDialog();
         }
 

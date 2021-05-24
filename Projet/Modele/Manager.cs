@@ -16,6 +16,15 @@ namespace Modele
     public class Manager : INotifyPropertyChanged
     {
         private Element elementSelected;
+        public Element ElementSelected
+        {
+            get => elementSelected;
+            set
+            {
+                elementSelected = value;
+                NotifyPropertyChanged();
+            }
+        }
         public bool SearchActivated { get; set; } = true;
         public IList<Element> Affichage
         {
@@ -42,15 +51,6 @@ namespace Modele
                     return new List<Element> { }; 
                 }
                 return null;
-            }
-        }
-        public Element ElementSelected
-        {
-            get => elementSelected;
-            set
-            {
-                elementSelected = value;
-                NotifyPropertyChanged();
             }
         }
         public string Pattern { get; set; } = null;

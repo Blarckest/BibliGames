@@ -23,7 +23,7 @@ namespace Vues
     /// </summary>
     public partial class Parametre : Window
     {
-        public ObservableCollection<string> DossierAffiche { get; set; }
+        public ObservableCollection<string> DossierAffiche { get; }
         private IList<string> DossierSupp { get; } = new List<string>();
         public Parametre()
         {

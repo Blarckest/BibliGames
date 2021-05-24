@@ -9,7 +9,7 @@ namespace Logger
     {
         private static Thread thread = new Thread(SaveLog);
         private static string dossier = "./Logs";
-        private static ConcurrentQueue<string> queue= new ConcurrentQueue<string>();
+        private static readonly ConcurrentQueue<string> queue= new ConcurrentQueue<string>();
 
         private static void SaveLog()
         {

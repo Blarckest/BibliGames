@@ -26,7 +26,7 @@ namespace Vues.User_Controls
 
         private void ModifierJeu(object sender, RoutedEventArgs e)
         {
-            (App.Current as App).Navigator.OpenAjoutDetail(DataContext as Jeu);
+            (App.Current as App).Navigator.OpenAjoutDetail();
         }
 
         private void LancerJeu(object sender, RoutedEventArgs e)

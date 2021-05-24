@@ -20,28 +20,27 @@ namespace Vues
     /// </summary>
     public partial class AjoutDetailWindow : Window, INotifyPropertyChanged
     {
-        Jeu Jeu;
+        private Jeu Jeu{ get; }
+        private string executable;
+        private string image;
+        public string Executable { get => executable; set { executable = value; NotifyPropertyChanged(); } }
+        public string Image { get => image; set { image = value; NotifyPropertyChanged(); } }
+        public string Description { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private string executable;
-        private string image;
-
-        public string Executable { get => executable; set { executable = value; NotifyPropertyChanged(); } }
-        public string Image { get => image; set { image = value; NotifyPropertyChanged(); } }
-        public string Description { get; set; }
-        public AjoutDetailWindow(Jeu jeu)
+        public AjoutDetailWindow()
         {
-            Executable = jeu.Exec;
-            Image = jeu.Image;
-            Description = jeu.Description;
+            Jeu = (App.Current as App).Manager.ElementSelected as Jeu;
+            Executable = Jeu.Exec;
+            Image = Jeu.Image;
+            Description = Jeu.Description;
             DataContext = this;
-            this.Jeu = jeu;
             InitializeComponent();
-
         }
 
         private void Annuler(object sender, RoutedEventArgs e)
@@ -52,9 +51,7 @@ namespace Vues
         private void Valider(object sender, RoutedEventArgs e)
         {
             //valider modif
-            Jeu.Exec = Executable;
-            Jeu.Image = Image;
-            Jeu.Description = Description;
+            (App.Current as App).Manager.ModifDetail(Image, Description, Description);
             this.Close();
         }
         private void ChercherImage(object sender, MouseButtonEventArgs e)

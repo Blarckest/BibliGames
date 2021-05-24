@@ -9,7 +9,7 @@ namespace DataManager
 {
     public class Stub :Loader
     {
-        private Data Data { get; set; }
+        private Data Data { get; }
         public Stub(string path = "") : base(path)
         {
             List<Element> elements = new List<Element>();
