@@ -10,18 +10,8 @@ namespace Modele
         private int nbjeux = 0;
         public int NbJeux
         {
-            get { return nbjeux; }
-            set
-            {
-                if (value < 0)
-                {
-                    nbjeux = 0;
-                }
-                else
-                {
-                    nbjeux = value;
-                }
-            }
+            get => nbjeux;
+            set => nbjeux = value < 0 ? 0 : value;
         }
         public Launcher(LauncherName name=LauncherName.Autre):base(name.ToString())
         {
@@ -29,7 +19,7 @@ namespace Modele
         }
         public Launcher(int nbJeux, LauncherName name = LauncherName.Autre):this(name)
         {
-            this.NbJeux = nbJeux;
+            NbJeux = nbJeux;
         }
     }
 }

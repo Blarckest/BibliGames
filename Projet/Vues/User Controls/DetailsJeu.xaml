@@ -26,7 +26,7 @@
                      Grid.Column="1"  Margin="0,0,60,0" VerticalAlignment="Center"
                      materialDesign:TextFieldAssist.HasOutlinedTextField="True" 
                      materialDesign:TextFieldAssist.TextFieldCornerRadius="30"/>
-            <StackPanel Orientation="Horizontal" Grid.Column="5">
+            <StackPanel Orientation="Horizontal" Grid.Column="2">
                 <Button Content="Modifier" Click="ModifierJeu" Margin="10" Width="100" HorizontalAlignment="Right" Cursor="Hand"/>
                 <Button Content="Jouer" Click="LancerJeu" Margin="10" Width="150" Cursor="Hand"/>
             </StackPanel>

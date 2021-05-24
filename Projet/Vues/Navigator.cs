@@ -10,7 +10,7 @@ namespace Vues
 {
     public class Navigator
     {
-        public Manager Manager { get; set; }
+        public Manager Manager { get; private set; }
         public void Setup(out Manager manager)
         {
             Logs.SuppLog();

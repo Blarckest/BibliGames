@@ -11,13 +11,13 @@ namespace Modele
 {
     public class Data
     {
-        public IList<Element> Elements { get; set; }
-        public IList<string> Dossiers { get; set; }
+        public IList<Element> Elements { get; }
+        public IList<string> Dossiers { get; }
 
         public Data(IList<Element> elements, IList<string> dossiers)
         {
-            this.Elements = new ObservableCollection<Element>(elements);
-            this.Dossiers = dossiers;
+            Elements = new ObservableCollection<Element>(elements);
+            Dossiers = dossiers;
         }
 
 
@@ -36,18 +36,17 @@ namespace Modele
 
         public void ModifDetail(string image, string description, string exec, Jeu elementselected)
         {
-            var element = elementselected as Jeu;
-            if (element.Image != image && File.Exists(image))
+            if (elementselected.Image != image && File.Exists(image))
             {
-                element.Image = image;
+                elementselected.Image = image;
             }
-            if (element.Description != description)
+            if (elementselected.Description != description)
             {
-                element.Description = description;
+                elementselected.Description = description;
             }
-            if (element.Exec != exec && File.Exists(exec))
+            if (elementselected.Exec != exec && File.Exists(exec))
             {
-                element.Exec = exec;
+                elementselected.Exec = exec;
             }
         }
 
@@ -132,7 +131,7 @@ namespace Modele
                     Elements.Insert(index, jeu);
                 }
                 (Elements[index] as Jeu).Launcher = launcher; //on set le launcher associé au jeu
-                (Elements.Where(e => ReferenceEquals(e, launcherActuel)).First() as Launcher).NbJeux++; //on ajoute un jeu
+                (Elements.First(e => ReferenceEquals(e, launcherActuel)) as Launcher).NbJeux++; //on ajoute un jeu
             }
             else
             {

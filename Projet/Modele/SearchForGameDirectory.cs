@@ -27,9 +27,9 @@ namespace Modele
             return dossiers;
         }
 
-        public static Dictionary<LauncherName, List<string>> GetAllGameDirectory(List<string> paths)
+        public static IDictionary<LauncherName, List<string>> GetAllGameDirectory(List<string> paths)
         {
-            Dictionary<LauncherName, List<string>> dossiers = new Dictionary<LauncherName, List<string>>();
+            IDictionary<LauncherName, List<string>> dossiers = new Dictionary<LauncherName, List<string>>();
             SearchEpicGames(dossiers);
             SearchOriginGames(dossiers);
             SearchRiotGames(dossiers);
@@ -73,18 +73,16 @@ namespace Modele
         {
             return !(Directory.EnumerateFileSystemEntries(path).Any() || (Directory.GetFiles(path+"\\\\","*.exe",SearchOption.AllDirectories).Any()));//renvoie si le dossier et vide ou contient aucun executable (any renvoie un booleen true si il y a qq chose ds le IEnumerable renvoyer)
         }
-        private static void SearchSteamGames(Dictionary<LauncherName, List<string>> dossiers)
+        private static void SearchSteamGames(IDictionary<LauncherName, List<string>> dossiers)
         {
             List<string> paths = new List<string>();
             List<string> pathsToGameDirectory = new List<string>();
-            string steam = "SOFTWARE\\Wow6432Node\\Valve\\Steam\\";
-            string steamPath;
-            string configPath;
+            const string steam = "SOFTWARE\\Wow6432Node\\Valve\\Steam\\";
             RegistryKey key;
             if ((key = Registry.LocalMachine.OpenSubKey(steam))!=null)
             {
-                steamPath = key.GetValue("InstallPath").ToString(); //cle contenant le chemin jusqu'au dossier steam
-                configPath = steamPath + "/steamapps/libraryfolders.vdf"; //fichier de config
+                string steamPath = key.GetValue("InstallPath").ToString();
+                string configPath = steamPath + "/steamapps/libraryfolders.vdf";
                 string regexChemin = @"[A-Z]:\\"; //cherche pour un debut de chemin ex: D:\\
                 if (File.Exists(configPath))
                 {
@@ -127,10 +125,10 @@ namespace Modele
             }
         }
 
-        private static void SearchUplayGames(Dictionary<LauncherName, List<string>> dossiers)
+        private static void SearchUplayGames(IDictionary<LauncherName, List<string>> dossiers)
         {
             List<string> pathsToGameDirectory = new List<string>();
-            string regKey = "SOFTWARE\\WOW6432Node\\Ubisoft\\Launcher\\Installs";
+            const string regKey = "SOFTWARE\\WOW6432Node\\Ubisoft\\Launcher\\Installs";
             RegistryKey key;
             if ((key = Registry.LocalMachine.OpenSubKey(regKey))!=null)
             {
@@ -150,11 +148,10 @@ namespace Modele
             }
         }
 
-        private static void SearchEpicGames(Dictionary<LauncherName, List<string>> dossiers)
+        private static void SearchEpicGames(IDictionary<LauncherName, List<string>> dossiers)
         {
             List<string> pathsToGameDirectory = new List<string>();
-            string temp;
-            string regKey = "SOFTWARE\\WOW6432Node\\Epic Games\\EpicGamesLauncher";
+            const string regKey = "SOFTWARE\\WOW6432Node\\Epic Games\\EpicGamesLauncher";
             RegistryKey key;
             if ((key = Registry.LocalMachine.OpenSubKey(regKey))!=null) //si la cle existe on continue
             {
@@ -172,7 +169,7 @@ namespace Modele
                             {
                                 if (line.Contains("InstallLocation")) //traitement sur la ligne qui nous interesse
                                 {
-                                    temp = line.Substring(line.IndexOf(":\\") - 1); //recuperation du debut du chemin jusqua la fin de la ligne
+                                    string temp = line.Substring(line.IndexOf(":\\") - 1);
                                     temp = temp.Substring(0, temp.Length - 1);  //suppression de la virgule de fin de ligne
                                     temp = temp.Replace("\\\\", "\\");  //tout les  \ sont echapé on a donc besoin d'en enlever 
                                     temp = temp.Replace("\"", "");  //enleve les caracteres de fin qu'on ne veut pas
@@ -194,10 +191,10 @@ namespace Modele
             }
         }
 
-        private static void SearchRiotGames(Dictionary<LauncherName, List<string>> dossiers)
+        private static void SearchRiotGames(IDictionary<LauncherName, List<string>> dossiers)
         {
             List<string> pathsToGameDirectory = new List<string>();
-            string regKey = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\"; //tout les chemin des jeux riot sont dispo ici
+            const string regKey = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\"; //tout les chemin des jeux riot sont dispo ici
             RegistryKey key = Registry.CurrentUser.OpenSubKey(regKey);
             foreach (string subKey in key.GetSubKeyNames()) //parcour des sous-clé
             {
@@ -216,7 +213,7 @@ namespace Modele
             }
         }
 
-        private static void SearchOriginGames(Dictionary<LauncherName, List<string>> dossiers)
+        private static void SearchOriginGames(IDictionary<LauncherName, List<string>> dossiers)
         {
             List<string> pathsToGameDirectory = new List<string>();
             string pathToProgramData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
@@ -232,7 +229,7 @@ namespace Modele
                         string line = File.ReadAllLines(fichier).First(); //le fichier contient qu'une ligne
                         line = System.Uri.UnescapeDataString(line); //la ligne est au format web " "==%20 par ex
                         string[] lines = line.Split('&');
-                        string pathToFolder = lines.Where(e => e.Contains("installpath=", System.StringComparison.OrdinalIgnoreCase) && e.Contains(":\\")).First(); //recuperation de la valeur qui nous interesse
+                        string pathToFolder = lines.First(e => e.Contains("installpath=", StringComparison.OrdinalIgnoreCase) && e.Contains(":\\")); //recuperation de la valeur qui nous interesse
                         pathToFolder = pathToFolder.Substring(pathToFolder.IndexOf(":\\") - 1); //suppression du "installpath="
                         if (pathToFolder.Last() == '\\')
                         {

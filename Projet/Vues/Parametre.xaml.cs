@@ -24,7 +24,7 @@ namespace Vues
     public partial class Parametre : Window
     {
         public ObservableCollection<string> DossierAffiche { get; set; }
-        private IList<string> DossierSupp = new List<string>();
+        private readonly IList<string> DossierSupp = new List<string>();
         public Parametre()
         {
             DataContext = this;

@@ -7,16 +7,16 @@ namespace Logger
 {
     public static class Logs
     {
-        private static Thread Thread = new Thread(SaveLog);
-        private static string Dossier = "./Logs";
-        private static ConcurrentQueue<string> Queue= new ConcurrentQueue<string>();
+        private static Thread thread = new Thread(SaveLog);
+        private static string dossier = "./Logs";
+        private static ConcurrentQueue<string> queue= new ConcurrentQueue<string>();
 
         private static void SaveLog()
         {
             string log;
-            Directory.CreateDirectory(Dossier);
-            StreamWriter sw = new StreamWriter($"{Dossier}/FichierDeLogs.txt", true);
-            while (Queue.TryDequeue(out log))
+            Directory.CreateDirectory(dossier);
+            StreamWriter sw = new StreamWriter($"{dossier}/FichierDeLogs.txt", true);
+            while (queue.TryDequeue(out log))
             {
                 sw.WriteLine(log);
             }
@@ -25,47 +25,47 @@ namespace Logger
 
         public static void InfoLog(string action)
         {
-            Queue.Enqueue($"{DateTime.Now} | Info : {action}");
-            if (!Thread.IsAlive)
+            queue.Enqueue($"{DateTime.Now} | Info : {action}");
+            if (!thread.IsAlive)
             {
-                Thread = new Thread(SaveLog);
-                Thread.Start(); 
+                thread = new Thread(SaveLog);
+                thread.Start(); 
             }
         }
 
         public static void ErrorLog(string action)
         {
-            Queue.Enqueue($"{DateTime.Now} | Error : {action}");
-            if (!Thread.IsAlive)
+            queue.Enqueue($"{DateTime.Now} | Error : {action}");
+            if (!thread.IsAlive)
             {
-                Thread = new Thread(SaveLog);
-                Thread.Start();
+                thread = new Thread(SaveLog);
+                thread.Start();
             }
         }
 
         public static void WarningLog(string action)
         {
-            Queue.Enqueue($"{DateTime.Now} | Warning : {action}");
-            if (!Thread.IsAlive)
+            queue.Enqueue($"{DateTime.Now} | Warning : {action}");
+            if (!thread.IsAlive)
             {
-                Thread = new Thread(SaveLog);
-                Thread.Start();
+                thread = new Thread(SaveLog);
+                thread.Start();
             }
         }
 
         public static void SuppLog()
         {
-            string fichier = Dossier + "/FichierDeLogs.txt";
+            string fichier = dossier + "/FichierDeLogs.txt";
             if (File.Exists(fichier))
             {
-                StreamReader sr = new StreamReader($"{Dossier}/FichierDeLogs.txt");
+                StreamReader sr = new StreamReader($"{dossier}/FichierDeLogs.txt");
                 string line = sr.ReadLine();
                 sr.Close();
                 line = line.Substring(0, 10);
                 DateTime date = DateTime.Today;
                 if (line != date.ToString("d"))
                 {
-                    File.Delete($"{Dossier}/FichierDeLogs.txt");
+                    File.Delete($"{dossier}/FichierDeLogs.txt");
                 }
             }
         }

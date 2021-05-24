@@ -20,13 +20,12 @@ namespace Test_Fonctionnels
             Loader loader = new Stub("");
         }
 
-        public static Dictionary<LauncherName, List<string>> TestGameDirectory()
+        public static IDictionary<LauncherName, List<string>> TestGameDirectory()
         {
             TestStub();
             List<string> path = new List<string>();
             path.Add("./Stub");
-            Dictionary<LauncherName, List<string>> dossiers;
-            dossiers = SearchForGameDirectory.GetAllGameDirectory(path);
+            IDictionary<LauncherName, List<string>> dossiers = SearchForGameDirectory.GetAllGameDirectory(path);
             foreach (KeyValuePair<LauncherName, List<string>> element in dossiers)
             {
                 Console.WriteLine("Dossier dans le launcher :");
@@ -42,12 +41,10 @@ namespace Test_Fonctionnels
 
         private static void TestExecutable()
         {
-            Dictionary<LauncherName, List<string>> dossiers;
-            dossiers =TestGameDirectory();
+            IDictionary<LauncherName, List<string>> dossiers = TestGameDirectory();
             Console.WriteLine("--------------------------------");
             Console.WriteLine("DOSSIER  LAUNCHER  EXECUTABLE");
-            List<Jeu> jeux;
-            jeux =SearchForExecutableAndName.GetExecutableAndNameFromGameDirectory(dossiers);
+            List<Jeu> jeux = SearchForExecutableAndName.GetExecutableAndNameFromGameDirectory(dossiers);
             foreach(Jeu jeu in jeux)
             {
                 Console.WriteLine($"{jeu.Nom},  {jeu.Launcher},  {jeu.Exec}");
@@ -56,7 +53,7 @@ namespace Test_Fonctionnels
 
         private static void TestSave()
         {
-            string path = "./Ressource/sauvegarde";
+            const string path = "./Ressource/sauvegarde";
             Saver save = new SaveElements(path);
             Loader loader = new Stub("");
             var manager = new Manager(loader.Load());
@@ -67,7 +64,7 @@ namespace Test_Fonctionnels
 
         private static void TestLoad()
         {
-            string path = "./Ressource/sauvegarde";
+            const string path = "./Ressource/sauvegarde";
             Loader loader = new LoadElements(path);
             Manager manager = new Manager(loader.Load());
             TestAfficherElements(manager);

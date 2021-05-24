@@ -26,6 +26,7 @@ namespace Vues.User_Controls
 
         private void DemandeSuppression(object sender, MouseButtonEventArgs e)
         {
+            //on cherche la listbox pour mettre l'itemselected au jeux cliquer
             bool trouver = false;
             var temp = VisualTreeHelper.GetParent(this);
             while (!trouver) //on set le selecteditem a l'item courant

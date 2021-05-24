@@ -6,20 +6,20 @@ namespace TestUnitaire
 {
     public class TestLauncher
     {
-        readonly Launcher launcher = new Launcher();
+        readonly Launcher Launcher = new Launcher();
 
         [Theory]
         [InlineData(13)]
         [InlineData(-2)]
         public void TestNombreLauncher(int v)
         {
-            launcher.NbJeux = v;
+            Launcher.NbJeux = v;
             if(v<0)
             {
-                Assert.Equal(0, launcher.NbJeux);
+                Assert.Equal(0, Launcher.NbJeux);
             } else
             {
-                Assert.Equal(v, launcher.NbJeux);
+                Assert.Equal(v, Launcher.NbJeux);
             }
         }
 
@@ -28,8 +28,8 @@ namespace TestUnitaire
         [InlineData(LauncherName.EpicGames)]
         public void TestNomLauncher(LauncherName v)
         {
-            launcher.Nom = v.ToString();
-            Assert.Equal(v.ToString(), launcher.Nom);
+            Launcher.Nom = v.ToString();
+            Assert.Equal(v.ToString(), Launcher.Nom);
         }
     }
 }

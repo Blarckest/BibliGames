@@ -15,10 +15,7 @@ namespace Modele
         public LauncherName Launcher { get; set; }
         public string Icone
         {
-            get
-            {
-                return icone;
-            }
+            get => icone;
             set
             {
                 icone = value;
@@ -27,10 +24,7 @@ namespace Modele
         }
         public string Exec
         {
-            get
-            {
-                return exec;
-            }
+            get => exec;
             set
             {
                 exec = value;
@@ -40,10 +34,7 @@ namespace Modele
 
         public string Description
         {
-            get
-            {
-                return description;
-            }
+            get => description;
             set
             {
                 description = value;
@@ -52,10 +43,7 @@ namespace Modele
         }
         public string Note
         {
-            get
-            {
-                return note;
-            }
+            get => note;
             set
             {
                 note = value;
@@ -63,10 +51,7 @@ namespace Modele
             }
         }
         public string Image {
-            get
-            {
-                return image;
-            }
+            get => image;
             set
             {
                 image  =  value;
@@ -77,18 +62,18 @@ namespace Modele
 
         public Jeu(string nom,string dossier,string exec,LauncherName launcher=LauncherName.Autre) : base(nom)
         {
-            this.Dossier = dossier;
-            this.Exec = exec;
-            this.Launcher = launcher;
+            Dossier = dossier;
+            Exec = exec;
+            Launcher = launcher;
         }
 
         public Jeu(string nom, string dossier, string exec, string image, string icone, string note,string description, LauncherName launcher = LauncherName.Autre, bool isManuallyAdded=false) : this(nom, dossier,exec,launcher)
         {
-            this.Icone = icone;
-            this.Image = image;
-            this.Note = note;
-            this.Description = description;
-            this.IsManuallyAdded = isManuallyAdded;
+            Icone = icone;
+            Image = image;
+            Note = note;
+            Description = description;
+            IsManuallyAdded = isManuallyAdded;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -6,7 +6,7 @@ namespace TestUnitaire
 {
     public class TestJeu
     {
-        readonly Jeu jeu = new Jeu("Valorant", "", "Valorant.exe", LauncherName.Riot);
+        readonly Jeu Jeu = new Jeu("Valorant", "", "Valorant.exe", LauncherName.Riot);
 
         [Theory]
         [InlineData("Rocket League")]
@@ -14,8 +14,8 @@ namespace TestUnitaire
         [InlineData("Valorant")]
         public void TestNomJeu(string nom)
         {
-            jeu.Nom = nom;
-            Assert.Equal(nom,jeu.Nom);
+            Jeu.Nom = nom;
+            Assert.Equal(nom,Jeu.Nom);
         }
 
         [Theory]
@@ -23,8 +23,8 @@ namespace TestUnitaire
         [InlineData("/bin/temp")]
         public void TestDossierJeu(string v)
         {
-            jeu.Dossier = v;
-            Assert.Equal(v, jeu.Dossier);
+            Jeu.Dossier = v;
+            Assert.Equal(v, Jeu.Dossier);
         }
 
         [Theory]
@@ -32,8 +32,8 @@ namespace TestUnitaire
         [InlineData("Il y'a un '")]
         public void TestDescriptionJeu(string desc)
         {
-            jeu.Description = desc;
-            Assert.Equal(desc, jeu.Description);
+            Jeu.Description = desc;
+            Assert.Equal(desc, Jeu.Description);
         }
 
         [Theory]
@@ -41,8 +41,8 @@ namespace TestUnitaire
         [InlineData("Jeu.png")]
         public void TestImageJeu(string img)
         {
-            jeu.Image = img;
-            Assert.Equal(img, jeu.Image);
+            Jeu.Image = img;
+            Assert.Equal(img, Jeu.Image);
         }
 
         [Theory]
@@ -50,8 +50,8 @@ namespace TestUnitaire
         [InlineData("Jeu.exe")]
         public void TestExecutableJeu(string v)
         {
-            jeu.Exec = v;
-            Assert.Equal(v, jeu.Exec);
+            Jeu.Exec = v;
+            Assert.Equal(v, Jeu.Exec);
         }
 
         [Theory]
@@ -59,8 +59,8 @@ namespace TestUnitaire
         [InlineData(LauncherName.EpicGames)]
         public void TestLauncherJeu(LauncherName v)
         {
-            jeu.Launcher = v;
-            Assert.Equal(v, jeu.Launcher);
+            Jeu.Launcher = v;
+            Assert.Equal(v, Jeu.Launcher);
         }
 
         [Theory]
@@ -68,8 +68,8 @@ namespace TestUnitaire
         [InlineData("Jeu.png")]
         public void TestIconeJeu(string v)
         {
-            jeu.Icone = v;
-            Assert.Equal(v, jeu.Icone);
+            Jeu.Icone = v;
+            Assert.Equal(v, Jeu.Icone);
         }
 
         [Theory]
@@ -77,8 +77,8 @@ namespace TestUnitaire
         [InlineData("faire un top 1")]
         public void TestNoteJeu(string v)
         {
-            jeu.Note = v;
-            Assert.Equal(v, jeu.Note);
+            Jeu.Note = v;
+            Assert.Equal(v, Jeu.Note);
         }
     }
 }

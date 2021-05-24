@@ -6,7 +6,7 @@ namespace DataManager
 {
     public abstract class Loader
     {
-        protected string Folder;
+        protected readonly string Folder;
         protected Loader(string folder)
         {
             this.Folder = folder;

@@ -23,16 +23,16 @@ namespace Vues
     /// </summary>
     public partial class MainWindow : Window
     {
-        public Manager Manager;
+        private Manager manager;
         public MainWindow()
         {
-            (App.Current as App).Navigator.Setup(out Manager);
-            DataContext = Manager;
+            (App.Current as App).Navigator.Setup(out manager);
+            DataContext = manager;
             InitializeComponent();
             (App.Current as App).Navigator.SetupMasterDetail(MasterDetailCC);
-            Manager.SearchActivated = false;
+            manager.SearchActivated = false;
             BarreDeRecherche.Text = "Rechercher";
-            Manager.SearchActivated = true;
+            manager.SearchActivated = true;
         }
 
         private void AjoutJeu(object sender, RoutedEventArgs e)
@@ -45,21 +45,21 @@ namespace Vues
         }
         private void ChampRechEntre(object sender, RoutedEventArgs e)
         {
-            Manager.SearchActivated = false;
+            manager.SearchActivated = false;
             if (((TextBox)sender).Text =="Rechercher")
             {
                 ((TextBox)sender).Text = ""; //met a vide le champ 
             }
-            Manager.SearchActivated = true;
+            manager.SearchActivated = true;
         }
         private void ChampRechQuitter(object sender, RoutedEventArgs e)
         {
-            Manager.SearchActivated = false;
+            manager.SearchActivated = false;
             if (((TextBox)sender).Text == "")
             {
                 ((TextBox)sender).Text = "Rechercher";
             }
-            Manager.SearchActivated = true;
+            manager.SearchActivated = true;
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -69,9 +69,9 @@ namespace Vues
 
         private void Recherche(object sender, TextChangedEventArgs e)//appeler quand le texte de la barre de recherche change
         {
-            if (Manager.SearchActivated)
+            if (manager.SearchActivated)
             {
-                Manager.UpdateRecherche();
+                manager.UpdateRecherche();
             }
         }
     }

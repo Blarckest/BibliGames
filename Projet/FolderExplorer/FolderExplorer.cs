@@ -6,23 +6,20 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace FolderExplorerLogic
+namespace FolderExplorer
 {
     public class FolderExplorer : INotifyPropertyChanged
     {
         public bool SearchActivated; //dit a la barre de recherche si la recherche est activé
-        private Stack<string> Historique; //contient l'historique
-        private Stack<string> ForwardHistorique; //permet de retourner a la valeur d'avant
+        private readonly Stack<string> historique; //contient l'historique
+        private readonly Stack<string> forwardHistorique; //permet de retourner a la valeur d'avant
         public string DossierSelectionner { get; set; } //contient la valeur du dossier actuel
-        public ObservableCollection<LigneExplorateur> ListeDossier { get; set; } //la liste afficher
-        public ObservableCollection<LigneExplorateur> QuickAccess { get; set; } //la liste des raccourcisafficher
+        public ObservableCollection<LigneExplorateur> ListeDossier { get;} //la liste afficher
+        public ObservableCollection<LigneExplorateur> QuickAccess { get;} //la liste des raccourcisafficher
         private string message, messageError, chemin;
         public string Message
         {
-            get
-            {
-                return message;
-            }
+            get => message;
             set
             {
                 message = value;
@@ -31,10 +28,7 @@ namespace FolderExplorerLogic
         }
         public string MessageError
         {
-            get
-            {
-                return messageError;
-            }
+            get => messageError;
             set
             {
                 messageError = value;
@@ -43,10 +37,7 @@ namespace FolderExplorerLogic
         }
         public string Chemin
         {
-            get
-            {
-                return chemin;
-            }
+            get => chemin;
             set
             {
                 chemin = value;
@@ -57,14 +48,14 @@ namespace FolderExplorerLogic
         public FolderExplorer()
         {
             SearchActivated = false;
-            ForwardHistorique = new Stack<string>();
-            Historique = new Stack<string>();
+            forwardHistorique = new Stack<string>();
+            historique = new Stack<string>();
             ListeDossier = new ObservableCollection<LigneExplorateur>();
             QuickAccess = new ObservableCollection<LigneExplorateur>();
             InitializeQuickAccess();
             Message = "Veuillez selectionner un dossier";
 
-            Historique.Push(null); //init
+            historique.Push(null); //init
             SetDirectories();
             SearchActivated = true;
         }
@@ -92,23 +83,23 @@ namespace FolderExplorerLogic
 
         public string GetRepertoireChoisi(LigneExplorateur item)
         {
-            return Historique.Peek()==null || Historique.Peek().Length<4 ? Historique.Peek()+item.Nom : Historique.Peek() + "\\" + item.Nom;  //on fait peek+Item quand on est au niveau des disque ou dans un descendant direct d'un disque
+            return historique.Peek()==null || historique.Peek().Length<4 ? historique.Peek()+item.Nom : historique.Peek() + "\\" + item.Nom;  //on fait peek+Item quand on est au niveau des disque ou dans un descendant direct d'un disque
         }
 
         public void GoBackward() //fonction appeller pour revenir en arriere
         {
-            if (Historique.Count > 1) //si on peux pop
+            if (historique.Count > 1) //si on peux pop
             {
-                ForwardHistorique.Push(Historique.Pop()); //on ajoute a notre historique forward
+                forwardHistorique.Push(historique.Pop()); //on ajoute a notre historique forward
             }
             SetDirectories();
         }
 
         public void GoForward() //fonction appeller pour aller la ou on etait avant d'aller on arriere
         {
-            if (ForwardHistorique.Count > 0) //si on peux pop
+            if (forwardHistorique.Count > 0) //si on peux pop
             {
-                Historique.Push(ForwardHistorique.Pop()); //on ajoute a notre historique backward
+                historique.Push(forwardHistorique.Pop()); //on ajoute a notre historique backward
             }
             SetDirectories();
         }
@@ -119,26 +110,26 @@ namespace FolderExplorerLogic
             {
                 if (DossierSelectionner.Length > 3)
                 {
-                    Historique.Push(Directory.GetParent(DossierSelectionner).FullName);
+                    historique.Push(Directory.GetParent(DossierSelectionner).FullName);
                 }
                 else
                 {
-                    Historique.Push(null);
+                    historique.Push(null);
                 }
                 SetDirectories();
             }
         }
 
-        public void UpdatePathTextBox() //met a jour la textbox
+        private void UpdatePathTextBox() //met a jour la textbox
         {
-            Chemin = Historique.Peek() == null ? "/" : Historique.Peek();
+            Chemin = historique.Peek() == null ? "/" : historique.Peek();
         }
 
         public void TouchEnterPressed(string text) //la textbox a ete modifier cette fonction sert a voir si on peux aller a l'endroit demander
         {
             if (Directory.Exists(text) && text != DossierSelectionner) //equivaut a si dossier exist/si on est pas deja a cet endroit
             {
-                Historique.Push(text.Trim()); //trim au cas ou l'utilisateur aurait decider de mettre des espaces a la fin du chemin
+                historique.Push(text.Trim()); //trim au cas ou l'utilisateur aurait decider de mettre des espaces a la fin du chemin
                 SetDirectories(); //update
             }
 
@@ -147,21 +138,21 @@ namespace FolderExplorerLogic
         public bool UpdateVue(LigneExplorateur item) //appeler lors d'un double clique sur un element, retourne si l'action a été possible ou pas
         {
             string path;
-            path = Historique.Peek() == null ? "" : Historique.Peek().Length == 3 ? Historique.Peek() : Historique.Peek() + "\\"; //un peu complexe mais je trouvais ca marrant equivaut a if(count==1){if length==3 -> peek else -> peek+"\\"}
+            path = historique.Peek() == null ? "" : historique.Peek().Length == 3 ? historique.Peek() : historique.Peek() + "\\"; //un peu complexe mais je trouvais ca marrant equivaut a if(count==1){if length==3 -> peek else -> peek+"\\"}
             path += item != null ? item.Nom : ""; //si pas goback alors on rajoute le nom du dossier selectionner au chemin actuelle
-            Historique.Push(path);
+            historique.Push(path);
             bool res = SetDirectories();
             if (!res) //on a pas pu rentrer dans le dossier choisi 
             {
-                Historique.Pop(); //on annule
+                historique.Pop(); //on annule
             }
             return res;
         }
 
         public void QuickAccessUsed(LigneExplorateur item) //appeler lors d'un selection dans le QuickAccess
         {
-            Historique.Push(item.Path);
-            ForwardHistorique.Clear();//n'a pas de sens de revenir a un endroit peutetre jamais decouvert
+            historique.Push(item.Path);
+            forwardHistorique.Clear();//n'a pas de sens de revenir a un endroit peutetre jamais decouvert
             SetDirectories();
         }
 
@@ -173,8 +164,8 @@ namespace FolderExplorerLogic
         {
             bool errorOccur = false;
             MessageError = "";
-            string path = Historique.Peek();
-            if (Historique.Peek() == null)
+            string path = historique.Peek();
+            if (historique.Peek() == null)
             {
                 FillVueWithDrives();
                 path = null;

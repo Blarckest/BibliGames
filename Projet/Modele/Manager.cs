@@ -27,13 +27,8 @@ namespace Modele
                 return temp;
             }
         }
-        public IList<string> Dossiers
-        {
-            get
-            {
-                return Data.Dossiers;
-            }
-        }
+        public IList<string> Dossiers => Data.Dossiers;
+
         public List<Element> JeuLauncherSelected
         {
             get
@@ -61,7 +56,7 @@ namespace Modele
             }
         }
         public string Pattern { get; set; } = null;
-        public Data Data { get; set; }
+        public Data Data { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -147,7 +142,7 @@ namespace Modele
         }
 
         //effectue juste une suppression des elements non désiré (correspondant pas au pattern)
-        public void Recherche(IList<Element> elements)
+        private void Recherche(IList<Element> elements)
         {
             if (!(string.IsNullOrEmpty(Pattern) || Pattern == "Rechercher") && SearchActivated)
             {

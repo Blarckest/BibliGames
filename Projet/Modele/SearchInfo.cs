@@ -170,7 +170,7 @@ namespace Modele
         {
             try
             {
-                string texte = LinesOfTheWebPage.Where(l => l.Contains("<div data-react-class=\"GamePageHeader\" data-react-props")).First(); //get la ligne qui nous interesse
+                string texte = LinesOfTheWebPage.First(l => l.Contains("<div data-react-class=\"GamePageHeader\" data-react-props")); //get la ligne qui nous interesse
                 texte = System.Web.HttpUtility.HtmlDecode(texte);  //transforme les caractere speciaux au html en ascii
                 texte = Regex.Unescape(texte); //on met les \003u en < et autre 
                 texte = texte.Substring(texte.IndexOf("<p>"));
@@ -212,7 +212,7 @@ namespace Modele
         {
             try
             {
-                string icon = LinesOfTheWebPage.Where(l => l.Contains("<meta content=\"https://images.igdb.com/igdb/image/upload/t_cover_big/")).First();
+                string icon = LinesOfTheWebPage.First(l => l.Contains("<meta content=\"https://images.igdb.com/igdb/image/upload/t_cover_big/"));
                 icon = icon.Substring(icon.IndexOf("http"));
                 icon = icon.Substring(0, icon.IndexOf(".jpg") + 4);
                 WebClient.DownloadFile(new Uri(icon), @$".\Ressources\InfoJeux\{GetFolderName(jeu)}\icon.jpg");

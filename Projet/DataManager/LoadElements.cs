@@ -24,7 +24,7 @@ namespace DataManager
             List<Launcher> launchers;
             List<Jeu> games;
             List<Element> elements=new List<Element>();
-            Dictionary<LauncherName, List<string>> directoryDetected;
+            IDictionary<LauncherName, List<string>> directoryDetected;
             if (File.Exists($"{Folder}/LauncherInfo.xml") && File.Exists($"{Folder}/GamesInfo.xml") && File.Exists($"{Folder}/AdditionalFolder.txt") && new FileInfo($"{Folder}/LauncherInfo.xml").Length != 0) //si la sauvegarde existe et que les fichiers sont pas vide si AdditionalFolder.txt est vide c pas grave
             {
                 XDocument launchersFile = XDocument.Load($"{Folder}/LauncherInfo.xml");
@@ -164,6 +164,7 @@ namespace DataManager
                 return new List<string>(File.ReadAllLines($"{Folder}/AdditionalFolder.txt")); //on recupere les dossier de recherche
             }
             return new List<string>() { }; //si le fichier existait pas on retourne une liste vide
+            
         }
     }
 }

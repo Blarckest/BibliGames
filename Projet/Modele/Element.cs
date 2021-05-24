@@ -11,7 +11,7 @@ namespace Modele
         public string Nom { get; set;} = null;
         protected Element(string nom)
         {
-            this.Nom = nom;
+            Nom = nom;
         }
 
         public virtual bool Equals([AllowNull] Element other)

@@ -16,7 +16,7 @@ namespace Modele
         /// Retourne la liste des executables en fonction du launcher
         /// </summary>
         /// <returns>Dictionary<Launcher,List<Tuple<string,string>>>(launcher,executable,nom)</returns>
-        public static List<Jeu> GetExecutableAndNameFromGameDirectory(Dictionary<LauncherName, List<string>> dossiers)
+        public static List<Jeu> GetExecutableAndNameFromGameDirectory(IDictionary<LauncherName, List<string>> dossiers)
         {
             List<Jeu> jeux = new List<Jeu>();
             List<string> dossiersLauncher;
@@ -42,26 +42,25 @@ namespace Modele
             return jeux;
         }
 
-        public static string Filter(string[] executables, string nom = null, LauncherName launcher = LauncherName.Autre)
+        private static string Filter(string[] executables, string nom = null, LauncherName launcher = LauncherName.Autre)
         {
-            int archi;
-            archi = Environment.Is64BitOperatingSystem ? 64 : 32;
+            int archi = Environment.Is64BitOperatingSystem ? 64 : 32;
             if (launcher == LauncherName.Riot)//Riot est un peu speciale (peu de jeux)(launcher....etc) donc hardcodage de ceux la
             {
                 //manque le nom pour runeterra et apparemment valorant se lance en ligne de commande avec le RiotClientServices.exe
                 return executables.First(e => e.Contains("LeagueClient.exe") || e.Contains("VALORANT.exe") || e.Contains("LoR.exe"));
             }
             IEnumerable<string> res = executables.Where(e => Filter(e)); //apllication du filtre
-            if (res.Count() == 0) //si tout a disparu dans le filtre 
+            if (res.Any()) //si tout a disparu dans le filtre 
             {
                 return executables[0];
             }
             else if (nom != null && res.Count() > 1) //si un nom est defini on prend les executables contenant le nom (si il y en a)
             {
                 var temp = res.Where(e => Path.GetFileName(e).Contains(nom, StringComparison.OrdinalIgnoreCase));
-                res = temp.Count() == 0 ? res : temp;
+                res = temp.Any() ? res : temp;
                 temp = res.Where(e => Path.GetFileName(e).Contains(nom.Replace(" ", ""), StringComparison.OrdinalIgnoreCase));
-                res = temp.Count() == 0 ? res : temp;
+                res = temp.Any() ? res : temp;
             }
             if (res.Count() > 1 && res.Any(e => e.Contains("bin", StringComparison.OrdinalIgnoreCase))) //preferer les exe contenu dans un dossier bin ou binaries (si il y en a)
             {
@@ -85,13 +84,11 @@ namespace Modele
         public static void SearchForExecutables(List<Jeu> jeux, IList<string> dossiers, LauncherName launcher = LauncherName.Autre)
         {
             List<Jeu> temp = new List<Jeu>();
-            string nom;
-            string executable;
             foreach (string dossier in dossiers) //pour chaque dossier recup l'executable le plus probable d'etre le bon
             {
-                nom = Path.GetFileName(dossier);
+                var nom = Path.GetFileName(dossier);
                 string[] nomExecutables = Directory.GetFiles(dossier, "*.exe", SearchOption.AllDirectories); //recup tout les .exe dans tout les sous-dossier
-                executable = Filter(nomExecutables, nom, launcher); //filtrage
+                var executable = Filter(nomExecutables, nom, launcher);
                 temp.Add(new Jeu(nom, dossier, executable, launcher));//ajout
                 Logs.InfoLog($"Ajout du jeu {nom}");
             }
@@ -101,11 +98,9 @@ namespace Modele
 
         private static Jeu SearchForExecutables(string dossier, LauncherName launcher = LauncherName.Autre)
         {
-            string nom;
-            string executable;
-            nom = Path.GetFileName(dossier);
+            var nom = Path.GetFileName(dossier);
             string[] nomExecutables = Directory.GetFiles(dossier, "*.exe", SearchOption.AllDirectories); //recup tout les .exe dans tout les sous-dossier
-            executable = Filter(nomExecutables, nom, launcher); //filtrage
+            string executable = Filter(nomExecutables, nom, launcher);
             return new Jeu(nom, dossier, executable, launcher);
         }
 
@@ -164,7 +159,7 @@ namespace Modele
             string nom = "";
             string executable = "";
             string dossier = "";
-            string regKey = "SOFTWARE\\WOW6432Node\\Epic Games\\EpicGamesLauncher";
+            const string regKey = "SOFTWARE\\WOW6432Node\\Epic Games\\EpicGamesLauncher";
             RegistryKey key = Registry.LocalMachine.OpenSubKey(regKey);
             string path = key.GetValue("AppDataPath").ToString(); //get location du dossier ou epic stock les infos utiles
             path += "Manifests\\";
@@ -217,20 +212,17 @@ namespace Modele
         private static void SearchForRiotExecutables(List<Jeu> jeux) // a vérifier avec les jeux
         {
             List<Jeu> temp = new List<Jeu>();
-            string nom = "";
-            string executable = "";
-            string dossier = "";
-            string regKey = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall";
+            const string regKey = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall";
             RegistryKey key = Registry.CurrentUser.OpenSubKey(regKey);
             foreach (string subKey in key.GetSubKeyNames()) //parcour des sous-clé
             {
                 if (subKey.Contains("Riot Game")) //cas ou la sous-clé nous interesse
                 {
                     RegistryKey keyJeu = Registry.CurrentUser.OpenSubKey(regKey + subKey);
-                    dossier = keyJeu.GetValue("InstallLocation").ToString();
+                    string dossier = keyJeu.GetValue("InstallLocation").ToString();
                     dossier = dossier.Replace("/", "\\"); //certains jeux sont marque avec des / et d'autres avec des \\ donc on transforme ceux en / en \\
-                    nom = keyJeu.GetValue("DisplayName").ToString();
-                    executable = $"{dossier}\\{nom}.exe";
+                    string nom = keyJeu.GetValue("DisplayName").ToString();
+                    string executable = $"{dossier}\\{nom}.exe";
                     temp.Add(new Jeu(nom, dossier, executable, LauncherName.Riot));
                     Logs.InfoLog($"Ajout du jeu {nom}");
                 }

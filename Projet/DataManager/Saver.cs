@@ -8,7 +8,7 @@ namespace DataManager
 {
     public abstract class Saver
     {
-        protected string Folder;
+        protected readonly string Folder;
         protected Saver(string folder)
         {
             this.Folder = folder;
