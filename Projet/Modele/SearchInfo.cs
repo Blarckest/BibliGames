@@ -87,8 +87,10 @@ namespace Modele
             original = original.Replace("\n", "\\n");
             Regex charToApostrophe = new Regex("[\"”’“]");
             Regex charToEmpty = new Regex("[®™]"); //le serveur ne supporte pas le caracteres echapé/speciaux
+            Regex charToSpace = new Regex("[—]"); //remplace le caractere spécial '—' par un espace
             original = charToApostrophe.Replace(original, "'");
             original = charToEmpty.Replace(original, "");
+            original = charToSpace.Replace(original, " ");
             WebRequest request = WebRequest.Create("https://api.pons.com/text-translation-web/v4/translate?locale=fr");
             string postsourcedata = $"{{\"impressionId\":\"e69edd59-88af-47de-aba6-e40d065b838d\",\"sourceLanguage\":\"en\",\"targetLanguage\":\"fr\",\"text\":\"{original}\"}}"; //requete post a envoyer
             request.Method = "POST"; //parametre de la requete

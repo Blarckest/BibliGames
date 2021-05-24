@@ -36,6 +36,7 @@ namespace Modele
 
         public void ModifDetail(string image, string description, string exec, Jeu elementselected)
         {
+            Logs.InfoLog($"Modification des détails de {elementselected.Nom}");
             if (elementselected.Image != image && File.Exists(image))
             {
                 elementselected.Image = image;

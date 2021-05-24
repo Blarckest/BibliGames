@@ -28,7 +28,8 @@ namespace Modele
                 SearchForExecutables(jeux, dossiersLauncher, LauncherName.Origin);
 
             if (dossiers.TryGetValue(LauncherName.Riot, out dossiersLauncher)) //recup dossiers du launcher riot et recherche d'executable si il y en a
-                SearchForExecutables(jeux, dossiersLauncher, LauncherName.Riot);
+                SearchForRiotExecutables(jeux); // tout est situé dans les fichiers de config
+
 
             if (dossiers.TryGetValue(LauncherName.Steam, out dossiersLauncher)) //recup dossiers du launcher steam et recherche d'executable si il y en a
                 SearchForSteamExecutables(jeux, dossiersLauncher);
@@ -218,7 +219,7 @@ namespace Modele
             {
                 if (subKey.Contains("Riot Game")) //cas ou la sous-clé nous interesse
                 {
-                    RegistryKey keyJeu = Registry.CurrentUser.OpenSubKey(regKey + subKey);
+                    RegistryKey keyJeu = Registry.CurrentUser.OpenSubKey($"{regKey}\\{subKey}");
                     string dossier = keyJeu.GetValue("InstallLocation").ToString();
                     dossier = dossier.Replace("/", "\\"); //certains jeux sont marque avec des / et d'autres avec des \\ donc on transforme ceux en / en \\
                     string nom = keyJeu.GetValue("DisplayName").ToString();
