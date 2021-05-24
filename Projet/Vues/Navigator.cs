@@ -37,6 +37,13 @@ namespace Vues
             window.ShowDialog();
         }
 
+        public string OpenFolderExplorer()
+        {
+            FolderExplorerView folderExplorer = new FolderExplorerView();
+            folderExplorer.ShowDialog();
+            return folderExplorer.DossierSelectionner;
+        }
+
         public void UpdateDetail(ListBox listeJeu, ContentControl detail)
         {
             if (listeJeu.SelectedItem != null)

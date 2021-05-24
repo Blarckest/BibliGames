@@ -24,23 +24,23 @@ namespace Vues
     public partial class Parametre : Window
     {
         public ObservableCollection<string> DossierAffiche { get; set; }
-        private readonly IList<string> DossierSupp = new List<string>();
+        private IList<string> DossierSupp { get; } = new List<string>();
         public Parametre()
         {
             DataContext = this;
             DossierAffiche = new ObservableCollection<string>((App.Current as App).Manager.Data.Dossiers);
             InitializeComponent();
         }
-        public void ParcourirDossiers(object sender, MouseButtonEventArgs e)
+
+        private void ParcourirDossiers(object sender, MouseButtonEventArgs e)
         {
-            FolderExplorerView folderExplorer = new FolderExplorerView();
-            folderExplorer.ShowDialog();
-            string dossier = folderExplorer.DossierSelectionner;
+            var dossier = (App.Current as App).Navigator.OpenFolderExplorer();
             if (dossier != null)
             {
                 DossierAffiche.Add(dossier);
             }
         }
+
         private void Annuler(object sender, RoutedEventArgs e)
         {
             this.Close();

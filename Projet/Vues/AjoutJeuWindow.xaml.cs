@@ -35,23 +35,22 @@ namespace Vues
 
         private void ChercherExecutable(object sender, MouseButtonEventArgs e)
         {
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            dlg.InitialDirectory = "C:\\Users";
-            dlg.Multiselect = false;
-            dlg.FileName = "Executable"; // Default file name
-            dlg.DefaultExt = ".exe"; // Default file extension
-            dlg.Filter = "All Executables files (.exe) | *.exe"; // Filter files by extension
-
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog()
+            {
+                InitialDirectory = "C:\\Users",
+                Multiselect = false,
+                FileName = "Executable", // Default file name
+                DefaultExt = ".exe", // Default file extension
+                Filter = "All Executables files (.exe) | *.exe", // Filter files by extension
+            };
             // Show open file dialog box
             bool? result = dlg.ShowDialog();
 
             // Process open file dialog box results 
             if (result == true)
             {
-                // Open document 
-                string filename = dlg.FileName;
-                textBoxLienExe.Text = filename;
-                //mettre filename 
+                // update la textbox
+                textBoxLienExe.Text = dlg.FileName;
             }
         }
     }
