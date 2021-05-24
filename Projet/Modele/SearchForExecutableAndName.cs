@@ -223,7 +223,8 @@ namespace Modele
                     string dossier = keyJeu.GetValue("InstallLocation").ToString();
                     dossier = dossier.Replace("/", "\\"); //certains jeux sont marque avec des / et d'autres avec des \\ donc on transforme ceux en / en \\
                     string nom = keyJeu.GetValue("DisplayName").ToString();
-                    string executable = $"{dossier}\\{nom}.exe";
+                    string[] nomExecutables = Directory.GetFiles(dossier, "*.exe", SearchOption.AllDirectories); //recup tout les .exe dans tout les sous-dossier
+                    var executable = Filter(nomExecutables, nom, LauncherName.Riot);
                     temp.Add(new Jeu(nom, dossier, executable, LauncherName.Riot));
                     Logs.InfoLog($"Ajout du jeu {nom}");
                 }
