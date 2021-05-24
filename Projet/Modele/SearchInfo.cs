@@ -20,17 +20,17 @@ namespace Modele
         ///                 icon.jpg/image.jpg/text.txt
         ///         sauvegarde
         ///             liste des jeux                
-        [ThreadStatic] private static string[] LinesOfTheWebPage;
-        [ThreadStatic] private static Random Rand;
-        [ThreadStatic] private static WebClient WebClient;
+        [ThreadStatic] private static string[] linesOfTheWebPage;
+        [ThreadStatic] private static Random rand;
+        [ThreadStatic] private static WebClient webClient;
 
         public static void SetInfo(object jeu) //on recoit un objet pour etre en accord avec le deleguate de ParameterizedThreadStart
         {
             if (jeu.GetType()==typeof(Jeu))
             {
                 Jeu jeuRecu = jeu as Jeu;
-                Rand = new Random();//on est obligé d'instancier les variables threadStatic
-                WebClient = new WebClient();
+                rand = new Random();//on est obligé d'instancier les variables threadStatic
+                webClient = new WebClient();
                 bool needImage = false, needIcone = false, needDescription = false;
                 CreateFolderStructure(jeuRecu);
                 string pathToFolderExec = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);//si jamais on en a besoin
@@ -158,7 +158,7 @@ namespace Modele
                 HtmlDocument doc = web.Load(@$"https://www.igdb.com/games/{ReplaceName(jeu)}");
                 string texte = doc.Text;
                 texte = texte.Replace("><", ">\n<");
-                LinesOfTheWebPage = texte.Split("\n");
+                linesOfTheWebPage = texte.Split("\n");
                 return true;
             }
             catch (Exception)
@@ -172,7 +172,7 @@ namespace Modele
         {
             try
             {
-                string texte = LinesOfTheWebPage.First(l => l.Contains("<div data-react-class=\"GamePageHeader\" data-react-props")); //get la ligne qui nous interesse
+                string texte = linesOfTheWebPage.First(l => l.Contains("<div data-react-class=\"GamePageHeader\" data-react-props")); //get la ligne qui nous interesse
                 texte = System.Web.HttpUtility.HtmlDecode(texte);  //transforme les caractere speciaux au html en ascii
                 texte = Regex.Unescape(texte); //on met les \003u en < et autre 
                 texte = texte.Substring(texte.IndexOf("<p>"));
@@ -196,11 +196,11 @@ namespace Modele
         {
             try
             {
-                var images = LinesOfTheWebPage.Where(l => l.Contains("<a href=\"https://images.igdb.com/igdb/image/upload/t_original/")).ToList();  //get les lignes qui nous interesse          
-                string image = images[Rand.Next(images.Count())]; //on en choisis une au hasard
+                var images = linesOfTheWebPage.Where(l => l.Contains("<a href=\"https://images.igdb.com/igdb/image/upload/t_original/")).ToList();  //get les lignes qui nous interesse          
+                string image = images[rand.Next(images.Count())]; //on en choisis une au hasard
                 image = image.Substring(image.IndexOf("http"));
                 image = image.Substring(0, image.IndexOf(".jpg") + 4);
-                WebClient.DownloadFile(new Uri(image), @$".\Ressources\InfoJeux\{GetFolderName(jeu)}\image.jpg"); //on telecharge
+                webClient.DownloadFile(new Uri(image), @$".\Ressources\InfoJeux\{GetFolderName(jeu)}\image.jpg"); //on telecharge
                 return true;
             }
             catch (Exception)
@@ -214,10 +214,10 @@ namespace Modele
         {
             try
             {
-                string icon = LinesOfTheWebPage.First(l => l.Contains("<meta content=\"https://images.igdb.com/igdb/image/upload/t_cover_big/"));
+                string icon = linesOfTheWebPage.First(l => l.Contains("<meta content=\"https://images.igdb.com/igdb/image/upload/t_cover_big/"));
                 icon = icon.Substring(icon.IndexOf("http"));
                 icon = icon.Substring(0, icon.IndexOf(".jpg") + 4);
-                WebClient.DownloadFile(new Uri(icon), @$".\Ressources\InfoJeux\{GetFolderName(jeu)}\icon.jpg");
+                webClient.DownloadFile(new Uri(icon), @$".\Ressources\InfoJeux\{GetFolderName(jeu)}\icon.jpg");
                 return true;
             }
             catch (Exception)

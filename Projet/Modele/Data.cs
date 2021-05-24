@@ -21,7 +21,7 @@ namespace Modele
         }
 
 
-        public void AjoutJeu(LauncherName launcher, string exec)
+        internal void AjoutJeu(LauncherName launcher, string exec)
         {
             Jeu jeu = SearchInfo.ExtractGameInfoFromExec(exec);
             jeu.IsManuallyAdded = true;
@@ -29,14 +29,14 @@ namespace Modele
             SetInfo(jeu);
         }
 
-        public void AjoutJeu(Jeu jeu)
+        internal void AjoutJeu(Jeu jeu)
         {
             InsertGame(jeu.Launcher, jeu);
             jeu.IsManuallyAdded = true;
             SetInfo(jeu);
         }
 
-        public void ModifDetail(string image, string description, string exec, Jeu elementselected)
+        internal void ModifDetail(string image, string description, string exec, Jeu elementselected)
         {
             Logs.InfoLog($"Modification des détails de {elementselected.Nom}");
             if (elementselected.Image != image && File.Exists(image))
@@ -53,7 +53,7 @@ namespace Modele
             }
         }
 
-        public void SuppJeu(Jeu elementselected)
+        internal void SuppJeu(Jeu elementselected)
         {
             (Elements[GetLauncherIndex(elementselected.Launcher)] as Launcher).NbJeux--; //on enleve un jeu au launcher concerné
             Logs.InfoLog($"Suppression du jeu {elementselected.Nom}");
@@ -64,7 +64,7 @@ namespace Modele
         /// Appeller lors de l'ajout d'un dossier dans les parametre
         /// </summary>
         /// <param name="dossier"></param>
-        public bool AjouterDossier(string dossier)
+        internal bool AjouterDossier(string dossier)
         {
             if (!Dossiers.Contains(dossier))
             {
@@ -83,7 +83,7 @@ namespace Modele
             return false;
         }
 
-        public bool SuppDossier(string dossier)
+        internal bool SuppDossier(string dossier)
         {
             if (Dossiers.Contains(dossier))
             {
@@ -111,7 +111,11 @@ namespace Modele
             return false;
         }
 
-
+        internal int GetLauncherIndex(LauncherName launcherName)
+        {
+            Launcher temp = new Launcher(launcherName);
+            return Elements.IndexOf(temp);
+        }
 
         private void InsertGame(LauncherName launcher, Jeu jeu)
         {
@@ -171,12 +175,6 @@ namespace Modele
                 Elements.Add(new Launcher(launcher)); //launcher.autre est obligatoirement en dernier
             }
 
-        }
-
-        public int GetLauncherIndex(LauncherName launcherName)
-        {
-            Launcher temp = new Launcher(launcherName);
-            return Elements.IndexOf(temp);
         }
 
         private void SetInfo(Jeu jeu)

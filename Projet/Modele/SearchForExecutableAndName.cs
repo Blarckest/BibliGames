@@ -42,6 +42,21 @@ namespace Modele
             return jeux;
         }
 
+        public static void SearchForExecutables(List<Jeu> jeux, IList<string> dossiers, LauncherName launcher = LauncherName.Autre)
+        {
+            List<Jeu> temp = new List<Jeu>();
+            foreach (string dossier in dossiers) //pour chaque dossier recup l'executable le plus probable d'etre le bon
+            {
+                var nom = Path.GetFileName(dossier);
+                string[] nomExecutables = Directory.GetFiles(dossier, "*.exe", SearchOption.AllDirectories); //recup tout les .exe dans tout les sous-dossier
+                var executable = Filter(nomExecutables, nom, launcher);
+                temp.Add(new Jeu(nom, dossier, executable, launcher));//ajout
+                Logs.InfoLog($"Ajout du jeu {nom}");
+            }
+            temp.Sort();
+            jeux.AddRange(temp);
+        }
+
         private static string Filter(string[] executables, string nom = null, LauncherName launcher = LauncherName.Autre)
         {
             int archi = Environment.Is64BitOperatingSystem ? 64 : 32;
@@ -79,21 +94,6 @@ namespace Modele
                 || executable.Contains("AntiCheat", StringComparison.OrdinalIgnoreCase) || executable.Contains("Downloader", StringComparison.OrdinalIgnoreCase) || executable.Contains("Upload") || executable.Contains("Report", StringComparison.OrdinalIgnoreCase)
                 || executable.Contains("Unreal", StringComparison.OrdinalIgnoreCase) || executable.Contains("Redist", StringComparison.OrdinalIgnoreCase) || executable.Contains("egodumper", StringComparison.OrdinalIgnoreCase)
                 || executable.Contains("mono.exe", StringComparison.OrdinalIgnoreCase)); //traitement des cas communs
-        }
-
-        public static void SearchForExecutables(List<Jeu> jeux, IList<string> dossiers, LauncherName launcher = LauncherName.Autre)
-        {
-            List<Jeu> temp = new List<Jeu>();
-            foreach (string dossier in dossiers) //pour chaque dossier recup l'executable le plus probable d'etre le bon
-            {
-                var nom = Path.GetFileName(dossier);
-                string[] nomExecutables = Directory.GetFiles(dossier, "*.exe", SearchOption.AllDirectories); //recup tout les .exe dans tout les sous-dossier
-                var executable = Filter(nomExecutables, nom, launcher);
-                temp.Add(new Jeu(nom, dossier, executable, launcher));//ajout
-                Logs.InfoLog($"Ajout du jeu {nom}");
-            }
-            temp.Sort();
-            jeux.AddRange(temp);
         }
 
         private static Jeu SearchForExecutables(string dossier, LauncherName launcher = LauncherName.Autre)

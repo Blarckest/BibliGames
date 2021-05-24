@@ -28,7 +28,7 @@ namespace Vues
         public Parametre()
         {
             DataContext = this;
-            DossierAffiche = new ObservableCollection<string>((App.Current as App).Manager.Data.Dossiers);
+            DossierAffiche = new ObservableCollection<string>((App.Current as App).Manager.Dossiers);
             InitializeComponent();
         }
 

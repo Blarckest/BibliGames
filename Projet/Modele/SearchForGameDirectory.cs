@@ -16,9 +16,9 @@ namespace Modele
         /// la fonction retourne un dictionnaire avec comme clé un launcher et comme value un liste contenant les dossiers associé a ce launcher
         /// </summary>
         /// <returns>Dictionary<Launcher, List<string>></returns>
-        public static Dictionary<LauncherName, List<string>> GetAllGameDirectory()
+        public static IDictionary<LauncherName, List<string>> GetAllGameDirectory()
         {
-            Dictionary<LauncherName, List<string>> dossiers = new Dictionary<LauncherName, List<string>>();
+            IDictionary<LauncherName, List<string>> dossiers = new Dictionary<LauncherName, List<string>>();
             SearchEpicGames(dossiers);
             SearchOriginGames(dossiers);
             SearchRiotGames(dossiers);
