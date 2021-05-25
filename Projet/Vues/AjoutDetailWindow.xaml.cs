@@ -23,8 +23,10 @@ namespace Vues
         private Jeu Jeu{ get; }
         private string executable;
         private string image;
+        private string icone;
         public string Executable { get => executable; set { executable = value; NotifyPropertyChanged(); } }
         public string Image { get => image; set { image = value; NotifyPropertyChanged(); } }
+        public string Icone { get => icone; set { icone = value; NotifyPropertyChanged(); } }
         public string Description { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -39,6 +41,7 @@ namespace Vues
             Executable = Jeu.Exec;
             Image = Jeu.Image;
             Description = Jeu.Description;
+            Icone = Jeu.Icone;
             DataContext = this;
             InitializeComponent();
         }
@@ -75,8 +78,28 @@ namespace Vues
             }
         }
 
-        private void ChercherExec(object sender, MouseButtonEventArgs e)
+        private void ChercherIcone(object sender, MouseButtonEventArgs e)
         {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.InitialDirectory = "C:\\Users\\Public\\Pictures\\Sample Pictures";
+            dlg.Multiselect = false;
+            dlg.FileName = "Images"; // Default file name
+            dlg.DefaultExt = ".jpg | .png"; // Default file extension
+            dlg.Filter = "All images files (.jpg, .png)|*.jpg;*.png|JPG files (.jpg)|*.jpg|PNG files (.png)|*.png"; // Filter files by extension
+
+            // Show open file dialog box
+            bool? result = dlg.ShowDialog();
+
+            // Process open file dialog box results 
+            if (result == true)
+            {
+                // Open document 
+                Icone = dlg.FileName;
+            }
+        }
+
+            private void ChercherExec(object sender, MouseButtonEventArgs e)
+            {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.InitialDirectory = "C:\\";
             dlg.Multiselect = false;

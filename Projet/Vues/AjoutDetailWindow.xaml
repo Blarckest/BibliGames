@@ -24,6 +24,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <StackPanel Grid.ColumnSpan="2" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
@@ -32,20 +33,25 @@
             <Image Margin="5" Source="/Icones;Component/parcourir.png" Width="30" MouseLeftButtonDown="ChercherExec"/>
         </StackPanel>
         <StackPanel Grid.ColumnSpan="2" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,13">
+            <TextBlock Text="Lien vers l'icone: " VerticalAlignment="Center"/>
+            <TextBox x:Name="textBoxLienIcone" Width="500" VerticalAlignment="Center" Text="{Binding Icone}"/>
+            <Image Margin="5" Source="/Icones;Component/parcourir.png" Width="30" MouseLeftButtonDown="ChercherIcone"/>
+        </StackPanel>
+        <StackPanel Grid.ColumnSpan="2" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,13">
             <TextBlock Text="Lien vers l'image: " VerticalAlignment="Center"/>
             <TextBox x:Name="textBoxLienImage" Width="500" VerticalAlignment="Center" Text="{Binding Image}"/>
             <Image Margin="5" Source="/Icones;Component/parcourir.png" Width="30" MouseLeftButtonDown="ChercherImage"/>
         </StackPanel>
-        <StackPanel Grid.ColumnSpan="2" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+        <StackPanel Grid.ColumnSpan="2" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Text="Description: "/>
             <TextBox x:Name="textBoxDescription" Width="500" Height="200" Margin="0,0,13,0" Text="{Binding Description}"
                      TextWrapping="Wrap" AcceptsReturn="True"
                      materialDesign:TextFieldAssist.HasOutlinedTextField="True" 
                      materialDesign:TextFieldAssist.TextFieldCornerRadius="5"/>
         </StackPanel>
-        <Button Grid.Row="3" Content="Retour" HorizontalAlignment="Center"
+        <Button Grid.Row="4" Content="Retour" HorizontalAlignment="Center"
                 VerticalAlignment="Top" Margin="5,10,5,5" Click="Annuler"/>
-        <Button Grid.Row="3" Grid.Column="1" Content="Enregistrer" HorizontalAlignment="Center"
+        <Button Grid.Row="4" Grid.Column="1" Content="Enregistrer" HorizontalAlignment="Center"
                 VerticalAlignment="Top" Margin="5,10,5,5" Click="Valider"/>
     </Grid>
 </Window>
