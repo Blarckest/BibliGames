@@ -54,7 +54,7 @@ namespace Vues
         private void Valider(object sender, RoutedEventArgs e)
         {
             //valider modif
-            (App.Current as App).Manager.ModifDetail(Image, Description, Description);
+            (App.Current as App).Manager.ModifDetail(Image, Description, Executable, Icone);
             this.Close();
         }
         private void ChercherImage(object sender, MouseButtonEventArgs e)
@@ -62,7 +62,7 @@ namespace Vues
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.InitialDirectory = "C:\\Users\\Public\\Pictures\\Sample Pictures";
             dlg.Multiselect = false;
-            dlg.FileName = "Images"; // Default file name
+            dlg.FileName = "Image"; // Default file name
             dlg.DefaultExt = ".jpg | .png"; // Default file extension
             dlg.Filter = "All images files (.jpg, .png)|*.jpg;*.png|JPG files (.jpg)|*.jpg|PNG files (.png)|*.png"; // Filter files by extension
 
@@ -83,7 +83,7 @@ namespace Vues
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.InitialDirectory = "C:\\Users\\Public\\Pictures\\Sample Pictures";
             dlg.Multiselect = false;
-            dlg.FileName = "Images"; // Default file name
+            dlg.FileName = "Icone"; // Default file name
             dlg.DefaultExt = ".jpg | .png"; // Default file extension
             dlg.Filter = "All images files (.jpg, .png)|*.jpg;*.png|JPG files (.jpg)|*.jpg|PNG files (.png)|*.png"; // Filter files by extension
 

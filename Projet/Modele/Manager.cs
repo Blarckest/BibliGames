@@ -83,11 +83,11 @@ namespace Modele
             Data.AjoutJeu(jeu);
         }
 
-        public void ModifDetail(string image, string description, string exec)
+        public void ModifDetail(string image, string description, string exec, string icone)
         {
             if (ElementSelected.GetType() == typeof(Jeu))
             {
-                Data.ModifDetail(image, description, exec, ElementSelected as Jeu);
+                Data.ModifDetail(image, description, exec, icone, ElementSelected as Jeu);
             }
         }
 

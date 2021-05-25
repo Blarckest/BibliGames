@@ -36,19 +36,26 @@ namespace Modele
             SetInfo(jeu);
         }
 
-        internal void ModifDetail(string image, string description, string exec, Jeu elementselected)
+        internal void ModifDetail(string image, string description, string exec, string icone, Jeu elementselected)
         {
-            Logs.InfoLog($"Modification des détails de {elementselected.Nom}");
             if (elementselected.Image != image && File.Exists(image))
             {
+                Logs.InfoLog($"Modification de l'image de {elementselected.Nom} par {image}");
                 elementselected.Image = image;
+            }
+            if (elementselected.Icone != icone && File.Exists(icone))
+            {
+                Logs.InfoLog($"Modification de l'icone de {elementselected.Nom} par {icone}");
+                elementselected.Icone = icone;
             }
             if (elementselected.Description != description)
             {
+                Logs.InfoLog($"Modification de la description de {elementselected.Nom} par {description}");
                 elementselected.Description = description;
             }
             if (elementselected.Exec != exec && File.Exists(exec))
             {
+                Logs.WarningLog($"Modification de l'executable de {elementselected.Nom} par {exec}");
                 elementselected.Exec = exec;
             }
         }
