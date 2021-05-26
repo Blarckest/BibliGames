@@ -17,7 +17,7 @@ namespace Vues
             Logs.SuppLog();
             Loader loader = new LoadElements("Ressources/Sauvegarde");
             (App.Current as App).Manager = new Manager(loader.Load()); //on load la sauvegarde
-            if(!File.Exists("./Ressources/Defaut/icone.png") || File.Exists("./Ressources/Defaut/image.png"))
+            /* if(!File.Exists("./Ressources/Defaut/icone.png") || File.Exists("./Ressources/Defaut/image.png"))
             {
                 Directory.CreateDirectory("./Ressources/Defaut");
                 Assembly refassembly = Assembly.LoadFrom("Icones.dll");
@@ -25,7 +25,7 @@ namespace Vues
                 System.Resources.ResourceManager resourcemanager = new System.Resources.ResourceManager("ClassLibrary1.Resources", refassembly);
                 Object obj = resourcemanager.GetObject("document.png");
 
-            }
+            }*/
         }
         public void Save()
         {
