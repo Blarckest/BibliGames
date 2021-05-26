@@ -16747,7 +16747,7 @@
 											"top": 562,
 											"width": 579.12841796875,
 											"height": 13,
-											"text": "~ModifDetail(image: string, description: string, exec: string, icone: string, elementselected: Jeu): void",
+											"text": "~ModifDetail(image: string, description: string, exec: string, icone: string, elementSelected: Jeu): void",
 											"horizontalAlignment": 0
 										},
 										{
@@ -27819,7 +27819,7 @@
 									"_parent": {
 										"$ref": "AAAAAAF5gP7kvYkGo7w="
 									},
-									"name": "elementselected",
+									"name": "elementSelected",
 									"type": {
 										"$ref": "AAAAAAF4mIEp9vn2b3k="
 									}
