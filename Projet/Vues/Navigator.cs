@@ -23,17 +23,11 @@ namespace Vues
             if(!File.Exists("./Ressources/Defaut/icone.png") || !File.Exists("./Ressources/Defaut/image.png"))
             {
                 Directory.CreateDirectory("./Ressources/Defaut");
-                var temp = ExctractImageFromDll(Assembly.LoadFrom("Icones.dll"), "plus.png");
-                var file = File.Create("./Ressources/Defaut/icone.png");
-                temp.CopyTo(file);
-                file.Close();
-                temp= ExctractImageFromDll(Assembly.LoadFrom("Icones.dll"), "loupe.png");
-                file = File.Create("./Ressources/Defaut/image.png");
-                temp.CopyTo(file);
-                file.Close();
+                CopyDllRessourceToFile( Assembly.LoadFrom("Icones.dll"), "plus.png", "./Ressources/Defaut/image.png");
+                CopyDllRessourceToFile( Assembly.LoadFrom("Icones.dll"), "loupe.png", "./Ressources/Defaut/icone.png");
             }
         }
-        
+
         public void Save()
         {
             Saver saver = new SaveElements("Ressources/Sauvegarde"); 
@@ -78,7 +72,7 @@ namespace Vues
             }
             else
             {
-                detail.Content = null;
+                detail.Content = null; //on met rien sinon
             }
         }
 
@@ -93,6 +87,14 @@ namespace Vues
             System.Resources.ResourceReader resourceReader = new System.Resources.ResourceReader(assembly.GetManifestResourceStream(ressourcePath)); //on met un ressourcereader sur le fichier qui nous interesse
             resourceReader.GetResourceData(nomFichier, out _, out byte[] data);//on ne s'interesse pas au type // data contient les données
             return new MemoryStream(data,4,data.Length-4);//on revoit un memorystream le 4 correspond a un offset de 4 octet qui est present pour une raison inconnu
+        }
+
+        private void CopyDllRessourceToFile(Assembly assembly, string ressource, string destination)
+        {
+            var memStream = ExctractImageFromDll(assembly, ressource); //on recupere l'image sous forme de stream
+            var fileStream = File.Create(destination); //on creer le fichier
+            memStream.CopyTo(fileStream); //on copy les données
+            fileStream.Close(); //on ferme
         }
     }
 }
