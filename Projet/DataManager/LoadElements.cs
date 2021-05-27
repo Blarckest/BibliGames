@@ -20,9 +20,9 @@ namespace DataManager
         public override Data Load()
         {
             bool needRecupGames = true; //determine si on a besoin de recuperer les jeux a nouveaux
-            string[] additionalFolder=null;
-            List<Launcher> launchers;
-            List<Jeu> games;
+            string[] additionalFolder = null;
+            List<Launcher> launchers = null;
+            List<Jeu> games = null;
             List<Element> elements=new List<Element>();
             IDictionary<LauncherName, List<string>> directoryDetected;
             if (File.Exists($"{Folder}/LauncherInfo.xml") && File.Exists($"{Folder}/GamesInfo.xml") && File.Exists($"{Folder}/AdditionalFolder.txt") && new FileInfo($"{Folder}/LauncherInfo.xml").Length != 0) //si la sauvegarde existe et que les fichiers sont pas vide si AdditionalFolder.txt est vide c pas grave
@@ -109,23 +109,23 @@ namespace DataManager
 
             if (needRecupGames) //si on a besoin de recuperer les jeux
             {
-                games = SearchForExecutableAndName.GetExecutableAndNameFromGameDirectory(directoryDetected);
-                if (games.Count>0)//si l'utilisateur a des jeux
+                var gamesFound = SearchForExecutableAndName.GetExecutableAndNameFromGameDirectory(directoryDetected);
+                if (gamesFound.Count>0)//si l'utilisateur a des jeux
                 {
-                    Launcher actuel = new Launcher(games[0].Launcher);
+                    Launcher actuel = new Launcher(gamesFound[0].Launcher);
                     elements.Add(actuel);
-                    for (int i = 0; i < games.Count; i++)
+                    for (int i = 0; i < gamesFound.Count; i++)
                     {
-                        if (games[i].Launcher.ToString() == actuel.ToString()) //on est dans le meme launcher
+                        if (gamesFound[i].Launcher.ToString() == actuel.ToString()) //on est dans le meme launcher
                         {
-                            elements.Add(games[i]);
+                            elements.Add(gamesFound[i]);
                             actuel.NbJeux++;//on augmente le nb de jeu
                         }
                         else
                         {
-                            actuel = new Launcher(games[i].Launcher); //on ajoute le launcher
+                            actuel = new Launcher(gamesFound[i].Launcher); //on ajoute le launcher
                             elements.Add(actuel);
-                            elements.Add(games[i]);
+                            elements.Add(gamesFound[i]);
                             actuel.NbJeux++;//on augmente le nb de jeu
                         }
                     }
@@ -143,6 +143,18 @@ namespace DataManager
             }
 
             Logs.InfoLog("Chargement des données");
+
+            if (elements.Count==0)
+            {
+                Logs.WarningLog("Pas de données présente->utilisation du stub");
+                if (games!=null && launchers!=null && games.Count==10 && launchers.Count==1)//si on a charger probablement un stub on renvoie les données de la sauvegarde
+                {
+                    elements.AddRange(launchers);
+                    elements.AddRange(games);
+                    return new Data(elements, new List<string>());
+                }
+                return new Stub().Load(); // sinon on charge un nouveau stub
+            }
 
             Data data;
             if (additionalFolder!=null)
