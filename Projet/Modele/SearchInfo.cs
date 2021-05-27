@@ -29,11 +29,10 @@ namespace Modele
             if (jeu.GetType()==typeof(Jeu))
             {
                 Jeu jeuRecu = jeu as Jeu;
-                rand = new Random();//on est obligé d'instancier les variables threadStatic
+                rand = new Random();//on est obligé d'instancier les variables threadStatic dans le constructeur
                 webClient = new WebClient();
                 bool needImage = false, needIcone = false, needDescription = false;
                 CreateFolderStructure(jeuRecu);
-                string pathToFolderExec = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);//si jamais on en a besoin
                 if (string.IsNullOrEmpty(jeuRecu.Image))
                 {
                     if (!File.Exists(@$".\Ressources\InfoJeux\{GetFolderName(jeuRecu)}\image.jpg") || new FileInfo(@$".\Ressources\InfoJeux\{GetFolderName(jeuRecu)}\image.jpg").Length == 0) //si fichier existe pas ou qu'il est vide
@@ -42,7 +41,7 @@ namespace Modele
                     }
                     else//si la description est vide on va la chercher dans le fichier
                     {
-                        jeuRecu.Image = Path.Combine(pathToFolderExec, @$"Ressources\InfoJeux\{GetFolderName(jeuRecu)}\image.jpg");
+                        jeuRecu.Image = @$"Ressources\InfoJeux\{GetFolderName(jeuRecu)}\image.jpg";
                     } 
                 }
                 if (string.IsNullOrEmpty(jeuRecu.Icone))
@@ -53,7 +52,7 @@ namespace Modele
                     }
                     else//si la description est vide on va la chercher dans le fichier
                     {
-                        jeuRecu.Icone = Path.Combine(pathToFolderExec, @$"Ressources\InfoJeux\{GetFolderName(jeuRecu)}\icon.jpg");
+                        jeuRecu.Icone = @$"Ressources\InfoJeux\{GetFolderName(jeuRecu)}\icon.jpg";
                     } 
                 }
                 if (string.IsNullOrEmpty(jeuRecu.Description))
@@ -118,14 +117,13 @@ namespace Modele
         {
             if (GoToGamePage(jeu))
             {
-                string pathToFolderExec = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
                 if (needImage && ExctractImage(jeu))
                 {
-                    jeu.Image = Path.Combine(pathToFolderExec, @$"Ressources\InfoJeux\{GetFolderName(jeu)}\image.jpg");
+                    jeu.Image = @$"Ressources\InfoJeux\{GetFolderName(jeu)}\image.jpg";
                 }
                 if (needIcon && ExctractIcon(jeu))
                 {
-                    jeu.Icone = Path.Combine(pathToFolderExec, @$"Ressources\InfoJeux\{GetFolderName(jeu)}\icon.jpg");
+                    jeu.Icone = @$"Ressources\InfoJeux\{GetFolderName(jeu)}\icon.jpg";
                 }
                 if (needDescription)
                 {

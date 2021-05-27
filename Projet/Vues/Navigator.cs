@@ -22,6 +22,9 @@ namespace Vues
             if(!File.Exists("./Ressources/Defaut/icone.png") || !File.Exists("./Ressources/Defaut/image.png"))
             {
                 Directory.CreateDirectory("./Ressources/Defaut");
+                //ta besoin de recup le stream dde la ressource a partir de l'assembly Icones.dll (le nom du manifest c'est Icones.g.ressources
+                //ensuite tu recup la donnée qui t'interesse et tu la met dans un byte[]
+                //ensuite une fois que ta ce tableau tu le met dans un memorystream avec un offset de 4.
             }
         }
         public void Save()
@@ -32,24 +35,24 @@ namespace Vues
         public void OpenParametre()
         {
             Parametre window = new Parametre();
-            window.ShowDialog();
+            window.ShowDialog(); //on ouvre en bloquant
         }
         public void OpenAjoutJeu()
         {
             AjoutJeuWindow window = new AjoutJeuWindow();
-            window.ShowDialog();
+            window.ShowDialog();//on ouvre en bloquant
         }
         public void OpenAjoutDetail()
         {
             AjoutDetailWindow window = new AjoutDetailWindow();
-            window.ShowDialog();
+            window.ShowDialog();//on ouvre en bloquant
         }
 
         public string OpenFolderExplorer()
         {
             FolderExplorerView folderExplorer = new FolderExplorerView();
-            folderExplorer.ShowDialog();
-            return folderExplorer.DossierSelectionner;
+            folderExplorer.ShowDialog();//on ouvre en bloquant
+            return folderExplorer.DossierSelectionner; //on renvoie le dossier selectionner par l'utilisateur a la fonction appelante
         }
 
         public void UpdateDetail(ListBox listeJeu, ContentControl detail)
@@ -58,11 +61,11 @@ namespace Vues
             {
                 if (listeJeu.SelectedItem.GetType() == typeof(Launcher))
                 {
-                    detail.Content = new User_Controls.DetailLauncher() { DataContext = (App.Current as App).Manager };
+                    detail.Content = new User_Controls.DetailLauncher() { DataContext = (App.Current as App).Manager }; //si l'item est un launcher on met le Content du CC avec un detailLauncher avec le bon datacontext
                 }
                 else
                 {
-                    detail.Content = new User_Controls.DetailsJeu() { DataContext = listeJeu.SelectedItem };
+                    detail.Content = new User_Controls.DetailsJeu() { DataContext = listeJeu.SelectedItem }; //pareil mais avec Jeu
                 }
             }
             else

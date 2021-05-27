@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Icones", "Projet\Icones\Ico
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FolderExplorer", "Projet\FolderExplorer\FolderExplorer.csproj", "{308DAD16-0BFE-4735-9A9B-7ADB0A16D7C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger", "Projet\Logger\Logger.csproj", "{EA153A60-B220-43CF-A790-C2DCDF7A8ADF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logger", "Projet\Logger\Logger.csproj", "{EA153A60-B220-43CF-A790-C2DCDF7A8ADF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

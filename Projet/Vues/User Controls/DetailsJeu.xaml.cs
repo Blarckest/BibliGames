@@ -26,6 +26,7 @@ namespace Vues.User_Controls
 
         private void ModifierJeu(object sender, RoutedEventArgs e)
         {
+            //modif les details du jeu
             (App.Current as App).Navigator.OpenAjoutDetail();
         }
 
