@@ -23,11 +23,17 @@ namespace Vues
             if(!File.Exists("./Ressources/Defaut/icone.png") || !File.Exists("./Ressources/Defaut/image.png"))
             {
                 Directory.CreateDirectory("./Ressources/Defaut");
-                //ta besoin de recup le stream dde la ressource a partir de l'assembly Icones.dll (le nom du manifest c'est Icones.g.ressources
-                //ensuite tu recup la donnée qui t'interesse et tu la met dans un byte[]
-                //ensuite une fois que ta ce tableau tu le met dans un memorystream avec un offset de 4.
+                var temp = ExctractImageFromDll(Assembly.LoadFrom("Icones.dll"), "plus.png");
+                var file = File.Create("./Ressources/Defaut/icone.png");
+                temp.CopyTo(file);
+                file.Close();
+                temp= ExctractImageFromDll(Assembly.LoadFrom("Icones.dll"), "loupe.png");
+                file = File.Create("./Ressources/Defaut/image.png");
+                temp.CopyTo(file);
+                file.Close();
             }
         }
+        
         public void Save()
         {
             Saver saver = new SaveElements("Ressources/Sauvegarde"); 
@@ -80,5 +86,14 @@ namespace Vues
         {
             masterDetailCc.Content = new windowParts.MasterDetail();
         }
+
+        private MemoryStream ExctractImageFromDll(Assembly assembly,string nomFichier)
+        {
+            string ressourcePath= assembly.GetName().Name + ".g.resources"; //les ressources sont la dedans
+            System.Resources.ResourceReader resourceReader = new System.Resources.ResourceReader(assembly.GetManifestResourceStream(ressourcePath)); //on met un ressourcereader sur le fichier qui nous interesse
+            resourceReader.GetResourceData(nomFichier, out _, out byte[] data);//on ne s'interesse pas au type // data contient les données
+            return new MemoryStream(data,4,data.Length-4);//on revoit un memorystream le 4 correspond a un offset de 4 octet qui est present pour une raison inconnu
+        }
     }
 }
+

@@ -121,9 +121,17 @@ namespace Modele
                 {
                     jeu.Image = @$"Ressources\InfoJeux\{GetFolderName(jeu)}\image.jpg";
                 }
+                else
+                {
+                    jeu.Image = @$"Ressources\Defaut\image.png";
+                }
                 if (needIcon && ExctractIcon(jeu))
                 {
                     jeu.Icone = @$"Ressources\InfoJeux\{GetFolderName(jeu)}\icon.jpg";
+                }
+                else
+                {
+                    jeu.Icone = @$"Ressources\Defaut\icone.png";
                 }
                 if (needDescription)
                 {

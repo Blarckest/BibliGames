@@ -17,14 +17,14 @@ namespace Test_Fonctionnels
 
         public static void TestStub()
         {
-            Loader loader = new Stub("");
+            Loader loader = new LoadElements("");
         }
 
         public static IDictionary<LauncherName, List<string>> TestGameDirectory()
         {
             TestStub();
             List<string> path = new List<string>();
-            path.Add("./Stub");
+            path.Add("../../../../../Test");
             IDictionary<LauncherName, List<string>> dossiers = SearchForGameDirectory.GetAllGameDirectory(path);
             foreach (KeyValuePair<LauncherName, List<string>> element in dossiers)
             {
@@ -55,7 +55,7 @@ namespace Test_Fonctionnels
         {
             const string path = "./Ressource/sauvegarde";
             Saver save = new SaveElements(path);
-            Loader loader = new Stub("");
+            Loader loader = new LoadElements(path);
             var manager = new Manager(loader.Load());
             IList<string> add = new List<string>();
             add.Add("zefzqf");
