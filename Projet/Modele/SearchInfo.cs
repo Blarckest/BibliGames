@@ -5,9 +5,9 @@ using System.Text;
 using System.IO;
 using System.Net;
 using System.Threading;
-using HtmlAgilityPack;
 using System.Text.RegularExpressions;
 using System.Linq;
+using System.Net.Http;
 
 namespace Modele
 {
@@ -119,19 +119,19 @@ namespace Modele
             {
                 if (needImage && ExctractImage(jeu))
                 {
-                    jeu.Image = @$"Ressources\InfoJeux\{GetFolderName(jeu)}\image.jpg";
+                    jeu.Image = @$"Ressources\InfoJeux\{GetFolderName(jeu)}\image.jpg"; //on set l'image correspondante
                 }
                 else
                 {
-                    jeu.Image = @$"Ressources\Defaut\image.png";
+                    jeu.Image = @$"Ressources\Defaut\image.png";//on utilise l'image par defaut
                 }
                 if (needIcon && ExctractIcon(jeu))
                 {
-                    jeu.Icone = @$"Ressources\InfoJeux\{GetFolderName(jeu)}\icon.jpg";
+                    jeu.Icone = @$"Ressources\InfoJeux\{GetFolderName(jeu)}\icon.jpg";//on set l'icon correspondante
                 }
                 else
                 {
-                    jeu.Icone = @$"Ressources\Defaut\icone.png";
+                    jeu.Icone = @$"Ressources\Defaut\icone.png"; //on utilise l'icone par defaut
                 }
                 if (needDescription)
                 {
@@ -145,10 +145,10 @@ namespace Modele
             //aller directement a la page du jeux en allant https://www.igdb.com/games/+(jeux en minuscule et espace remplacer par '-' tt les caracteres speciaux sont supprimé)
             string nom=jeu.Nom;
             nom = nom.ToLower();
-            Regex reg = new Regex("[*':\",_&#^@]");
+            Regex reg = new Regex("[*':\",_&#^@]"); //ces char sont a supp
             nom = reg.Replace(nom, string.Empty);
 
-            reg = new Regex("[ ]");
+            reg = new Regex("[ ]"); //les espaces->'-'
             nom = reg.Replace(nom, "-");
 
             reg = new Regex("[.]");
@@ -160,11 +160,9 @@ namespace Modele
         {
             try
             {
-                HtmlWeb web = new HtmlWeb();
-                HtmlDocument doc = web.Load(@$"https://www.igdb.com/games/{ReplaceName(jeu)}");
-                string texte = doc.Text;
-                texte = texte.Replace("><", ">\n<");
-                linesOfTheWebPage = texte.Split("\n");
+                string texte = webClient.DownloadString(@$"https://www.igdb.com/games/{ReplaceName(jeu)}"); //on recupere le contenu de la page
+                texte = texte.Replace("><", ">\n<"); //on prepare pour la ligne juste apres
+                linesOfTheWebPage = texte.Split("\n"); //on met chaque ligne dans un tableau
                 return true;
             }
             catch (Exception)
@@ -179,7 +177,7 @@ namespace Modele
             try
             {
                 string texte = linesOfTheWebPage.First(l => l.Contains("<div data-react-class=\"GamePageHeader\" data-react-props")); //get la ligne qui nous interesse
-                texte = System.Web.HttpUtility.HtmlDecode(texte);  //transforme les caractere speciaux au html en ascii
+                texte = System.Web.HttpUtility.HtmlDecode(texte);  //transforme les caractere speciaux du html en ascii
                 texte = Regex.Unescape(texte); //on met les \003u en < et autre 
                 texte = texte.Substring(texte.IndexOf("<p>"));
                 texte = texte.Substring(0, texte.IndexOf("</p>\",\"websites\":"));
@@ -220,10 +218,10 @@ namespace Modele
         {
             try
             {
-                string icon = linesOfTheWebPage.First(l => l.Contains("<meta content=\"https://images.igdb.com/igdb/image/upload/t_cover_big/"));
+                string icon = linesOfTheWebPage.First(l => l.Contains("<meta content=\"https://images.igdb.com/igdb/image/upload/t_cover_big/")); //on recup ce qui nous interesse
                 icon = icon.Substring(icon.IndexOf("http"));
                 icon = icon.Substring(0, icon.IndexOf(".jpg") + 4);
-                webClient.DownloadFile(new Uri(icon), @$".\Ressources\InfoJeux\{GetFolderName(jeu)}\icon.jpg");
+                webClient.DownloadFile(new Uri(icon), @$".\Ressources\InfoJeux\{GetFolderName(jeu)}\icon.jpg"); //on telecharge
                 return true;
             }
             catch (Exception)
@@ -235,15 +233,13 @@ namespace Modele
 
         private static string GetFolderName(Jeu jeu)
         {
-            Regex reg = new Regex("[<>:\"“/\\|?*]");
-            string nom = reg.Replace(jeu.Nom, "");
-            return Path.GetFileName(nom);
+            Regex reg = new Regex("[<>:\"“/\\|?*]"); //ces char sont interdit dans un nom de dossier
+            return reg.Replace(jeu.Nom, "");           
         }
 
         private static void CreateFolderStructure(Jeu jeu)
         {
-
-            Directory.CreateDirectory(@$".\Ressources\Infojeux\{GetFolderName(jeu)}");
+            Directory.CreateDirectory(@$".\Ressources\Infojeux\{GetFolderName(jeu)}"); //on creer le chemin
         }
     }
 }
