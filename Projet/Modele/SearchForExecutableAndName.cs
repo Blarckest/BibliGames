@@ -5,8 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.Win32;
-
-
+using System.Net;
 
 namespace Modele
 {
@@ -25,7 +24,7 @@ namespace Modele
                 SearchForEpicExecutables(jeux); //pas besoin des dossiers tout est situé dans des fichiers de config
 
             if (dossiers.TryGetValue(LauncherName.Origin, out dossiersLauncher)) //recup dossiers du launcher Origin et recherche d'executable si il y en a
-                SearchForExecutables(jeux, dossiersLauncher, LauncherName.Origin);
+                SearchForOriginExecutables(jeux);
 
             if (dossiers.TryGetValue(LauncherName.Riot, out dossiersLauncher)) //recup dossiers du launcher riot et recherche d'executable si il y en a
                 SearchForRiotExecutables(jeux); // tout est situé dans les fichiers de config
@@ -226,6 +225,42 @@ namespace Modele
                     var executable = Filter(nomExecutables, nom, LauncherName.Riot);
                     temp.Add(new Jeu(nom, dossier, executable, LauncherName.Riot));
                     Logs.InfoLog($"Ajout du jeu {nom}");
+                }
+            }
+            temp.Sort();
+            jeux.AddRange(temp);
+        }
+
+        private static void SearchForOriginExecutables(List<Jeu> jeux)
+        {
+            List<Jeu> temp = new List<Jeu>();
+            string pathToProgramData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            string path = pathToProgramData + "\\Origin\\LocalContent\\"; //dossier qui nous interesse
+            if (Directory.Exists(path))
+            {
+                string[] dirs = Directory.GetDirectories(path);
+                foreach (string dir in dirs)
+                {
+                    string fichier = Directory.GetFiles(dir, "*.mfst").Count() == 1 ? Directory.GetFiles(dir, "*.mfst").First() : null; //fichier .mfst contient les infos utile
+                    if (File.Exists(fichier))
+                    {
+                        string line = File.ReadAllLines(fichier).First(); //le fichier contient qu'une ligne
+                        line = System.Uri.UnescapeDataString(line); //la ligne est au format web " "==%20 par ex
+                        string[] lines = line.Split('&');
+                        string pathToFolder = lines.First(e => e.Contains("installpath=", StringComparison.OrdinalIgnoreCase) && e.Contains(":\\")); //recuperation de la valeur qui nous interesse
+                        pathToFolder = pathToFolder.Substring(pathToFolder.IndexOf(":\\") - 1); //suppression du "installpath="
+                        if (pathToFolder.Last() == '\\')
+                        {
+                            pathToFolder = pathToFolder.Remove(pathToFolder.Length - 1);
+                        }
+                        string nom = new WebClient().DownloadString(@$"https://api1.origin.com/ecommerce2/public/Path.GetFileNameWithoutExtension(fichier)/en_US"); //on recupere le contenu de la page
+                        nom = nom.Substring(nom.IndexOf("displayname") + 14);
+                        nom = nom.Substring(0, nom.IndexOf("\",\"short"));
+                        var jeu=SearchForExecutables(pathToFolder, LauncherName.Origin);
+                        jeu.Nom = nom;
+                        temp.Add(jeu);
+                        Logs.InfoLog($"Ajout du jeu {nom}");
+                    }
                 }
             }
             temp.Sort();

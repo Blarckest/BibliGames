@@ -70,23 +70,6 @@ namespace Modele
 
         public Jeu(string nom, string dossier, string exec, string image, string icone, string note,string description, LauncherName launcher = LauncherName.Autre, bool isManuallyAdded=false) : this(nom, dossier,exec,launcher)
         {
-            
-            if (!File.Exists(icone))
-            {
-                Icone = "./Ressources/Defaut/icone.png";
-            }
-            else
-            {
-                Icone = icone;
-            }
-            if (!File.Exists(image))
-            {
-                Image = "./Ressources/Defaut/image.png";
-            }
-            else
-            {
-                Image = image;
-            }
             Note = note;
             Description = description;
             IsManuallyAdded = isManuallyAdded;

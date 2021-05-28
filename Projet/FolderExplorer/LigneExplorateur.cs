@@ -13,26 +13,11 @@ namespace FolderExplorer
         public string Nom { get; }
         public string Path { get; }
 
-        public LigneExplorateur(string pathImage, string text, bool isTextPath = false)
-        {
-            Image = pathImage;
-            if (isTextPath)
-            {
-                Path = text;
-                Nom = System.IO.Path.GetFileName(text);
-            }
-            else
-            {
-                Nom = text;
-                Path = text; //pour garantir qu'un clique dans acces rapide sur un lecteur ouvre le lecteur
-            }
-        }
         public LigneExplorateur(string pathImage, string text, string path)
         {
             Image = pathImage;
             Nom = text;
-            Path = path; //pour garantir qu'un clique dans acces rapide sur un lecteur ouvre le lecteur
-
+            Path = path;
         }
     }
 }

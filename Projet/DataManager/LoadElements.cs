@@ -147,7 +147,7 @@ namespace DataManager
             if (elements.Count==0)
             {
                 Logs.WarningLog("Pas de données présente->utilisation du stub");
-                if (games!=null && launchers!=null && games.Count==10 && launchers.Count==1)//si on a charger probablement un stub on renvoie les données de la sauvegarde
+                if (games!=null && launchers!=null && games.Count==11 && launchers.Count==1)//si on a charger probablement un stub on renvoie les données de la sauvegarde
                 {
                     elements.AddRange(launchers);
                     elements.AddRange(games);
