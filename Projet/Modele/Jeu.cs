@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -69,8 +70,23 @@ namespace Modele
 
         public Jeu(string nom, string dossier, string exec, string image, string icone, string note,string description, LauncherName launcher = LauncherName.Autre, bool isManuallyAdded=false) : this(nom, dossier,exec,launcher)
         {
-            Icone = icone;
-            Image = image;
+            
+            if (!File.Exists(icone))
+            {
+                Icone = "./Ressources/Defaut/icone.png";
+            }
+            else
+            {
+                Icone = icone;
+            }
+            if (!File.Exists(image))
+            {
+                Image = "./Ressources/Defaut/image.png";
+            }
+            else
+            {
+                Image = image;
+            }
             Note = note;
             Description = description;
             IsManuallyAdded = isManuallyAdded;
