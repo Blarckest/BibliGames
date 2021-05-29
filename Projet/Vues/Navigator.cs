@@ -23,8 +23,8 @@ namespace Vues
             if(!File.Exists("./Ressources/Defaut/icone.png") || !File.Exists("./Ressources/Defaut/image.png"))
             {
                 Directory.CreateDirectory("./Ressources/Defaut");
-                CopyDllRessourceToFile( Assembly.LoadFrom("Icones.dll"), "plus.png", "./Ressources/Defaut/image.png");
-                CopyDllRessourceToFile( Assembly.LoadFrom("Icones.dll"), "loupe.png", "./Ressources/Defaut/icone.png");
+                CopyDllRessourceToFile( Assembly.LoadFrom("Icones.dll"), "image.png", "./Ressources/Defaut/image.png");
+                CopyDllRessourceToFile( Assembly.LoadFrom("Icones.dll"), "icone.png", "./Ressources/Defaut/icone.png");
             }
         }
 

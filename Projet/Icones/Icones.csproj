@@ -13,6 +13,8 @@
 	  <None Remove="disk.png" />
 	  <None Remove="document.png" />
 	  <None Remove="folder.png" />
+	  <None Remove="icone.png" />
+	  <None Remove="image.png" />
 	  <None Remove="interogation.png" />
 	  <None Remove="left-arrow.png" />
 	  <None Remove="loupe.png" />
@@ -47,6 +49,12 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
 		<Resource Include="folder.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="icone.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="image.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
 		<Resource Include="interogation.png">
