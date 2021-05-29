@@ -46,6 +46,7 @@ namespace Modele
                     {
                         Launcher launcher = ElementSelected as Launcher;
                         var temp = Data.Elements.Skip(Data.GetLauncherIndex((LauncherName)Enum.Parse(typeof(LauncherName), launcher.Nom)) + 1).Take(launcher.NbJeux).ToList();
+                        Recherche(temp);
                         return temp;
                     }
                     return new List<Element> { }; 
@@ -74,6 +75,7 @@ namespace Modele
             {
                 Data.AjoutJeu(launcher, exec);
                 NotifyPropertyChanged("Affichage");
+                NotifyPropertyChanged("JeuLauncherSelected");
             }
         }
 
@@ -123,12 +125,14 @@ namespace Modele
         {
             Data.AjouterDossier(dossier);
             NotifyPropertyChanged("Affichage");
+            NotifyPropertyChanged("JeuLauncherSelected");
         }
 
         public void SuppDossier(string dossier)
         {
             Data.SuppDossier(dossier);
             NotifyPropertyChanged("Affichage");
+            NotifyPropertyChanged("JeuLauncherSelected");
         }
 
         public void UpdateRecherche()
@@ -136,6 +140,7 @@ namespace Modele
             if (SearchActivated)
             {
                 NotifyPropertyChanged("Affichage");
+                NotifyPropertyChanged("JeuLauncherSelected");
             }
         }
 

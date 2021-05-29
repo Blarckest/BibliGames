@@ -41,7 +41,7 @@ namespace Modele
                     }
                     else//si la description est vide on va la chercher dans le fichier
                     {
-                        jeuRecu.Image = @$"Ressources\InfoJeux\{GetFolderName(jeuRecu)}\image.jpg";
+                        jeuRecu.Image = @$".\Ressources\InfoJeux\{GetFolderName(jeuRecu)}\image.jpg";
                     } 
                 }
                 if (string.IsNullOrEmpty(jeuRecu.Icone))
@@ -52,7 +52,7 @@ namespace Modele
                     }
                     else//si la description est vide on va la chercher dans le fichier
                     {
-                        jeuRecu.Icone = @$"Ressources\InfoJeux\{GetFolderName(jeuRecu)}\icon.jpg";
+                        jeuRecu.Icone = @$".\Ressources\InfoJeux\{GetFolderName(jeuRecu)}\icon.jpg";
                     } 
                 }
                 if (string.IsNullOrEmpty(jeuRecu.Description))
