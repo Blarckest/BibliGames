@@ -253,9 +253,10 @@ namespace Modele
                         {
                             pathToFolder = pathToFolder.Remove(pathToFolder.Length - 1);
                         }
-                        string nom = new WebClient().DownloadString(@$"https://api1.origin.com/ecommerce2/public/Path.GetFileNameWithoutExtension(fichier)/en_US"); //on recupere le contenu de la page
-                        nom = nom.Substring(nom.IndexOf("displayname") + 14);
+                        string nom = new WebClient().DownloadString(@$"https://api1.origin.com/ecommerce2/public/{Path.GetFileNameWithoutExtension(fichier)}/en_US"); //on recupere le contenu de la page
+                        nom = nom.Substring(nom.IndexOf("displayName") + 14);
                         nom = nom.Substring(0, nom.IndexOf("\",\"short"));
+                        nom=new Regex("[®™]").Replace(nom,"");
                         var jeu=SearchForExecutables(pathToFolder, LauncherName.Origin);
                         jeu.Nom = nom;
                         temp.Add(jeu);
