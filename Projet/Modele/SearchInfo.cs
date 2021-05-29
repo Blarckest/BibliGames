@@ -119,19 +119,19 @@ namespace Modele
             {
                 if (needImage && ExctractImage(jeu))
                 {
-                    jeu.Image = @$"Ressources\InfoJeux\{GetFolderName(jeu)}\image.jpg"; //on set l'image correspondante
+                    jeu.Image = @$".\Ressources\InfoJeux\{GetFolderName(jeu)}\image.jpg"; //on set l'image correspondante
                 }
                 else
                 {
-                    jeu.Image = @$"Ressources\Defaut\image.png";//on utilise l'image par defaut
+                    jeu.Image = @$".\Ressources\Defaut\image.png";//on utilise l'image par defaut
                 }
                 if (needIcon && ExctractIcon(jeu))
                 {
-                    jeu.Icone = @$"Ressources\InfoJeux\{GetFolderName(jeu)}\icon.jpg";//on set l'icon correspondante
+                    jeu.Icone = @$".\Ressources\InfoJeux\{GetFolderName(jeu)}\icon.jpg";//on set l'icon correspondante
                 }
                 else
                 {
-                    jeu.Icone = @$"Ressources\Defaut\icone.png"; //on utilise l'icone par defaut
+                    jeu.Icone = @$".\Ressources\Defaut\icone.png"; //on utilise l'icone par defaut
                 }
                 if (needDescription)
                 {
