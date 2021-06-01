@@ -376,7 +376,7 @@
 									"font": "Arial;13;0",
 									"left": 579.5,
 									"top": 132.5,
-									"width": 94,
+									"width": 94.51904296875,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAF4mEsCW6Q/1Is="
@@ -774,7 +774,7 @@
 									"font": "Arial;13;0",
 									"left": 709.5,
 									"top": 500.5,
-									"width": 179,
+									"width": 179.9521484375,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAF4mExq9KSeceE="
@@ -973,7 +973,7 @@
 									"font": "Arial;13;0",
 									"left": 484.5,
 									"top": 636.5,
-									"width": 96,
+									"width": 97.38818359375,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAF4mEy106TPW6A="
@@ -1441,7 +1441,7 @@
 									"font": "Arial;13;0",
 									"left": 491,
 									"top": 740.5,
-									"width": 207,
+									"width": 207.40576171875,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAF4mFpEbrRl3mg="
@@ -1640,7 +1640,7 @@
 									"font": "Arial;13;0",
 									"left": 444.5,
 									"top": 892.5,
-									"width": 252,
+									"width": 252.93115234375,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAF4mFpnm7UpTT4="
@@ -1839,7 +1839,7 @@
 									"font": "Arial;13;0",
 									"left": 543.5,
 									"top": 284.5,
-									"width": 111,
+									"width": 112.01953125,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAF4mGJ/s8u46Uc="
@@ -2035,7 +2035,7 @@
 									"font": "Arial;13;0",
 									"left": 407,
 									"top": 100.5,
-									"width": 108,
+									"width": 108.96630859375,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAF4mGwedepKBzg="
@@ -3305,7 +3305,7 @@
 									"font": "Arial;13;0",
 									"left": 559,
 									"top": 556.5,
-									"width": 110,
+									"width": 110.42626953125,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAF422sEUv8zCcI="
@@ -32264,9 +32264,9 @@
 												"$ref": "AAAAAAF5g7IcP2aGW00="
 											},
 											"font": "Arial;13;0",
-											"left": 22.55908203125,
+											"left": 24.72998046875,
 											"top": 21,
-											"width": 96.291015625,
+											"width": 108.67529296875,
 											"height": 13,
 											"text": "SequenceDiagram"
 										},
@@ -32279,7 +32279,7 @@
 											"font": "Arial;13;1",
 											"left": 5,
 											"top": 21,
-											"width": 12.55908203125,
+											"width": 14.72998046875,
 											"height": 13,
 											"text": "sd"
 										}
@@ -34676,9 +34676,9 @@
 												"$ref": "AAAAAAF5o580ums8B7U="
 											},
 											"font": "Arial;13;0",
-											"left": 388.3291015625,
+											"left": 391.9599609375,
 											"top": 277,
-											"width": 111.4873046875,
+											"width": 123.1162109375,
 											"height": 13,
 											"text": "CombinedFragment1"
 										},
@@ -34691,7 +34691,7 @@
 											"font": "Arial;13;1",
 											"left": 365,
 											"top": 277,
-											"width": 18.3291015625,
+											"width": 21.9599609375,
 											"height": 13,
 											"text": "seq"
 										},
@@ -35191,24 +35191,6 @@
 					},
 					"name": "Role8",
 					"type": "List<string>"
-				}
-			]
-		},
-		{
-			"_type": "UMLModel",
-			"_id": "AAAAAAF5g/sdHcDjhO0=",
-			"_parent": {
-				"$ref": "AAAAAAFF+h6SjaM2Hec="
-			},
-			"name": "Model4",
-			"ownedElements": [
-				{
-					"_type": "UMLClassDiagram",
-					"_id": "AAAAAAF5g/sdHsDkUnc=",
-					"_parent": {
-						"$ref": "AAAAAAF5g/sdHcDjhO0="
-					},
-					"name": "diagramme classe simplifie"
 				}
 			]
 		},
