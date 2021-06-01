@@ -104,6 +104,13 @@ namespace Modele
                 || executable.Contains("mono.exe", StringComparison.OrdinalIgnoreCase)); //traitement des cas communs
         }
 
+        
+
+        protected bool IsDirectoryEmpty(string path)
+        {
+            return !(Directory.EnumerateFileSystemEntries(path).Any() || (Directory.GetFiles(path + "\\\\", "*.exe", SearchOption.AllDirectories).Any()));//renvoie si le dossier et vide ou contient aucun executable (any renvoie un booleen true si il y a qq chose ds le IEnumerable renvoyer)
+        }
+
         abstract protected void GetGamesDirectory();
         abstract protected void GetGames();
     }
