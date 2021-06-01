@@ -42,19 +42,17 @@ namespace Modele
             }
         }
 
-        protected virtual void SearchForExecutables(List<Jeu> jeux, IList<string> dossiers, LauncherName launcher = LauncherName.Autre)
+        protected virtual void SearchForExecutables(LauncherName launcher = LauncherName.Autre)
         {
-            List<Jeu> temp = new List<Jeu>();
-            foreach (string dossier in dossiers) //pour chaque dossier recup l'executable le plus probable d'etre le bon
+            foreach (string dossier in Dossiers) //pour chaque dossier recup l'executable le plus probable d'etre le bon
             {
                 var nom = Path.GetFileName(dossier);
                 string[] nomExecutables = Directory.GetFiles(dossier, "*.exe", SearchOption.AllDirectories); //recup tout les .exe dans tout les sous-dossier
                 var executable = Filter(nomExecutables, nom, launcher);
-                temp.Add(new Jeu(nom, dossier, executable, launcher));//ajout
+                Jeux.Add(new Jeu(nom, dossier, executable, launcher));//ajout
                 Logs.InfoLog($"Ajout du jeu {nom}");
             }
-            temp.Sort();
-            jeux.AddRange(temp);
+            Jeux.Sort();
         }
 
         protected virtual Jeu SearchForExecutables(string dossier, LauncherName launcher = LauncherName.Autre)

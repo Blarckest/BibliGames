@@ -19,12 +19,19 @@ namespace DataManager
 
         public override Data Load()
         {
+            List<GameSearcher> searchers = new List<GameSearcher>();
+            searchers.Add(new EpicSearcher());
+            searchers.Add(new OriginSearcher());
+            searchers.Add(new RiotSearcher());
+            searchers.Add(new SteamSearcher());
+            searchers.Add(new UplaySearcher());
+
             bool needRecupGames = true; //determine si on a besoin de recuperer les jeux a nouveaux
             string[] additionalFolder = null;
             List<Launcher> launchers = null;
             List<Jeu> games = null;
-            List<Element> elements=new List<Element>();
-            IDictionary<LauncherName, List<string>> directoryDetected;
+            List<Element> elements = new List<Element>();
+            List<string> directoryDetected = new List<string>();
             if (File.Exists($"{Folder}/LauncherInfo.xml") && File.Exists($"{Folder}/GamesInfo.xml") && File.Exists($"{Folder}/AdditionalFolder.txt") && new FileInfo($"{Folder}/LauncherInfo.xml").Length != 0) //si la sauvegarde existe et que les fichiers sont pas vide si AdditionalFolder.txt est vide c pas grave
             {
                 XDocument launchersFile = XDocument.Load($"{Folder}/LauncherInfo.xml");
@@ -55,43 +62,24 @@ namespace DataManager
 
 
                 additionalFolder = System.IO.File.ReadAllLines($"{Folder}/AdditionalFolder.txt"); //on recupere les dossier de recherche
-                directoryDetected = SearchForGameDirectory.GetAllGameDirectory(additionalFolder.ToList()); //get les directory qu'est censer avoir la sauvegarde
-                var jeuxManuallyAdded = games.Where(j => j.IsManuallyAdded); //on recup les jeux ajouter manuellement
-                if (jeuxManuallyAdded.Count()!=0)
+                searchers.Add(new OtherSearcher(additionalFolder)); //on initialise le OtherSearcher avec les dossiers trouver dans additionalFolder
+
+                foreach (var searcher in searchers)//get les directory qu'est censer avoir la sauvegarde
                 {
-                    var dossierJeuxManuallyAdded = jeuxManuallyAdded.Select(j => j.Dossier).ToList(); //on recup leurs dossier pour que la detection de mise a jour se passe bien
-                    if (directoryDetected.ContainsKey(LauncherName.Autre))
-                    {
-                        directoryDetected[LauncherName.Autre].AddRange(dossierJeuxManuallyAdded); //on append si la clé était deja defini
-                    }
-                    else
-                    {
-                        directoryDetected.Add(LauncherName.Autre, dossierJeuxManuallyAdded); //on defini la clé si elle l'eteit pas avant
-                    }
+                    directoryDetected.AddRange(searcher.Dossiers);
                 }
 
-                if (launchers.All(l => directoryDetected.Keys.Contains((LauncherName)Enum.Parse(typeof(LauncherName), l.Nom)))) //si on a bien tt les clé en rapport avec la sauvegarde
+
+                var jeuxManuallyAdded = games.Where(j => j.IsManuallyAdded); //on recup les jeux ajouter manuellement
+                if (jeuxManuallyAdded.Count() != 0)
                 {
-                    foreach (LauncherName launcher in directoryDetected.Keys) //on itere sur les clés
-                    {
-                        List<string> listeDossier;
-                        if (directoryDetected.TryGetValue(launcher, out listeDossier))
-                        {
-                            if (games.Where(e => e.Launcher == launcher).All(e => listeDossier.Contains(e.Dossier))) //on regarde si chaque jeu a son dossier dans les dossiers retourné par GetAllGameDirectory
-                            {
-                                needRecupGames = false;
-                            }
-                        }
-                    }
-                    if (!needRecupGames)
-                    {
-                        foreach (Launcher launcher in launchers) //on remplit la liste d'élément
-                        {
-                            elements.Add(launcher);
-                            elements.AddRange(games.Take(launcher.NbJeux));
-                            games.RemoveRange(0, launcher.NbJeux);
-                        }
-                    }
+                    var dossierJeuxManuallyAdded = jeuxManuallyAdded.Select(j => j.Dossier).ToList(); //on recup leurs dossier pour que la detection de mise a jour se passe bien
+                    directoryDetected.AddRange(dossierJeuxManuallyAdded); //on ajoute les dossiers des jeux ajoutés a la main
+                }
+
+                if (games.All(j => directoryDetected.Contains(j.Dossier))) //on regarde si chaque jeu a son dossier dans les dossiers trouvés
+                {
+                    needRecupGames = false;
                 }
                 else
                 {
@@ -101,16 +89,30 @@ namespace DataManager
             else
             {
                 needRecupGames = true;
-                directoryDetected = SearchForGameDirectory.GetAllGameDirectory();
+                foreach (var searcher in searchers)//get les directory
+                {
+                    directoryDetected.AddRange(searcher.Dossiers);
+                }
             }
 
 
-
-
-            if (needRecupGames) //si on a besoin de recuperer les jeux
+            if (!needRecupGames)
             {
-                var gamesFound = SearchForExecutableAndName.GetExecutableAndNameFromGameDirectory(directoryDetected);
-                if (gamesFound.Count>0)//si l'utilisateur a des jeux
+                foreach (Launcher launcher in launchers) //on remplit la liste d'élément
+                {
+                    elements.Add(launcher);
+                    elements.AddRange(games.Take(launcher.NbJeux));
+                    games.RemoveRange(0, launcher.NbJeux);
+                }
+            }
+            else //si on a besoin de recuperer les jeux
+            {
+                List<Jeu> gamesFound = new List<Jeu>();
+                foreach (var searcher in searchers)//get les directory
+                {
+                    gamesFound.AddRange(searcher.Jeux);
+                }
+                if (gamesFound.Count > 0)//si l'utilisateur a des jeux
                 {
                     Launcher actuel = new Launcher(gamesFound[0].Launcher);
                     elements.Add(actuel);
@@ -129,7 +131,7 @@ namespace DataManager
                             actuel.NbJeux++;//on augmente le nb de jeu
                         }
                     }
-                }               
+                }
             }
 
             foreach (Element element in elements)//on set les infos
@@ -144,10 +146,10 @@ namespace DataManager
 
             Logs.InfoLog("Chargement des données");
 
-            if (elements.Count==0)
+            if (elements.Count == 0)
             {
                 Logs.WarningLog("Pas de données présente->utilisation du stub");
-                if (games!=null && launchers!=null && games.Count==11 && launchers.Count==1)//si on a charger probablement un stub on renvoie les données de la sauvegarde
+                if (games != null && launchers != null && games.Count == 11 && launchers.Count == 1)//si on a charger probablement un stub on renvoie les données de la sauvegarde
                 {
                     elements.AddRange(launchers);
                     elements.AddRange(games);
@@ -157,26 +159,26 @@ namespace DataManager
             }
 
             Data data;
-            if (additionalFolder!=null)
+            if (additionalFolder != null)
             {
-                 data = new Data(elements, additionalFolder.ToList());
+                data = new Data(elements, additionalFolder.ToList());
             }
             else
             {
                 data = new Data(elements, LoadAdditionalPath());
             }
-            
+
             return data;
         }
 
-        public override IList<string> LoadAdditionalPath()
+        protected override IList<string> LoadAdditionalPath()
         {
             if (File.Exists($"{Folder}/AdditionalFolder.txt"))
             {
                 return new List<string>(File.ReadAllLines($"{Folder}/AdditionalFolder.txt")); //on recupere les dossier de recherche
             }
             return new List<string>() { }; //si le fichier existait pas on retourne une liste vide
-            
+
         }
     }
 }

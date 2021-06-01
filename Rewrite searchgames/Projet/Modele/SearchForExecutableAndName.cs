@@ -9,7 +9,7 @@ using System.Net;
 
 namespace Modele
 {
-    public static class SearchForExecutableAndName
+    public static class SearchForExecutableAndName_old
     {
         /// <summary>
         /// Retourne la liste des executables en fonction du launcher

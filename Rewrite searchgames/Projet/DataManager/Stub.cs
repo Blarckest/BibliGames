@@ -15,7 +15,9 @@ namespace DataManager
             List<Element> elements = new List<Element>();
             List<Jeu> games = new List<Jeu>();
             string[] pathToTest = { "../../../../../Test" }; //on va au dossier de test
-            SearchForExecutableAndName.SearchForExecutables(games, SearchForGameDirectory.GetGameDirectoryFromPaths(pathToTest)); //on charge
+
+            games = new OtherSearcher(pathToTest).Jeux;//on charge
+                                                       
             if (games.Count > 0)
             {
                 Launcher actuel = new Launcher(games[0].Launcher);
@@ -52,7 +54,7 @@ namespace DataManager
             return Data;
         }
 
-        public override IList<string> LoadAdditionalPath()
+        protected override IList<string> LoadAdditionalPath()
         {
             return new List<string> { "Path1", "Path2" };
         }
