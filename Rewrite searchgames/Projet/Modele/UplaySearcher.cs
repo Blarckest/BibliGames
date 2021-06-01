@@ -4,13 +4,13 @@ using System.Text;
 
 namespace Modele
 {
-    class UplaySearcher : GameSearcher
+    public class UplaySearcher : GameSearcher
     {
-        protected override List<Jeu> GetGames()
+        protected override void GetGames()
         {
             throw new NotImplementedException();
         }
-        protected override List<string> GetGamesDirectory()
+        protected override void GetGamesDirectory()
         {
             throw new NotImplementedException();
         }

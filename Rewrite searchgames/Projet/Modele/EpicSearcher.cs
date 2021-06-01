@@ -4,14 +4,14 @@ using System.Text;
 
 namespace Modele
 {
-    internal class EpicSearcher : GameSearcher
+    public class EpicSearcher : GameSearcher
     {
-        protected override List<Jeu> GetGames()
+        protected override void GetGames()
         {
             throw new NotImplementedException();
         }
 
-        protected override List<string> GetGamesDirectory()
+        protected override void GetGamesDirectory()
         {
             throw new NotImplementedException();
         }

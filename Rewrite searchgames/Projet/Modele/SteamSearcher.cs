@@ -4,14 +4,14 @@ using System.Text;
 
 namespace Modele
 {
-    class SteamSearcher : GameSearcher
+    public class SteamSearcher : GameSearcher
     {
-        protected override List<Jeu> GetGames()
+        protected override void GetGames()
         {
             throw new NotImplementedException();
         }
 
-        protected override List<string> GetGamesDirectory()
+        protected override void GetGamesDirectory()
         {
             throw new NotImplementedException();
         }

@@ -7,17 +7,17 @@ using System.Text;
 
 namespace Modele
 {
-    internal abstract class GameSearcher
+    public abstract class GameSearcher
     {
-        protected List<string> dossiers;
-        protected List<Jeu> jeux;
+        private List<string> dossiers;
+        private List<Jeu> jeux;
 
         public List<string> Dossiers { 
             get
             {
                 if (dossiers==null)
                 {
-                    dossiers = GetGamesDirectory();
+                    GetGamesDirectory(); //rempli dossiers
                 }
                 return dossiers;
             } 
@@ -32,7 +32,7 @@ namespace Modele
             {
                 if (jeux == null)
                 {
-                    jeux = GetGames();
+                    GetGames(); //rempli jeux
                 }
                 return jeux;
             }
@@ -42,7 +42,7 @@ namespace Modele
             }
         }
 
-        protected void SearchForExecutables(List<Jeu> jeux, IList<string> dossiers, LauncherName launcher = LauncherName.Autre)
+        protected virtual void SearchForExecutables(List<Jeu> jeux, IList<string> dossiers, LauncherName launcher = LauncherName.Autre)
         {
             List<Jeu> temp = new List<Jeu>();
             foreach (string dossier in dossiers) //pour chaque dossier recup l'executable le plus probable d'etre le bon
@@ -55,6 +55,14 @@ namespace Modele
             }
             temp.Sort();
             jeux.AddRange(temp);
+        }
+
+        protected virtual Jeu SearchForExecutables(string dossier, LauncherName launcher = LauncherName.Autre)
+        {
+            var nom = Path.GetFileName(dossier);
+            string[] nomExecutables = Directory.GetFiles(dossier, "*.exe", SearchOption.AllDirectories); //recup tout les .exe dans tout les sous-dossier
+            string executable = Filter(nomExecutables, nom, launcher);
+            return new Jeu(nom, dossier, executable, launcher);
         }
 
         protected string Filter(string[] executables, string nom = null, LauncherName launcher = LauncherName.Autre)
@@ -96,15 +104,7 @@ namespace Modele
                 || executable.Contains("mono.exe", StringComparison.OrdinalIgnoreCase)); //traitement des cas communs
         }
 
-        protected Jeu SearchForExecutables(string dossier, LauncherName launcher = LauncherName.Autre)
-        {
-            var nom = Path.GetFileName(dossier);
-            string[] nomExecutables = Directory.GetFiles(dossier, "*.exe", SearchOption.AllDirectories); //recup tout les .exe dans tout les sous-dossier
-            string executable = Filter(nomExecutables, nom, launcher);
-            return new Jeu(nom, dossier, executable, launcher);
-        }
-
-        abstract protected List<string> GetGamesDirectory();
-        abstract protected List<Jeu> GetGames();
+        abstract protected void GetGamesDirectory();
+        abstract protected void GetGames();
     }
 }
