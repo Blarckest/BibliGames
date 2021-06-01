@@ -51,7 +51,7 @@ namespace Modele
             if (dossiers != null)
             {
                 jeux = new List<Jeu>();
-                base.SearchForExecutables(LauncherName.Uplay);
+                base.SearchForExecutables();
             }
             else
             {
