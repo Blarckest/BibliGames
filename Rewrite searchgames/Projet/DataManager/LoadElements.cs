@@ -19,15 +19,18 @@ namespace DataManager
 
         public override Data Load()
         {
-            List<GameSearcher> searchers = new List<GameSearcher>();
-            searchers.Add(new EpicSearcher());
-            searchers.Add(new OriginSearcher());
-            searchers.Add(new RiotSearcher());
-            searchers.Add(new SteamSearcher());
-            searchers.Add(new UplaySearcher());
+            IList<string> additionalFolder = LoadAdditionalPath();
+            List<GameSearcher> searchers = new List<GameSearcher>
+            {
+                new EpicSearcher(),
+                new OriginSearcher(),
+                new RiotSearcher(),
+                new SteamSearcher(),
+                new UplaySearcher(),
+                new OtherSearcher(additionalFolder)
+            };
 
             bool needRecupGames = true; //determine si on a besoin de recuperer les jeux a nouveaux
-            string[] additionalFolder = null;
             List<Launcher> launchers = null;
             List<Jeu> games = null;
             List<Element> elements = new List<Element>();
@@ -59,10 +62,6 @@ namespace DataManager
                                         Convert.ToBoolean(e.Element("IsManuallyAdded").Value)))
                                    .ToList();
 
-
-
-                additionalFolder = System.IO.File.ReadAllLines($"{Folder}/AdditionalFolder.txt"); //on recupere les dossier de recherche
-                searchers.Add(new OtherSearcher(additionalFolder)); //on initialise le OtherSearcher avec les dossiers trouver dans additionalFolder
 
                 foreach (var searcher in searchers)//get les directory qu'est censer avoir la sauvegarde
                 {
@@ -158,17 +157,7 @@ namespace DataManager
                 return new Stub().Load(); // sinon on charge un nouveau stub
             }
 
-            Data data;
-            if (additionalFolder != null)
-            {
-                data = new Data(elements, additionalFolder.ToList());
-            }
-            else
-            {
-                data = new Data(elements, LoadAdditionalPath());
-            }
-
-            return data;
+            return new Data(elements, additionalFolder);
         }
 
         protected override IList<string> LoadAdditionalPath()
