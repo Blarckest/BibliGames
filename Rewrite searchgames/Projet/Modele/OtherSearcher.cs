@@ -20,6 +20,18 @@ namespace Modele
             }
         }
 
+        public OtherSearcher(string path)
+        {
+            if (path != null)
+            {
+                Paths = new List<string>(new List<string> { path } );
+            }
+            else
+            {
+                Paths = new List<string>();
+            }
+        }
+
         private void GetGameDirectoryFromPaths()
         {
             foreach (string path in Paths)

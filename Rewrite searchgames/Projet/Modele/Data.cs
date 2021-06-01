@@ -77,7 +77,7 @@ namespace Modele
             {
                 Logs.InfoLog($"Ajout du dossier {dossier}");
                 Dossiers.Add(dossier);
-                List<Jeu> res = new OtherSearcher(new List<string>() { dossier }).Jeux;
+                List<Jeu> res = new OtherSearcher(dossier).Jeux;
                 foreach (Jeu jeu in res)
                 {
                     InsertGame(jeu.Launcher, jeu);
