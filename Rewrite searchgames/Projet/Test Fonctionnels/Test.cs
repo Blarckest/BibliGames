@@ -20,32 +20,49 @@ namespace Test_Fonctionnels
             Loader loader = new LoadElements("");
         }
 
-        public static IDictionary<LauncherName, List<string>> TestGameDirectory()
+        public static void TestGameDirectory()
         {
             TestStub();
             List<string> path = new List<string>();
             path.Add("../../../../../Test");
-            IDictionary<LauncherName, List<string>> dossiers = SearchForGameDirectory.GetAllGameDirectory(path);
-            foreach (KeyValuePair<LauncherName, List<string>> element in dossiers)
+            List<string> dossiers = new List<string>();
+             List <GameSearcher> searchers = new List<GameSearcher> 
+             {
+                new EpicSearcher(),
+                new OriginSearcher(),
+                new RiotSearcher(),
+                new SteamSearcher(),
+                new UplaySearcher(),
+            };
+            List<Jeu> jeux = new List<Jeu>();
+            foreach (var searcher in searchers)
             {
-                Console.WriteLine("Dossier dans le launcher :");
-                Console.WriteLine(element.Key);
-                List<string> chem = element.Value;
-                foreach(string chemin in chem)
-                {
-                    Console.WriteLine(chemin);
-                }
+                jeux.AddRange(searcher.Jeux);
             }
-            return dossiers;
+            foreach (string dossier in dossiers)
+            {
+                Console.WriteLine(dossier);
+            }
         }
 
         private static void TestExecutable()
         {
-            IDictionary<LauncherName, List<string>> dossiers = TestGameDirectory();
             Console.WriteLine("--------------------------------");
             Console.WriteLine("DOSSIER  LAUNCHER  EXECUTABLE");
-            List<Jeu> jeux = SearchForExecutableAndName.GetExecutableAndNameFromGameDirectory(dossiers);
-            foreach(Jeu jeu in jeux)
+            List<GameSearcher> searchers = new List<GameSearcher>
+            {
+                new EpicSearcher(),
+                new OriginSearcher(),
+                new RiotSearcher(),
+                new SteamSearcher(),
+                new UplaySearcher(),
+            };
+            List<Jeu> jeux = new List<Jeu>();
+            foreach (var searcher in searchers)
+            {
+                jeux.AddRange(searcher.Jeux);
+            }
+            foreach (Jeu jeu in jeux)
             {
                 Console.WriteLine($"{jeu.Nom},  {jeu.Launcher},  {jeu.Exec}");
             }

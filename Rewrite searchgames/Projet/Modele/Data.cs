@@ -65,6 +65,11 @@ namespace Modele
             (Elements[GetLauncherIndex(elementselected.Launcher)] as Launcher).NbJeux--; //on enleve un jeu au launcher concerné
             Logs.InfoLog($"Suppression du jeu {elementselected.Nom}");
             Elements.Remove(elementselected);
+            int index = GetLauncherIndex(elementselected.Launcher);
+            if ((Elements[index] as Launcher).NbJeux == 0)
+            {
+                Elements.RemoveAt(index);
+            }
         }
 
         /// <summary>
@@ -96,17 +101,22 @@ namespace Modele
                 int indexLauncher = GetLauncherIndex(LauncherName.Autre);
                 if (indexLauncher != -1)
                 {
-                    for (int i = indexLauncher + 1; i < Elements.Count; i++)
+                    int index = indexLauncher + 1;
+                    while (index < Elements.Count)
                     {
-                        Jeu jeu = Elements[i] as Jeu;
+                        Jeu jeu = Elements[index] as Jeu;
                         if (Directory.GetParent(jeu.Dossier).FullName == dossier)
                         {
-                            Elements.RemoveAt(i);
+                            Elements.RemoveAt(index);
                             (Elements[indexLauncher] as Launcher).NbJeux--;
                             if ((Elements[indexLauncher] as Launcher).NbJeux == 0)
                             {
                                 Elements.RemoveAt(indexLauncher);
                             }
+                        }
+                        else
+                        {
+                            index++;
                         }
                     }
                 }
