@@ -68,20 +68,19 @@ namespace Modele
             int archi = Environment.Is64BitOperatingSystem ? 64 : 32;
             if (launcher == LauncherName.Riot)//Riot est un peu speciale (peu de jeux)(launcher....etc) donc hardcodage de ceux la
             {
-                //manque le nom pour runeterra et apparemment valorant se lance en ligne de commande avec le RiotClientServices.exe
                 return executables.First(e => e.Contains("LeagueClient.exe") || e.Contains("VALORANT.exe") || e.Contains("LoR.exe"));
             }
-            IEnumerable<string> res = executables.Where(e => FilterIndesirables(e)); //apllication du filtre
-            if (res.Any()) //si tout a disparu dans le filtre 
+            IEnumerable<string> res = executables.Where(e => Filter(e)); //apllication du filtre
+            if (!res.Any()) //si tout a disparu dans le filtre 
             {
                 return executables[0];
             }
             else if (nom != null && res.Count() > 1) //si un nom est defini on prend les executables contenant le nom (si il y en a)
             {
                 var temp = res.Where(e => Path.GetFileName(e).Contains(nom, StringComparison.OrdinalIgnoreCase));
-                res = temp.Any() ? res : temp;
+                res = temp.Any() ? temp : res;
                 temp = res.Where(e => Path.GetFileName(e).Contains(nom.Replace(" ", ""), StringComparison.OrdinalIgnoreCase));
-                res = temp.Any() ? res : temp;
+                res = temp.Any() ? temp : res;
             }
             if (res.Count() > 1 && res.Any(e => e.Contains("bin", StringComparison.OrdinalIgnoreCase))) //preferer les exe contenu dans un dossier bin ou binaries (si il y en a)
             {
@@ -94,7 +93,7 @@ namespace Modele
             return res.First();
         }
 
-        protected bool FilterIndesirables(string executable)
+        protected bool Filter(string executable)
         {
             return !(executable.Contains("Unins", StringComparison.OrdinalIgnoreCase) || executable.Contains("Crash", StringComparison.OrdinalIgnoreCase) || executable.Contains("Helper", StringComparison.OrdinalIgnoreCase)
                 || executable.Contains("AntiCheat", StringComparison.OrdinalIgnoreCase) || executable.Contains("Downloader", StringComparison.OrdinalIgnoreCase) || executable.Contains("Upload") || executable.Contains("Report", StringComparison.OrdinalIgnoreCase)
