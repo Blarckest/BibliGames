@@ -15,6 +15,10 @@ namespace Modele
         {
             if (dossiers!=null)
             {
+                if (jeux==null)
+                {
+                    jeux = new List<Jeu>();
+                }
                 foreach (var jeu in jeux)
                 {
                     if (jeu.Exec==null)
@@ -33,6 +37,8 @@ namespace Modele
 
         protected override void GetGamesDirectory()
         {
+            dossiers = new List<string>();
+            jeux = new List<Jeu>();
             string nom = "";
             string executable = "";
             string dossier = "";

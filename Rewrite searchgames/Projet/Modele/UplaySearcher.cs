@@ -11,6 +11,7 @@ namespace Modele
         {
             if (dossiers != null)
             {
+                jeux = new List<Jeu>();
                 base.SearchForExecutables(LauncherName.Uplay);
             }
             else
@@ -21,6 +22,7 @@ namespace Modele
         }
         protected override void GetGamesDirectory()
         {
+            dossiers = new List<string>();
             const string regKey = "SOFTWARE\\WOW6432Node\\Ubisoft\\Launcher\\Installs";
             RegistryKey key;
             if ((key = Registry.LocalMachine.OpenSubKey(regKey)) != null)

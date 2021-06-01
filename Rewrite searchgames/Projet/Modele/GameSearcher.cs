@@ -9,13 +9,13 @@ namespace Modele
 {
     public abstract class GameSearcher
     {
-        protected List<string> dossiers = new List<string>();
-        protected List<Jeu> jeux = new List<Jeu>();
+        protected List<string> dossiers;
+        protected List<Jeu> jeux;
 
         public List<string> Dossiers { 
             get
             {
-                if (!dossiers.Any())
+                if (dossiers==null)
                 {
                     GetGamesDirectory(); //rempli dossiers
                 }
@@ -30,7 +30,7 @@ namespace Modele
         {
             get
             {
-                if (!jeux.Any() || jeux.Any(j=>j.Nom==null || j.Dossier==null || j.Exec==null)) //on verifie si il a des données non mise si il y en a on demande a getGames de corriger les données manquantes
+                if (jeux==null || jeux.Any(j=>j.Nom==null || j.Dossier==null || j.Exec==null)) //on verifie si il a des données non mise si il y en a on demande a getGames de corriger les données manquantes
                 {
                     GetGames(); //rempli/modifie jeux 
                 }

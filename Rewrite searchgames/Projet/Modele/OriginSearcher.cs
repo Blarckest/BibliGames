@@ -16,6 +16,7 @@ namespace Modele
         {
             if (dossiers!=null)
             {
+                jeux = new List<Jeu>();
                 foreach (var keyValue in DossierToNomOrigin)
                 {
                     string nom = new WebClient().DownloadString(@$"https://api1.origin.com/ecommerce2/public/{keyValue.Value}/en_US"); //on recupere le contenu de la page
@@ -38,6 +39,7 @@ namespace Modele
 
         protected override void GetGamesDirectory()
         {
+            dossiers = new List<string>();
             List<string> pathsToGameDirectory = new List<string>();
             string pathToProgramData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
             string path = pathToProgramData + "\\Origin\\LocalContent\\"; //dossier qui nous interesse

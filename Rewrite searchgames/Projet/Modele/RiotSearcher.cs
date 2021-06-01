@@ -15,6 +15,7 @@ namespace Modele
         {
             if (dossiers != null)
             {
+                jeux = new List<Jeu>();
                 foreach (var dossier in DossierToNom)
                 {
                     string[] nomExecutables = Directory.GetFiles(dossier.Value, "*.exe", SearchOption.AllDirectories);
@@ -33,6 +34,7 @@ namespace Modele
 
         protected override void GetGamesDirectory()
         {
+            dossiers = new List<string>();
             RegistryKey key = Registry.CurrentUser.OpenSubKey(regKey);
             foreach (string subKey in key.GetSubKeyNames()) //parcour des sous-clé
             {

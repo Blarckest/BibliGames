@@ -13,6 +13,7 @@ namespace Modele
         private const string steam = "SOFTWARE\\Wow6432Node\\Valve\\Steam\\";
         protected override void GetGames()
         {
+            jeux = new List<Jeu>();
             List<Jeu> temp = new List<Jeu>();
             string nom = "";
             string folderName = "";
@@ -62,6 +63,8 @@ namespace Modele
 
         protected override void GetGamesDirectory()
         {
+            dossiers = new List<string>();
+
             List<string> paths = new List<string>();
 
             RegistryKey key;

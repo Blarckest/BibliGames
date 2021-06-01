@@ -50,6 +50,7 @@ namespace Modele
         {
             if (dossiers != null)
             {
+                jeux = new List<Jeu>();
                 base.SearchForExecutables(LauncherName.Uplay);
             }
             else
@@ -60,6 +61,7 @@ namespace Modele
         }
         protected override void GetGamesDirectory()
         {
+            dossiers = new List<string>();
             GetGameDirectoryFromPaths();
         }
     }
