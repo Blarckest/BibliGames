@@ -9,9 +9,9 @@ namespace Modele
     {
         protected override void GetGames()
         {
-            if (Dossiers != null)
+            if (dossiers != null)
             {
-                base.SearchForExecutables(Jeux, Dossiers, LauncherName.Uplay);
+                base.SearchForExecutables(LauncherName.Uplay);
             }
             else
             {
@@ -31,7 +31,7 @@ namespace Modele
                     string path = valeurs.GetValue("InstallDir").ToString(); //get le dossier
                     path = path.Substring(0, path.Length - 1);
                     path = path.Replace("/", "\\"); //pour avoir une sortie pareil pour tout les launcher ex d:\\path\\to\\directory
-                    Dossiers.Add(path);
+                    dossiers.Add(path);
                 }
             }
         }

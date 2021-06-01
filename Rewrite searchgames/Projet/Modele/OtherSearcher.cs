@@ -32,7 +32,7 @@ namespace Modele
                         {
                             if (!IsDirectoryEmpty(dir)) //on verifie que il y a un executable dans le dossier et que le dossier n'est pas vide
                             {
-                                Dossiers.Add(dir);
+                                dossiers.Add(dir);
                             }
                         }
                         catch (Exception)
@@ -48,14 +48,14 @@ namespace Modele
         
         protected override void GetGames()
         {
-            if (Dossiers != null)
+            if (dossiers != null)
             {
                 base.SearchForExecutables(LauncherName.Uplay);
             }
             else
             {
                 GetGamesDirectory(); //si la fonction a jamais ete execute on l'execute
-                GetGames(); //on revient a la fonction actuel avec cette fois un dossiers non null
+                GetGames(); //on revient a la fonction actuel avec cette fois un Dossiers non null
             }
         }
         protected override void GetGamesDirectory()

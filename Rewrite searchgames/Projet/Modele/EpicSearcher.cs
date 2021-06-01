@@ -13,9 +13,9 @@ namespace Modele
     {
         protected override void GetGames()
         {
-            if (Dossiers!=null)
+            if (dossiers!=null)
             {
-                foreach (var jeu in Jeux)
+                foreach (var jeu in jeux)
                 {
                     if (jeu.Exec==null)
                     {
@@ -81,13 +81,13 @@ namespace Modele
                             {
                                 executable = null; //si c'etait un jeu uplay alors on s'en ocupera dans GetGames()
                             }
-                            Jeux.Add(new Jeu(nom, dossier, executable, LauncherName.EpicGames));//ajout a ce niveau car on a eu toutes les infos qu'on voulais
+                            jeux.Add(new Jeu(nom, dossier, executable, LauncherName.EpicGames));//ajout a ce niveau car on a eu toutes les infos qu'on voulais
                         }
                     }
                 }
             }
-            Jeux.Sort();
-            Dossiers.AddRange(Jeux.Select(j => j.Dossier)); //on rempli avec les dossiers des jeux trouver
+            jeux.Sort();
+            dossiers.AddRange(jeux.Select(j => j.Dossier)); //on rempli avec les dossiers des jeux trouver
         }
     }
 }

@@ -9,20 +9,20 @@ namespace Modele
 {
     public class RiotSearcher : GameSearcher
     {
-        private const string regKey = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall";
-        Dictionary<string, string> Direct = new Dictionary<string, string>();
+        private const string regKey = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\";
+        Dictionary<string, string> DossierToNom = new Dictionary<string, string>();
         protected override void GetGames()
         {
-            if (Dossiers != null)
+            if (dossiers != null)
             {
-                foreach (var dossier in Direct)
+                foreach (var dossier in DossierToNom)
                 {
                     string[] nomExecutables = Directory.GetFiles(dossier.Value, "*.exe", SearchOption.AllDirectories);
                     var executable = Filter(nomExecutables, dossier.Key, LauncherName.Riot);
-                    Jeux.Add(new Jeu(dossier.Key, dossier.Value, executable, LauncherName.Riot));
+                    jeux.Add(new Jeu(dossier.Key, dossier.Value, executable, LauncherName.Riot));
                     Logs.InfoLog($"Ajout du jeu {dossier.Key}");
                 }
-                Jeux.Sort();
+                jeux.Sort();
             }
             else
             {
@@ -42,8 +42,8 @@ namespace Modele
                     string path = keyJeu.GetValue("InstallLocation").ToString();
                     path = path.Replace("/", "\\"); //certains jeux sont marque avec des / et d'autres avec des \\ donc on transforme ceux en / en \\
                     string nom = keyJeu.GetValue("DisplayName").ToString();
-                    Dossiers.Add(path);
-                    Direct.Add(nom, path);
+                    dossiers.Add(path);
+                    DossierToNom.Add(nom, path);
                 }
             }
         }

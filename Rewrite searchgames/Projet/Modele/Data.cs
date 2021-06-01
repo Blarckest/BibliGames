@@ -77,9 +77,8 @@ namespace Modele
             {
                 Logs.InfoLog($"Ajout du dossier {dossier}");
                 Dossiers.Add(dossier);
-                List<Jeu> res = new List<Jeu>();
                 List<string> folder = new List<string>(Directory.GetDirectories(dossier));
-                SearchForExecutableAndName.SearchForExecutables(res, folder);
+                List<Jeu> res = new OtherSearcher(folder).Jeux;
                 foreach (Jeu jeu in res)
                 {
                     InsertGame(jeu.Launcher, jeu);

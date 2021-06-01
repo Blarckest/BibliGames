@@ -17,7 +17,7 @@ namespace Modele
             string nom = "";
             string folderName = "";
             List<string> steamAppsVisited = new List<string>();
-            foreach (string dossier in Dossiers) //sert juste a parcourir les differents steamapps
+            foreach (string dossier in dossiers) //sert juste a parcourir les differents steamapps
             {
                 string pathToSteamApps = Directory.GetParent(Directory.GetParent(dossier).FullName).FullName;
                 if (!steamAppsVisited.Contains(pathToSteamApps)) //si on pas deja traiter ce steamapps
@@ -57,7 +57,7 @@ namespace Modele
                 }
             }
             temp.Sort();
-            Jeux.AddRange(temp);
+            jeux.AddRange(temp);
         }
 
         protected override void GetGamesDirectory()
@@ -99,7 +99,7 @@ namespace Modele
                     {
                         if (!(IsDirectoryEmpty(directory) || directory.Contains("Steamworks Shared"))) //on veux pas de certains dossier
                         {
-                            Dossiers.Add(directory);
+                            dossiers.Add(directory);
                         }
                     }
                 }

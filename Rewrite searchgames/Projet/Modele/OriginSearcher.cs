@@ -14,25 +14,25 @@ namespace Modele
         private IDictionary<string, string> DossierToNomOrigin = new Dictionary<string, string>();
         protected override void GetGames()
         {
-            if (Dossiers!=null)
+            if (dossiers!=null)
             {
                 foreach (var keyValue in DossierToNomOrigin)
                 {
-                    string nom = new WebClient().DownloadString(@$"https://api1.origin.com/ecommerce2/public/{Path.GetFileNameWithoutExtension(keyValue.Value)}/en_US"); //on recupere le contenu de la page
+                    string nom = new WebClient().DownloadString(@$"https://api1.origin.com/ecommerce2/public/{keyValue.Value}/en_US"); //on recupere le contenu de la page
                     nom = nom.Substring(nom.IndexOf("displayName") + 14);
                     nom = nom.Substring(0, nom.IndexOf("\",\"short"));
                     nom = new Regex("[®™]").Replace(nom, "");
                     var jeu = SearchForExecutables(keyValue.Key, LauncherName.Origin);
                     jeu.Nom = nom;
-                    Jeux.Add(jeu);
+                    jeux.Add(jeu);
                     Logs.InfoLog($"Ajout du jeu {nom}");
                 }
-                Jeux.Sort(); 
+                jeux.Sort(); 
             }
             else
             {
                 GetGamesDirectory(); //si la fonction a jamais ete execute on l'execute
-                GetGames(); //on revient a la fonction actuel avec cette fois un dossiers non null
+                GetGames(); //on revient a la fonction actuel avec cette fois un Dossiers non null
             }
         }
 
@@ -58,7 +58,7 @@ namespace Modele
                         {
                             pathToFolder = pathToFolder.Remove(pathToFolder.Length - 1);
                         }
-                        Dossiers.Add(pathToFolder);
+                        dossiers.Add(pathToFolder);
                         DossierToNomOrigin.Add(pathToFolder, Path.GetFileNameWithoutExtension(fichier));
                     }
                 }

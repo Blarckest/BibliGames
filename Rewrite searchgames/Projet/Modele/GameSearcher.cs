@@ -9,13 +9,13 @@ namespace Modele
 {
     public abstract class GameSearcher
     {
-        private List<string> dossiers;
-        private List<Jeu> jeux;
+        protected List<string> dossiers = new List<string>();
+        protected List<Jeu> jeux = new List<Jeu>();
 
         public List<string> Dossiers { 
             get
             {
-                if (dossiers==null)
+                if (!dossiers.Any())
                 {
                     GetGamesDirectory(); //rempli dossiers
                 }
@@ -30,7 +30,7 @@ namespace Modele
         {
             get
             {
-                if (jeux.Any(j=>j.Nom==null || j.Dossier==null || j.Exec==null)) //on verifie si il a des données non mise si il y en a on demande a getGames de corriger les données manquantes
+                if (!jeux.Any() || jeux.Any(j=>j.Nom==null || j.Dossier==null || j.Exec==null)) //on verifie si il a des données non mise si il y en a on demande a getGames de corriger les données manquantes
                 {
                     GetGames(); //rempli/modifie jeux 
                 }
@@ -49,10 +49,10 @@ namespace Modele
                 var nom = Path.GetFileName(dossier);
                 string[] nomExecutables = Directory.GetFiles(dossier, "*.exe", SearchOption.AllDirectories); //recup tout les .exe dans tout les sous-dossier
                 var executable = Filter(nomExecutables, nom, launcher);
-                Jeux.Add(new Jeu(nom, dossier, executable, launcher));//ajout
+                jeux.Add(new Jeu(nom, dossier, executable, launcher));//ajout
                 Logs.InfoLog($"Ajout du jeu {nom}");
             }
-            Jeux.Sort();
+            jeux.Sort();
         }
 
         protected virtual Jeu SearchForExecutables(string dossier, LauncherName launcher = LauncherName.Autre)
