@@ -30,9 +30,9 @@ namespace Modele
         {
             get
             {
-                if (jeux == null)
+                if (jeux.Any(j=>j.Nom==null || j.Dossier==null || j.Exec==null)) //on verifie si il a des données non mise si il y en a on demande a getGames de corriger les données manquantes
                 {
-                    GetGames(); //rempli jeux
+                    GetGames(); //rempli/modifie jeux 
                 }
                 return jeux;
             }
