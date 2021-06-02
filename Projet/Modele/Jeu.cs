@@ -70,6 +70,8 @@ namespace Modele
 
         public Jeu(string nom, string dossier, string exec, string image, string icone, string note,string description, LauncherName launcher = LauncherName.Autre, bool isManuallyAdded=false) : this(nom, dossier,exec,launcher)
         {
+            Image = image;
+            Icone = icone;
             Note = note;
             Description = description;
             IsManuallyAdded = isManuallyAdded;

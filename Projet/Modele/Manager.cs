@@ -35,7 +35,7 @@ namespace Modele
                 return temp;
             }
         }
-        public IList<string> Dossiers => Data.Dossiers;
+        public IList<string> Dossiers => Data.Dossiers.ToList(); //le ToList permet d'eviter la modification de dossier depuis l'exterieur
         public List<Element> JeuLauncherSelected
         {
             get
@@ -55,13 +55,14 @@ namespace Modele
             }
         }
         public string Pattern { get; set; } = null;
-        public Data Data { get; }
+        private Data data;
+        public Data Data => data.Clone() as Data; //le clonage permet d'eviter une modification des données non voulu depuis l'exterieur
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public Manager(Data data)
         {
-            Data = data;
+            this.data = data.Clone() as Data; //le clonage permet d'eviter une modification des données non voulu depuis l'exterieur
         }
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")

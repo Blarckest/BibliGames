@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace Modele
 {
-    public class Data
+    public class Data : ICloneable
     {
         public IList<Element> Elements { get; }
         public IList<string> Dossiers { get; }
@@ -20,6 +20,29 @@ namespace Modele
             Dossiers = dossiers;
         }
 
+        public object Clone()
+        {
+            IList<Element> elements = new List<Element>();
+            IList<string> dossiers = new List<string>();
+            foreach (Element element in Elements)
+            {
+                if (element.GetType() == typeof(Launcher))
+                {
+                    Launcher temp = element as Launcher;
+                    elements.Add(new Launcher(temp.NbJeux, (LauncherName)Enum.Parse(typeof(LauncherName), temp.Nom)));
+                }
+                else if (element.GetType() == typeof(Jeu))
+                {
+                    Jeu temp = element as Jeu;
+                    elements.Add(new Jeu(temp.Nom, temp.Dossier, temp.Exec, temp.Image, temp.Icone, temp.Note, temp.Description, temp.Launcher, temp.IsManuallyAdded));
+                }
+            }
+            foreach (string str in Dossiers)
+            {
+                dossiers.Add(str);
+            }
+            return new Data(elements, dossiers);
+        }
 
         internal void AjoutJeu(LauncherName launcher, string exec)
         {

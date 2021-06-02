@@ -30,7 +30,7 @@ namespace Vues
 
         public void Save()
         {
-            Saver saver = new SaveElements("Ressources/Sauvegarde"); 
+            Saver saver = new SaveElements("Ressources/Sauvegarde");
             saver.Save((App.Current as App).Manager.Data);//on save
             Logs.InfoLog("Fermeture de l'appli");
         }
