@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataManager\Persistance.csproj" />
     <ProjectReference Include="..\Modele\Modele.csproj" />
   </ItemGroup>
 

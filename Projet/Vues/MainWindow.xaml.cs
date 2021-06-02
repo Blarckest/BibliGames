@@ -1,5 +1,4 @@
-﻿using Persistance;
-using Logger;
+﻿using Logger;
 using Modele;
 using System;
 using System.Collections.Generic;
