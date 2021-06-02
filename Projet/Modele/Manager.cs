@@ -30,7 +30,7 @@ namespace Modele
         {
             get
             {
-                var temp = Data.Elements.ToList(); //on recupere les elements et on applique recherche dessus
+                var temp = Data.Elements; //on recupere les elements et on applique recherche dessus
                 Recherche(temp);
                 return temp;
             }
@@ -57,17 +57,24 @@ namespace Modele
         public string Pattern { get; set; } = null;
         private Data data;
         public Data Data => data.Clone() as Data; //le clonage permet d'eviter une modification des données non voulu depuis l'exterieur
+        private IPersistance Persistance { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public Manager(Data data)
+        public Manager(IPersistance persistance)
         {
-            this.data = data.Clone() as Data; //le clonage permet d'eviter une modification des données non voulu depuis l'exterieur
+            Persistance = persistance;
+            data = Persistance.Load();
         }
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void Save()
+        {
+            Persistance.Save(Data);
         }
 
         public void AjoutJeu(LauncherName launcher, string exec)

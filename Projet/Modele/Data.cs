@@ -22,25 +22,8 @@ namespace Modele
 
         public object Clone()
         {
-            IList<Element> elements = new List<Element>();
-            IList<string> dossiers = new List<string>();
-            foreach (Element element in Elements)
-            {
-                if (element.GetType() == typeof(Launcher))
-                {
-                    Launcher temp = element as Launcher;
-                    elements.Add(new Launcher(temp.NbJeux, (LauncherName)Enum.Parse(typeof(LauncherName), temp.Nom)));
-                }
-                else if (element.GetType() == typeof(Jeu))
-                {
-                    Jeu temp = element as Jeu;
-                    elements.Add(new Jeu(temp.Nom, temp.Dossier, temp.Exec, temp.Image, temp.Icone, temp.Note, temp.Description, temp.Launcher, temp.IsManuallyAdded));
-                }
-            }
-            foreach (string str in Dossiers)
-            {
-                dossiers.Add(str);
-            }
+            IList<Element> elements = new List<Element>(Elements);
+            IList<string> dossiers = new List<string>(Dossiers);
             return new Data(elements, dossiers);
         }
 

@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataManager\DataManager.csproj" />
+    <ProjectReference Include="..\DataManager\Persistance.csproj" />
     <ProjectReference Include="..\FolderExplorer\FolderExplorer.csproj" />
     <ProjectReference Include="..\Icones\Icones.csproj" />
   </ItemGroup>

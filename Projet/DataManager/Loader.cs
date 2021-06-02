@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace DataManager
+namespace Persistance
 {
-    public abstract class Loader
+    internal abstract class Loader
     {
         protected readonly string Folder;
         protected Loader(string folder)

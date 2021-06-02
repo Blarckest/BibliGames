@@ -8,9 +8,9 @@ using System.Xml;
 using System.Xml.Linq;
 using System.IO;
 
-namespace DataManager
+namespace Persistance
 {
-    public class SaveElements : Saver
+    internal class SaveElements : Saver
     {
         public SaveElements(string folder) : base(folder)
         {

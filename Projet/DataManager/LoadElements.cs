@@ -9,9 +9,9 @@ using System.Xml.Linq;
 using System.IO;
 using System.Threading;
 
-namespace DataManager
+namespace Persistance
 {
-    public class LoadElements : Loader
+    internal class LoadElements : Loader
     {
         public LoadElements(string folder) : base(folder)
         {
@@ -154,9 +154,8 @@ namespace DataManager
                     elements.AddRange(games);
                     return new Data(elements, new List<string>());
                 }
-                return new Stub().Load(); // sinon on charge un nouveau stub
+                return new Stub.Stub().Load(); // sinon on charge un nouveau stub
             }
-
             return new Data(elements, additionalFolder);
         }
 

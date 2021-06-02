@@ -13,7 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vues", "Projet\Vues\Vues.cs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modele", "Projet\Modele\Modele.csproj", "{9918CCFC-6923-4912-8865-EEDBE7FD490A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataManager", "Projet\DataManager\DataManager.csproj", "{67E74C9B-E233-49D0-A5E0-F8D34DD611D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistance", "Projet\DataManager\Persistance.csproj", "{67E74C9B-E233-49D0-A5E0-F8D34DD611D1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{58A40068-D09B-413F-89FD-16AEA4F28099} = {58A40068-D09B-413F-89FD-16AEA4F28099}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test Fonctionnels", "Projet\Test Fonctionnels\Test Fonctionnels.csproj", "{F4A4C9FE-BAE1-4268-B80D-86FC2633AC20}"
 EndProject
@@ -24,6 +27,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FolderExplorer", "Projet\FolderExplorer\FolderExplorer.csproj", "{308DAD16-0BFE-4735-9A9B-7ADB0A16D7C4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logger", "Projet\Logger\Logger.csproj", "{EA153A60-B220-43CF-A790-C2DCDF7A8ADF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stub", "Projet\Stub\Stub.csproj", "{58A40068-D09B-413F-89FD-16AEA4F28099}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9918CCFC-6923-4912-8865-EEDBE7FD490A} = {9918CCFC-6923-4912-8865-EEDBE7FD490A}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +71,10 @@ Global
 		{EA153A60-B220-43CF-A790-C2DCDF7A8ADF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA153A60-B220-43CF-A790-C2DCDF7A8ADF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA153A60-B220-43CF-A790-C2DCDF7A8ADF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58A40068-D09B-413F-89FD-16AEA4F28099}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58A40068-D09B-413F-89FD-16AEA4F28099}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58A40068-D09B-413F-89FD-16AEA4F28099}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58A40068-D09B-413F-89FD-16AEA4F28099}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

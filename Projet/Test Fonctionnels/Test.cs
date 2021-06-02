@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using DataManager;
+using Persistance;
 using Modele;
 
 namespace Test_Fonctionnels

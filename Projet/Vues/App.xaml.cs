@@ -15,6 +15,6 @@ namespace Vues
     public partial class App : Application
     {
         public Navigator Navigator { get; set; } = new Navigator();
-        public Manager Manager { get; set; }
+        public Manager Manager { get; set; } = new Manager(new Persistance.Persistance()); //on load la sauvegarde
     }
 }

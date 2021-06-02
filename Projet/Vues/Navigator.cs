@@ -1,4 +1,4 @@
-﻿using DataManager;
+﻿using Persistance;
 using Logger;
 using Modele;
 using System;
@@ -16,10 +16,7 @@ namespace Vues
         public void Setup()
         {
             Logs.SuppLog();
-            Logs.InfoLog("Demarrage de l'appli");
-            Loader loader = new LoadElements("Ressources/Sauvegarde"); //new Stub();   
-            (App.Current as App).Manager = new Manager(loader.Load()); //on load la sauvegarde
-
+            Logs.InfoLog("Demarrage de l'appli"); 
             if(!File.Exists("./Ressources/Defaut/icone.png") || !File.Exists("./Ressources/Defaut/image.png"))
             {
                 Directory.CreateDirectory("./Ressources/Defaut");
@@ -30,10 +27,10 @@ namespace Vues
 
         public void Save()
         {
-            Saver saver = new SaveElements("Ressources/Sauvegarde");
-            saver.Save((App.Current as App).Manager.Data);//on save
+            (App.Current as App).Manager.Save();
             Logs.InfoLog("Fermeture de l'appli");
         }
+
         public void OpenParametre()
         {
             Parametre window = new Parametre();

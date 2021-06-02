@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
-namespace DataManager
+namespace Persistance
 {
-    public abstract class Saver
+    internal abstract class Saver
     {
         protected readonly string Folder;
         protected Saver(string folder)

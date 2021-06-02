@@ -5,19 +5,18 @@ using System.IO;
 using System.Text;
 using System.Threading;
 
-namespace DataManager
+namespace Stub
 {
-    public class Stub :Loader
+    public class Stub : IPersistance
     {
-        private Data Data { get; }
-        internal Stub(string path = "") : base(path)
+        public Data Load()
         {
             List<Element> elements = new List<Element>();
             List<Jeu> games = new List<Jeu>();
             string[] pathToTest = { "../../../../../Test" }; //on va au dossier de test
 
             games = new OtherSearcher(pathToTest).Jeux;//on charge
-                                                       
+
             if (games.Count > 0)
             {
                 Launcher actuel = new Launcher(games[0].Launcher);
@@ -46,17 +45,12 @@ namespace DataManager
                     thread.Start(element);
                 }
             }
-            Data = new Data(elements,new List<string>{ });
+            return new Data(elements, new List<string> { });
         }
 
-        public override Data Load()
+        public void Save(Data data)
         {
-            return Data;
-        }
-
-        protected override IList<string> LoadAdditionalPath()
-        {
-            return new List<string> { "Path1", "Path2" };
+            throw new NotImplementedException();
         }
     }
 }
