@@ -13,14 +13,18 @@ namespace Logger
 
         private static void SaveLog()
         {
-            string log;
-            Directory.CreateDirectory(dossier);
-            StreamWriter sw = new StreamWriter($"{dossier}/FichierDeLogs.txt", true);
-            while (queue.TryDequeue(out log))
+            try
             {
-                sw.WriteLine(log);
+                string log;
+                Directory.CreateDirectory(dossier);
+                StreamWriter sw = new StreamWriter($"{dossier}/FichierDeLogs.txt", true);
+                while (queue.TryDequeue(out log))
+                {
+                    sw.WriteLine(log);
+                }
+                sw.Close();
             }
-            sw.Close();
+            catch { }
         }
 
         public static void InfoLog(string action)
