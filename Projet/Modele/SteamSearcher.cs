@@ -11,62 +11,53 @@ namespace Modele
     public class SteamSearcher : GameSearcher
     {
         private const string steam = "SOFTWARE\\Wow6432Node\\Valve\\Steam\\";
+        private readonly IList<string> listSteamApps = new List<string>();
         protected override void GetGames()
         {
             jeux = new List<Jeu>();
-            List<Jeu> temp = new List<Jeu>();
             string nom = "";
             string folderName = "";
-            List<string> steamAppsVisited = new List<string>();
-            foreach (string dossier in dossiers) //sert juste a parcourir les differents steamapps
+            foreach (string pathToSteamApps in listSteamApps) //on parcours les steamapps
             {
-                string pathToSteamApps = Directory.GetParent(Directory.GetParent(dossier).FullName).FullName;
-                if (!steamAppsVisited.Contains(pathToSteamApps)) //si on pas deja traiter ce steamapps
+                string[] allFiles = Directory.GetFiles(pathToSteamApps, "*.acf"); //ce dossier contient tout les fichiers de config de tout les jeux
+                foreach (string file in allFiles)
                 {
-                    string[] allFiles = Directory.GetFiles(pathToSteamApps, "*.acf"); //ce dossier contient tout les fichiers de config de tout les jeux
-                    foreach (string file in allFiles)
+                    if (File.Exists(file))
                     {
-                        if (System.IO.File.Exists(file))
+                        string[] lines = File.ReadAllLines(file);
+                        foreach (string line in lines) //parcour du fichier
                         {
-                            string[] lines = System.IO.File.ReadAllLines(file);
-                            foreach (string line in lines) //parcour du fichier
+                            if (line.Contains("name")) //recuperation du nom
                             {
-                                if (line.Contains("name")) //recuperation du nom
-                                {
-                                    nom = line.Substring(10);
-                                    nom = nom.Replace("\"", "");
-                                }
-                                else if (line.Contains("installdir")) //recuperation du dossier
-                                {
-                                    folderName = line.Substring(16);
-                                    folderName = folderName.Replace("\"", "");
-                                    folderName = $"{pathToSteamApps}{@"\common\"}{folderName}";
-                                    break;
-                                }
+                                nom = line.Substring(10);
+                                nom = nom.Replace("\"", "");
                             }
-                            if (nom != "Steamworks Common Redistributables") //Ce dossier n'est pas un jeu
+                            else if (line.Contains("installdir")) //recuperation du dossier
                             {
-                                Jeu jeu = SearchForExecutables(folderName, LauncherName.Steam);
-                                jeu.Nom = nom;
-                                temp.Add(jeu);
-                                Logs.InfoLog($"Ajout du jeu {nom}");
-
+                                folderName = line.Substring(16);
+                                folderName = folderName.Replace("\"", "");
+                                folderName = $"{pathToSteamApps}{@"\common\"}{folderName}";
+                                break;
                             }
                         }
+                        if (nom != "Steamworks Common Redistributables") //Ce dossier n'est pas un jeu
+                        {
+                            Jeu jeu = SearchForExecutables(folderName, LauncherName.Steam);
+                            jeu.Nom = nom;
+                            jeux.Add(jeu);
+                            Logs.InfoLog($"Ajout du jeu {nom}");
+
+                        }
                     }
-                    steamAppsVisited.Add(pathToSteamApps);
                 }
             }
-            temp.Sort();
-            jeux.AddRange(temp);
+            jeux.Sort();
         }
 
         protected override void GetGamesDirectory()
         {
             dossiers = new List<string>();
-
-            List<string> paths = new List<string>();
-
+            IList<string> listeCommon = new List<string>();
             RegistryKey key;
             if ((key = Registry.LocalMachine.OpenSubKey(steam)) != null)
             {
@@ -87,15 +78,20 @@ namespace Modele
                             path = path.Replace("\"", "\\");  //met les dernier \ à \\
                             if (Directory.Exists(path + "steamapps\\common"))
                             {
-                                path += "steamapps\\common\\";
-                                paths.Add(path);
+                                path += "steamapps\\";
+                                listSteamApps.Add(path);
+                                path += "common\\";
+                                listeCommon.Add(path);
                             }
                         }
                     }
-                    paths.Add(steamPath + "\\steamapps\\common\\");
+                    steamPath += "\\steamapps\\";
+                    listSteamApps.Add(steamPath);
+                    steamPath += "common\\";
+                    listeCommon.Add(steamPath);
                 }
 
-                foreach (string path in paths)
+                foreach (string path in listeCommon)
                 {
                     string[] allDir = Directory.GetDirectories(path);
                     foreach (string directory in allDir)

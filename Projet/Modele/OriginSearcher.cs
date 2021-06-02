@@ -11,13 +11,13 @@ namespace Modele
 {
     public class OriginSearcher : GameSearcher
     {
-        private IDictionary<string, string> DossierToNomOrigin = new Dictionary<string, string>();
+        private IDictionary<string, string> dossierToNomOrigin = new Dictionary<string, string>();
         protected override void GetGames()
         {
             if (dossiers!=null)
             {
                 jeux = new List<Jeu>();
-                foreach (var keyValue in DossierToNomOrigin)
+                foreach (var keyValue in dossierToNomOrigin)
                 {
                     string nom = new WebClient().DownloadString(@$"https://api1.origin.com/ecommerce2/public/{keyValue.Value}/en_US"); //on recupere le contenu de la page
                     nom = nom.Substring(nom.IndexOf("displayName") + 14);
@@ -61,7 +61,7 @@ namespace Modele
                             pathToFolder = pathToFolder.Remove(pathToFolder.Length - 1);
                         }
                         dossiers.Add(pathToFolder);
-                        DossierToNomOrigin.Add(pathToFolder, Path.GetFileNameWithoutExtension(fichier));
+                        dossierToNomOrigin.Add(pathToFolder, Path.GetFileNameWithoutExtension(fichier));
                     }
                 }
             }

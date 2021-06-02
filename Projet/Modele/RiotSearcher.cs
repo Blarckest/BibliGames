@@ -10,13 +10,13 @@ namespace Modele
     public class RiotSearcher : GameSearcher
     {
         private const string regKey = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\";
-        Dictionary<string, string> DossierToNom = new Dictionary<string, string>();
+        Dictionary<string, string> dossierToNom = new Dictionary<string, string>();
         protected override void GetGames()
         {
             if (dossiers != null)
             {
                 jeux = new List<Jeu>();
-                foreach (var dossier in DossierToNom)
+                foreach (var dossier in dossierToNom)
                 {
                     string[] nomExecutables = Directory.GetFiles(dossier.Value, "*.exe", SearchOption.AllDirectories);
                     var executable = Filter(nomExecutables, dossier.Key, LauncherName.Riot);
@@ -45,7 +45,7 @@ namespace Modele
                     path = path.Replace("/", "\\"); //certains jeux sont marque avec des / et d'autres avec des \\ donc on transforme ceux en / en \\
                     string nom = keyJeu.GetValue("DisplayName").ToString();
                     dossiers.Add(path);
-                    DossierToNom.Add(nom, path);
+                    dossierToNom.Add(nom, path);
                 }
             }
         }

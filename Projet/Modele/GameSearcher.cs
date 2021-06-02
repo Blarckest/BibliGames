@@ -70,7 +70,7 @@ namespace Modele
             {
                 return executables.First(e => e.Contains("LeagueClient.exe") || e.Contains("VALORANT.exe") || e.Contains("LoR.exe"));
             }
-            IEnumerable<string> res = executables.Where(e => Filter(e)); //apllication du filtre
+            IEnumerable<string> res = executables.Where(e => FilterIndesirables(e)); //apllication du filtre
             if (!res.Any()) //si tout a disparu dans le filtre 
             {
                 return executables[0];
@@ -93,7 +93,7 @@ namespace Modele
             return res.First();
         }
 
-        protected bool Filter(string executable)
+        protected bool FilterIndesirables(string executable)
         {
             return !(executable.Contains("Unins", StringComparison.OrdinalIgnoreCase) || executable.Contains("Crash", StringComparison.OrdinalIgnoreCase) || executable.Contains("Helper", StringComparison.OrdinalIgnoreCase)
                 || executable.Contains("AntiCheat", StringComparison.OrdinalIgnoreCase) || executable.Contains("Downloader", StringComparison.OrdinalIgnoreCase) || executable.Contains("Upload") || executable.Contains("Report", StringComparison.OrdinalIgnoreCase)
