@@ -25,8 +25,9 @@ namespace Vues
         public MainWindow()
         {
             (App.Current as App).Manager.Setup();
-            DataContext = (App.Current as App).Manager;
+            DataContext = this;
             InitializeComponent();
+            MainDockPanel.DataContext = (App.Current as App).Manager;
             (App.Current as App).Navigator.SetupMasterDetail(MasterDetailCC);
             (App.Current as App).Manager.SearchActivated = false;
             BarreDeRecherche.Text = "Rechercher";
@@ -44,7 +45,7 @@ namespace Vues
         private void ChampRechEntre(object sender, RoutedEventArgs e)
         {
             (App.Current as App).Manager.SearchActivated = false;
-            if (((TextBox)sender).Text =="Rechercher")
+            if (((TextBox)sender).Text == "Rechercher")
             {
                 ((TextBox)sender).Text = ""; //met a vide le champ 
             }
