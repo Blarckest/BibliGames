@@ -12,17 +12,24 @@ namespace Vues.Converters
         private string pathToFolderExec = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);//pour avoir le chemin jusqu'a l'executable
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value==null)
+            if (value == null)
             {
                 return null;
             }
             string imagePath = value as string;
-            imagePath = imagePath[2..];
-            if (!string.IsNullOrWhiteSpace(imagePath))
-            {
-                return new Uri(Path.Combine(pathToFolderExec, imagePath), UriKind.RelativeOrAbsolute);
+            if (imagePath[0]=='.')//si c'est un chemin relatif
+            {             
+                imagePath = imagePath[2..];
+                if (!string.IsNullOrWhiteSpace(imagePath))
+                {
+                    return new Uri(Path.Combine(pathToFolderExec, imagePath), UriKind.RelativeOrAbsolute);
+                }
+                return null;
             }
-            return null;
+            else
+            {
+                return imagePath;
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -46,9 +46,11 @@
             <TextBox x:Name="textBoxLienExe" Width="500" VerticalAlignment="Center"/>
             <Image Source="/Icones;Component/parcourir.png" Width="30" Margin="5" MouseLeftButtonDown="ChercherExecutable"/>
         </StackPanel>
-        <Button Grid.Row="2" Content="Retour" HorizontalAlignment="Center"
-                VerticalAlignment="Top" Click="Annuler"/>
-        <Button Grid.Row="2" Grid.Column="1" Content="Enregistrer" HorizontalAlignment="Center"
+        
+        <Button Grid.Row="2"  Content="Enregistrer" HorizontalAlignment="Center"
                 VerticalAlignment="Top" Click="Valider"/>
+        
+        <Button Grid.Row="2" Grid.Column="1" Content="Retour" HorizontalAlignment="Center"
+                VerticalAlignment="Top" Click="Annuler"/>
     </Grid>
 </Window>

@@ -49,9 +49,9 @@
                      materialDesign:TextFieldAssist.HasOutlinedTextField="True" 
                      materialDesign:TextFieldAssist.TextFieldCornerRadius="5"/>
         </StackPanel>
-        <Button Grid.Row="4" Content="Retour" HorizontalAlignment="Center"
-                VerticalAlignment="Top" Margin="5,10,5,5" Click="Annuler"/>
-        <Button Grid.Row="4" Grid.Column="1" Content="Enregistrer" HorizontalAlignment="Center"
+        <Button Grid.Row="4" Content="Enregistrer" HorizontalAlignment="Center"
                 VerticalAlignment="Top" Margin="5,10,5,5" Click="Valider"/>
+        <Button Grid.Row="4" Grid.Column="1" Content="Retour" HorizontalAlignment="Center"
+                VerticalAlignment="Top" Margin="5,10,5,5" Click="Annuler"/>
     </Grid>
 </Window>

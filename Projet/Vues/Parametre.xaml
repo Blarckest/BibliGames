@@ -62,7 +62,7 @@
                    HorizontalAlignment="Left" VerticalAlignment="Center" MaxWidth="30"
                    MouseLeftButtonDown="SupprimeChemin"/>
         </StackPanel>
-        <Button Content="Retour" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="Annuler"/>
-        <Button Click="Sauvegarder" Content="Enregistrer" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+        <Button Click="Sauvegarder" Content="Enregistrer"  Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+        <Button Content="Retour" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="Annuler"/>
     </Grid>
 </Window>
