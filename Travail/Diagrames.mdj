@@ -8639,7 +8639,7 @@
 											"top": 2160,
 											"width": 206.68603515625,
 											"height": 13,
-											"text": "+LoadElements(folder: string)",
+											"text": "#LoadElements(folder: string)",
 											"horizontalAlignment": 0
 										},
 										{
@@ -8657,7 +8657,7 @@
 											"top": 2175,
 											"width": 206.68603515625,
 											"height": 13,
-											"text": "+Load(): Data",
+											"text": "#Load(): Data",
 											"horizontalAlignment": 0
 										},
 										{
@@ -8773,8 +8773,8 @@
 											"visible": false,
 											"fillColor": "#a05000",
 											"font": "Arial;13;0",
-											"left": -2592,
-											"top": 3216,
+											"left": -2448,
+											"top": 3232,
 											"height": 13
 										},
 										{
@@ -8785,9 +8785,9 @@
 											},
 											"fillColor": "#a05000",
 											"font": "Arial;13;1",
-											"left": 653,
-											"top": 2127,
-											"width": 207,
+											"left": 725,
+											"top": 2135,
+											"width": 79.853515625,
 											"height": 13,
 											"text": "Stub"
 										},
@@ -8800,8 +8800,8 @@
 											"visible": false,
 											"fillColor": "#a05000",
 											"font": "Arial;13;0",
-											"left": -2592,
-											"top": 3216,
+											"left": -2448,
+											"top": 3232,
 											"width": 81,
 											"height": 13,
 											"text": "(from Model2)"
@@ -8815,17 +8815,17 @@
 											"visible": false,
 											"fillColor": "#a05000",
 											"font": "Arial;13;0",
-											"left": -2592,
-											"top": 3216,
+											"left": -2448,
+											"top": 3232,
 											"height": 13,
 											"horizontalAlignment": 1
 										}
 									],
 									"fillColor": "#a05000",
 									"font": "Arial;13;0",
-									"left": 648,
-									"top": 2120,
-									"width": 217,
+									"left": 720,
+									"top": 2128,
+									"width": 89.853515625,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAF5RkcPD/IVZlA="
@@ -8851,9 +8851,9 @@
 									},
 									"fillColor": "#a05000",
 									"font": "Arial;13;0",
-									"left": 648,
-									"top": 2145,
-									"width": 217,
+									"left": 720,
+									"top": 2153,
+									"width": 89.853515625,
 									"height": 10
 								},
 								{
@@ -8877,11 +8877,11 @@
 											},
 											"fillColor": "#a05000",
 											"font": "Arial;13;0",
-											"left": 653,
-											"top": 2160,
-											"width": 207,
+											"left": 725,
+											"top": 2168,
+											"width": 79.853515625,
 											"height": 13,
-											"text": "#Stub()",
+											"text": "+Stub()",
 											"horizontalAlignment": 0
 										},
 										{
@@ -8895,38 +8895,20 @@
 											},
 											"fillColor": "#a05000",
 											"font": "Arial;13;0",
-											"left": 653,
-											"top": 2175,
-											"width": 207,
+											"left": 725,
+											"top": 2183,
+											"width": 79.853515625,
 											"height": 13,
-											"text": "#Load(): Data",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLOperationView",
-											"_id": "AAAAAAF5Rqo7qy8Uex4=",
-											"_parent": {
-												"$ref": "AAAAAAF5RkcPEPIao54="
-											},
-											"model": {
-												"$ref": "AAAAAAF5Rqo7ki8LfX0="
-											},
-											"fillColor": "#a05000",
-											"font": "Arial;13;0",
-											"left": 653,
-											"top": 2190,
-											"width": 207,
-											"height": 13,
-											"text": "#LoadAdditionalPath(): IList<string>",
+											"text": "+Load(): Data",
 											"horizontalAlignment": 0
 										}
 									],
 									"fillColor": "#a05000",
 									"font": "Arial;13;0",
-									"left": 648,
-									"top": 2155,
-									"width": 217,
-									"height": 53
+									"left": 720,
+									"top": 2163,
+									"width": 89.853515625,
+									"height": 38
 								},
 								{
 									"_type": "UMLReceptionCompartmentView",
@@ -8940,8 +8922,8 @@
 									"visible": false,
 									"fillColor": "#a05000",
 									"font": "Arial;13;0",
-									"left": -1296,
-									"top": 1608,
+									"left": -1224,
+									"top": 1616,
 									"width": 10,
 									"height": 10
 								},
@@ -8957,8 +8939,8 @@
 									"visible": false,
 									"fillColor": "#a05000",
 									"font": "Arial;13;0",
-									"left": -1296,
-									"top": 1608,
+									"left": -1224,
+									"top": 1616,
 									"width": 10,
 									"height": 10
 								}
@@ -8966,10 +8948,10 @@
 							"fillColor": "#a05000",
 							"font": "Arial;13;0",
 							"containerChangeable": true,
-							"left": 648,
-							"top": 2120,
-							"width": 217,
-							"height": 101,
+							"left": 720,
+							"top": 2128,
+							"width": 89.853515625,
+							"height": 73,
 							"nameCompartment": {
 								"$ref": "AAAAAAF5RkcPD/IU9NY="
 							},
@@ -9161,7 +9143,7 @@
 											"top": 1860,
 											"width": 411,
 											"height": 13,
-											"text": "+Save(Data: Data): void",
+											"text": "#Save(Data: Data): void",
 											"horizontalAlignment": 0
 										},
 										{
@@ -9179,7 +9161,7 @@
 											"top": 1875,
 											"width": 411,
 											"height": 13,
-											"text": "+Save(Elements: IList<Element>, AdditionalFolder: lList<string>): void",
+											"text": "#Save(Elements: IList<Element>, AdditionalFolder: lList<string>): void",
 											"horizontalAlignment": 0
 										}
 									],
@@ -9385,7 +9367,7 @@
 											"top": 2192,
 											"width": 401.40673828125,
 											"height": 13,
-											"text": "+SaveElements(folder: string)",
+											"text": "#SaveElements(folder: string)",
 											"horizontalAlignment": 0
 										},
 										{
@@ -9403,7 +9385,7 @@
 											"top": 2207,
 											"width": 401.40673828125,
 											"height": 13,
-											"text": "+Save(data: Data): void",
+											"text": "#Save(data: Data): void",
 											"horizontalAlignment": 0
 										},
 										{
@@ -9421,7 +9403,7 @@
 											"top": 2222,
 											"width": 401.40673828125,
 											"height": 13,
-											"text": "+Save(elements: IList<Element>, additionalFolder: IList<string>): void",
+											"text": "#Save(elements: IList<Element>, additionalFolder: IList<string>): void",
 											"horizontalAlignment": 0
 										}
 									],
@@ -20731,7 +20713,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 923,
+									"left": 895,
 									"top": 2187,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -20752,7 +20734,7 @@
 									},
 									"visible": null,
 									"font": "Arial;13;0",
-									"left": 923,
+									"left": 895,
 									"top": 2202,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -20773,7 +20755,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 924,
+									"left": 896,
 									"top": 2157,
 									"height": 13,
 									"alpha": -1.5707963267948966,
@@ -20791,7 +20773,7 @@
 							"tail": {
 								"$ref": "AAAAAAF5RkV7Ke8rmdo="
 							},
-							"points": "984:2178;864:2178",
+							"points": "984:2178;809:2178",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAF5rloh4y91LJk="
@@ -24155,7 +24137,7 @@
 											"top": 1679,
 											"width": 136.93798828125,
 											"height": 13,
-											"text": "+Save(Data: data): void",
+											"text": "+Save(data: Data): void",
 											"horizontalAlignment": 0
 										}
 									],
@@ -27206,6 +27188,7 @@
 								"$ref": "AAAAAAF5RkV7Ke8pve4="
 							},
 							"name": "LoadElements",
+							"visibility": "protected",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
@@ -27225,6 +27208,7 @@
 								"$ref": "AAAAAAF5RkV7Ke8pve4="
 							},
 							"name": "Load",
+							"visibility": "protected",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
@@ -27276,8 +27260,7 @@
 							"_parent": {
 								"$ref": "AAAAAAF5RkcPD/IRJxs="
 							},
-							"name": "Stub",
-							"visibility": "protected"
+							"name": "Stub"
 						},
 						{
 							"_type": "UMLOperation",
@@ -27286,7 +27269,6 @@
 								"$ref": "AAAAAAF5RkcPD/IRJxs="
 							},
 							"name": "Load",
-							"visibility": "protected",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
@@ -27297,26 +27279,6 @@
 									"type": {
 										"$ref": "AAAAAAF5gPpWCX7nqqk="
 									},
-									"direction": "return"
-								}
-							]
-						},
-						{
-							"_type": "UMLOperation",
-							"_id": "AAAAAAF5Rqo7ki8LfX0=",
-							"_parent": {
-								"$ref": "AAAAAAF5RkcPD/IRJxs="
-							},
-							"name": "LoadAdditionalPath",
-							"visibility": "protected",
-							"parameters": [
-								{
-									"_type": "UMLParameter",
-									"_id": "AAAAAAF5RqqjAi8kR80=",
-									"_parent": {
-										"$ref": "AAAAAAF5Rqo7ki8LfX0="
-									},
-									"type": "IList<string>",
 									"direction": "return"
 								}
 							]
@@ -27400,6 +27362,7 @@
 								"$ref": "AAAAAAF5Rkc0t/Kgi24="
 							},
 							"name": "Save",
+							"visibility": "protected",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
@@ -27431,6 +27394,7 @@
 								"$ref": "AAAAAAF5Rkc0t/Kgi24="
 							},
 							"name": "Save",
+							"visibility": "protected",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
@@ -27496,6 +27460,7 @@
 								"$ref": "AAAAAAF5RkdOr/L0EAI="
 							},
 							"name": "SaveElements",
+							"visibility": "protected",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
@@ -27515,6 +27480,7 @@
 								"$ref": "AAAAAAF5RkdOr/L0EAI="
 							},
 							"name": "Save",
+							"visibility": "protected",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
@@ -27545,6 +27511,7 @@
 								"$ref": "AAAAAAF5RkdOr/L0EAI="
 							},
 							"name": "Save",
+							"visibility": "protected",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
@@ -32640,8 +32607,10 @@
 									"_parent": {
 										"$ref": "AAAAAAF5ziAR9s59n08="
 									},
-									"name": "Data",
-									"type": "data"
+									"name": "data",
+									"type": {
+										"$ref": "AAAAAAF5gPpWCX7nqqk="
+									}
 								},
 								{
 									"_type": "UMLParameter",
