@@ -24,7 +24,7 @@ namespace Vues
     {
         public MainWindow()
         {
-            (App.Current as App).Navigator.Setup();
+            (App.Current as App).Manager.Setup();
             DataContext = (App.Current as App).Manager;
             InitializeComponent();
             (App.Current as App).Navigator.SetupMasterDetail(MasterDetailCC);
@@ -62,7 +62,8 @@ namespace Vues
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            (App.Current as App).Navigator.Save();
+            (App.Current as App).Manager.Save();
+            Logs.InfoLog("Fermeture de l'application");
         }
 
         private void Recherche(object sender, TextChangedEventArgs e)//appeler quand le texte de la barre de recherche change

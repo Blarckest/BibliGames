@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Collections.Specialized;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Reflection;
 
 namespace Modele
 {
@@ -67,6 +68,31 @@ namespace Modele
             data = Persistance.Load();
         }
 
+        public void Setup()
+        {
+            Logs.SuppLog();
+            Logs.InfoLog("Demarrage de l'appli");
+            if (!File.Exists("./Ressources/Defaut/icone.png") || !File.Exists("./Ressources/Defaut/image.png"))
+            {
+                Directory.CreateDirectory("./Ressources/Defaut");
+                CopyDllRessourceToFile(Assembly.LoadFrom("Icones.dll"), "image.png", "./Ressources/Defaut/image.png");
+                CopyDllRessourceToFile(Assembly.LoadFrom("Icones.dll"), "icone.png", "./Ressources/Defaut/icone.png");
+            }
+        }
+        private void CopyDllRessourceToFile(Assembly assembly, string ressource, string destination)
+        {
+            var memStream = ExctractImageFromDll(assembly, ressource); //on recupere l'image sous forme de stream
+            var fileStream = File.Create(destination); //on creer le fichier
+            memStream.CopyTo(fileStream); //on copy les données
+            fileStream.Close(); //on ferme
+        }
+        private MemoryStream ExctractImageFromDll(Assembly assembly, string nomFichier)
+        {
+            string ressourcePath = assembly.GetName().Name + ".g.resources"; //les ressources sont la dedans
+            System.Resources.ResourceReader resourceReader = new System.Resources.ResourceReader(assembly.GetManifestResourceStream(ressourcePath)); //on met un ressourcereader sur le fichier qui nous interesse
+            resourceReader.GetResourceData(nomFichier, out _, out byte[] data);//on ne s'interesse pas au type // data contient les données
+            return new MemoryStream(data, 4, data.Length - 4);//on revoit un memorystream le 4 correspond a un offset de 4 octet qui est present pour une raison inconnu
+        }
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
