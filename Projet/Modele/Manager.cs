@@ -31,12 +31,12 @@ namespace Modele
         {
             get
             {
-                var temp = Data.Elements; //on recupere les elements et on applique recherche dessus
+                var temp = GetData().Elements; //on recupere les elements et on applique recherche dessus
                 Recherche(temp);
                 return temp;
             }
         }
-        public IList<string> Dossiers => Data.Dossiers.ToList(); //le ToList permet d'eviter la modification de dossier depuis l'exterieur
+        public IList<string> Dossiers => GetData().Dossiers.ToList(); //le ToList permet d'eviter la modification de dossier depuis l'exterieur
         public List<Element> JeuLauncherSelected
         {
             get
@@ -46,7 +46,7 @@ namespace Modele
                     if (ElementSelected.GetType() == typeof(Launcher))
                     {
                         Launcher launcher = ElementSelected as Launcher;
-                        var temp = Data.Elements.Skip(Data.GetLauncherIndex((LauncherName)Enum.Parse(typeof(LauncherName), launcher.Nom)) + 1).Take(launcher.NbJeux).ToList();
+                        var temp = GetData().Elements.Skip(GetData().GetLauncherIndex((LauncherName)Enum.Parse(typeof(LauncherName), launcher.Nom)) + 1).Take(launcher.NbJeux).ToList();
                         Recherche(temp);
                         return temp;
                     }
@@ -55,9 +55,9 @@ namespace Modele
                 return null;
             }
         }
-        public string Pattern { get; set; } = null;
-        private Data data;
-        private Data Data => data.CloneCollections() as Data; //le clonage permet d'eviter une modification des collections non voulu depuis l'exterieur
+        public string Pattern { get; set; } = "Rechercher";
+        private readonly Data data;
+
         private IPersistance Persistance { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -78,7 +78,7 @@ namespace Modele
 
         public void Save()
         {
-            Persistance.Save(Data);
+            Persistance.Save(GetData());
         }
 
         public void AjoutJeu(LauncherName launcher, string exec)
@@ -199,6 +199,10 @@ namespace Modele
             System.Resources.ResourceReader resourceReader = new System.Resources.ResourceReader(assembly.GetManifestResourceStream(ressourcePath)); //on met un ressourcereader sur le fichier qui nous interesse
             resourceReader.GetResourceData(nomFichier, out _, out byte[] data);//on ne s'interesse pas au type // data contient les données
             return new MemoryStream(data, 4, data.Length - 4);//on revoit un memorystream le 4 correspond a un offset de 4 octet qui est present pour une raison inconnu
+        }
+        private Data GetData()
+        {
+            return data.CloneCollections(); //le clonage permet d'eviter une modification des collections non voulu depuis l'exterieur
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Modele
                             {
                                 folderName = line.Substring(16);
                                 folderName = folderName.Replace("\"", "");
-                                folderName = $"{pathToSteamApps}{@"\common\"}{folderName}";
+                                folderName = $"{pathToSteamApps}{@"common\"}{folderName}";
                                 break;
                             }
                         }
