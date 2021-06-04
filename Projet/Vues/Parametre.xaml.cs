@@ -79,13 +79,5 @@ namespace Vues
                 }
             }
         }
-
-        private void Raccourcis(object sender, KeyEventArgs e)
-        {
-            if(e.Key == Key.Escape)
-            {
-                Annuler(sender,e);
-            }
-        }
     }
 }
