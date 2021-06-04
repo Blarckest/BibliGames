@@ -26,9 +26,8 @@ namespace Vues
         {
             Logs.SuppLog();
             Logs.InfoLog("Demarrage de l'appli");
-            DataContext = this;
             InitializeComponent();
-            MainDockPanel.DataContext = (App.Current as App).Manager;
+            DataContext = (App.Current as App).Manager;
             (App.Current as App).Navigator.SetupMasterDetail(MasterDetailCC);
             (App.Current as App).Manager.SearchActivated = false;
             BarreDeRecherche.Text = "Rechercher";
@@ -73,6 +72,17 @@ namespace Vues
             if ((App.Current as App).Manager.SearchActivated)
             {
                 (App.Current as App).Manager.UpdateRecherche();
+            }
+        }
+
+        private void Raccourcis(object sender, KeyEventArgs e)
+        {
+            if(e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            {
+                if(e.Key == Key.P)
+                {
+                    (App.Current as App).Navigator.OpenParametre();
+                }
             }
         }
     }

@@ -13,7 +13,7 @@
       TextOptions.TextRenderingMode="Auto"        
       Background="{DynamicResource MaterialDesignPaper}"
       FontFamily="{DynamicResource MaterialDesignFont}"
-      Title="Parametres" Height="280" Width="671" ResizeMode="NoResize" >
+      Title="Parametres" Height="280" Width="671" ResizeMode="NoResize" KeyDown="Raccourcis" >
 
     <Grid VerticalAlignment="Center">
         <Grid.RowDefinitions>
