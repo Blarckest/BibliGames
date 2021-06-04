@@ -25,44 +25,44 @@ namespace Logger
 
         public static void InfoLog(string action)
         {
-            try
+            queue.Enqueue($"{DateTime.Now} | Info : {action}");
+            if (!thread.IsAlive)
             {
-                queue.Enqueue($"{DateTime.Now} | Info : {action}");
-                if (!thread.IsAlive)
+                try
                 {
                     thread = new Thread(SaveLog);
                     thread.Start();
                 }
-            }
-            catch { }            
+                catch { }
+            }  
         }
 
         public static void ErrorLog(string action)
         {
-            try
+            queue.Enqueue($"{DateTime.Now} | Error : {action}");
+            if (!thread.IsAlive)
             {
-                queue.Enqueue($"{DateTime.Now} | Error : {action}");
-                if (!thread.IsAlive)
+                try
                 {
                     thread = new Thread(SaveLog);
                     thread.Start();
                 }
+                catch { }
             }
-            catch { }
         }
 
         public static void WarningLog(string action)
         {
-            try
+            queue.Enqueue($"{DateTime.Now} | Warning : {action}");
+            if (!thread.IsAlive)
             {
-                queue.Enqueue($"{DateTime.Now} | Warning : {action}");
-                if (!thread.IsAlive)
+                try
                 {
                     thread = new Thread(SaveLog);
                     thread.Start();
                 }
+                catch { }
             }
-            catch { }
         }
 
         public static void SuppLog()
