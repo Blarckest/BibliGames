@@ -13,48 +13,56 @@ namespace Logger
 
         private static void SaveLog()
         {
-            try
+            string log;
+            Directory.CreateDirectory(dossier);
+            StreamWriter sw = new StreamWriter($"{dossier}/FichierDeLogs.txt", true);
+            while (queue.TryDequeue(out log))
             {
-                string log;
-                Directory.CreateDirectory(dossier);
-                StreamWriter sw = new StreamWriter($"{dossier}/FichierDeLogs.txt", true);
-                while (queue.TryDequeue(out log))
-                {
-                    sw.WriteLine(log);
-                }
-                sw.Close();
+                sw.WriteLine(log);
             }
-            catch { }
+            sw.Close();
         }
 
         public static void InfoLog(string action)
         {
-            queue.Enqueue($"{DateTime.Now} | Info : {action}");
-            if (!thread.IsAlive)
+            try
             {
-                thread = new Thread(SaveLog);
-                thread.Start(); 
+                queue.Enqueue($"{DateTime.Now} | Info : {action}");
+                if (!thread.IsAlive)
+                {
+                    thread = new Thread(SaveLog);
+                    thread.Start();
+                }
             }
+            catch { }            
         }
 
         public static void ErrorLog(string action)
         {
-            queue.Enqueue($"{DateTime.Now} | Error : {action}");
-            if (!thread.IsAlive)
+            try
             {
-                thread = new Thread(SaveLog);
-                thread.Start();
+                queue.Enqueue($"{DateTime.Now} | Error : {action}");
+                if (!thread.IsAlive)
+                {
+                    thread = new Thread(SaveLog);
+                    thread.Start();
+                }
             }
+            catch { }
         }
 
         public static void WarningLog(string action)
         {
-            queue.Enqueue($"{DateTime.Now} | Warning : {action}");
-            if (!thread.IsAlive)
+            try
             {
-                thread = new Thread(SaveLog);
-                thread.Start();
+                queue.Enqueue($"{DateTime.Now} | Warning : {action}");
+                if (!thread.IsAlive)
+                {
+                    thread = new Thread(SaveLog);
+                    thread.Start();
+                }
             }
+            catch { }
         }
 
         public static void SuppLog()
