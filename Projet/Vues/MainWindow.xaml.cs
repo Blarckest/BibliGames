@@ -24,7 +24,8 @@ namespace Vues
     {
         public MainWindow()
         {
-            (App.Current as App).Manager.Setup();
+            Logs.SuppLog();
+            Logs.InfoLog("Demarrage de l'appli");
             DataContext = this;
             InitializeComponent();
             MainDockPanel.DataContext = (App.Current as App).Manager;

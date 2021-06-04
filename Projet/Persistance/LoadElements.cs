@@ -133,18 +133,6 @@ namespace Persistance
                 }
             }
 
-            foreach (Element element in elements)//on set les infos
-            {
-                if (element.GetType() == typeof(Jeu))
-                {
-                    Logs.InfoLog($"Recherche des données pour {element.Nom}");
-                    Thread thread = new Thread(SearchInfo.SetInfo);
-                    thread.Start(element);
-                }
-            }
-
-            Logs.InfoLog("Chargement des données");
-
             if (elements.Count == 0)
             {
                 Logs.WarningLog("Pas de données présente->utilisation du stub");

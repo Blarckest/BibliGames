@@ -37,14 +37,6 @@ namespace Stub
                     }
                 }
             }
-            foreach (Element element in elements)//on set les infos
-            {
-                if (element.GetType() == typeof(Jeu))
-                {
-                    Thread thread = new Thread(SearchInfo.SetInfo);
-                    thread.Start(element);
-                }
-            }
             return new Data(elements, new List<string> { });
         }
 

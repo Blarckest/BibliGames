@@ -24,7 +24,7 @@ namespace Modele
         [ThreadStatic] private static Random rand;
         [ThreadStatic] private static WebClient webClient;
 
-        public static void SetInfo(object jeu) //on recoit un objet pour etre en accord avec le deleguate de ParameterizedThreadStart
+        internal static void SetInfo(object jeu) //on recoit un objet pour etre en accord avec le deleguate de ParameterizedThreadStart
         {
             if (jeu.GetType()==typeof(Jeu))
             {
@@ -74,7 +74,7 @@ namespace Modele
             } 
         }
 
-        public static Jeu ExtractGameInfoFromExec(string exec)
+        internal static Jeu ExtractGameFromExec(string exec)
         {
             string dossier = Directory.GetParent(exec).FullName;
             string nom = Path.GetFileName(Directory.GetParent(exec).FullName);

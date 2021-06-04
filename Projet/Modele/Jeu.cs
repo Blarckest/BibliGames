@@ -10,7 +10,7 @@ namespace Modele
 {
     public class Jeu : Element, INotifyPropertyChanged
     {
-        private string exec=null, description=null, image=null, note=null, icone=null;
+        private string exec=null, description=null, image=null, note="", icone=null;
         public bool IsManuallyAdded { get; set; } = false;
         public string Dossier { get; set; } = null;
         public LauncherName Launcher { get; set; }

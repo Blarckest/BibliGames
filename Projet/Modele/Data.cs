@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace Modele
 {
-    public class Data : ICloneable
+    public class Data
     {
         public IList<Element> Elements { get; }
         public IList<string> Dossiers { get; }
@@ -20,7 +20,32 @@ namespace Modele
             Dossiers = dossiers;
         }
 
-        public object Clone()
+        public Data CloneAll()
+        {
+            IList<Element> elements = new List<Element>();
+            IList<string> dossiers = new List<string>();
+            foreach (Element element in Elements)
+            {
+                if (element.GetType() == typeof(Launcher))
+                {
+
+                    Launcher temp = element as Launcher;
+
+                    elements.Add(new Launcher(temp.NbJeux, (LauncherName)Enum.Parse(typeof(LauncherName), temp.Nom)));
+                    
+                }
+                else if (element.GetType() == typeof(Jeu))
+                {
+
+                    Jeu temp = element as Jeu;
+
+                    elements.Add(new Jeu(temp.Nom, temp.Dossier, temp.Exec, temp.Image, temp.Icone, temp.Note, temp.Description, temp.Launcher, temp.IsManuallyAdded));
+
+                }
+            }
+            return new Data(elements, dossiers);
+        }
+        public Data CloneCollections()
         {
             IList<Element> elements = new List<Element>(Elements);
             IList<string> dossiers = new List<string>(Dossiers);
@@ -29,7 +54,7 @@ namespace Modele
 
         internal void AjoutJeu(LauncherName launcher, string exec)
         {
-            Jeu jeu = SearchInfo.ExtractGameInfoFromExec(exec);
+            Jeu jeu = SearchInfo.ExtractGameFromExec(exec);
             jeu.IsManuallyAdded = true;
             InsertGame(launcher, jeu);
             SetInfo(jeu);
@@ -196,6 +221,14 @@ namespace Modele
                 Elements.Add(new Launcher(launcher)); //launcher.autre est obligatoirement en dernier
             }
 
+        }
+
+        internal void SetInfoForAll()
+        {
+            foreach (Jeu jeu in Elements.OfType<Jeu>())
+            {
+                SetInfo(jeu);
+            }
         }
 
         private void SetInfo(Jeu jeu)
