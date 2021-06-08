@@ -125,7 +125,7 @@ namespace Persistance
             return false;
         }
 
-        private bool IsSaveOk(IList<GameSearcher> searchers, IList<Jeu> games)
+        private bool IsSaveOk(IEnumerable<GameSearcher> searchers, IList<Jeu> games)
         {
             List<string> directoryDetected = new List<string>();
 
