@@ -12,6 +12,5 @@ namespace Persistance
             this.Folder = folder;
         }
         public abstract Data Load();
-        protected abstract IList<string> LoadAdditionalPath();
     }
 }

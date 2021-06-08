@@ -19,8 +19,8 @@ namespace Persistance
 
         public override Data Load()
         {
-            IList<string> additionalFolder = LoadAdditionalPath();
-            List<GameSearcher> searchers = new List<GameSearcher>
+            bool needRecupGames = !LoadSave(out List<Jeu> games, out List<Launcher> launchers, out List<string> additionalFolder);
+            IList<GameSearcher> searchers = new List<GameSearcher>
             {
                 new EpicSearcher(),
                 new OriginSearcher(),
@@ -30,81 +30,10 @@ namespace Persistance
                 new OtherSearcher(additionalFolder)
             };
 
-            bool needRecupGames = true; //determine si on a besoin de recuperer les jeux a nouveaux
-            List<Launcher> launchers = null;
-            List<Jeu> games = null;
             List<Element> elements = new List<Element>();
-            List<string> directoryDetected = new List<string>();
-            if (File.Exists($"{Folder}/LauncherInfo.xml") && File.Exists($"{Folder}/GamesInfo.xml") && File.Exists($"{Folder}/AdditionalFolder.txt") && new FileInfo($"{Folder}/LauncherInfo.xml").Length != 0) //si la sauvegarde existe et que les fichiers sont pas vide si AdditionalFolder.txt est vide c pas grave
-            {
-                XDocument launchersFile = XDocument.Load($"{Folder}/LauncherInfo.xml");
-
-                launchers = launchersFile.Descendants("Launcher") //chargement des launcher
-                                      .Select(e => new Launcher()
-                                      {
-                                          Nom = e.Attribute("Nom").Value,
-                                          NbJeux = int.Parse(e.Element("NbJeux").Value)
-                                      })
-                                      .ToList();
-
-                XDocument gamesFile = XDocument.Load($"{Folder}/GamesInfo.xml");
-
-                games = gamesFile.Descendants("Jeu") //chargement des jeux
-                                   .Select(e => new Jeu(
-                                        e.Attribute("Nom").Value,
-                                        e.Element("Dossier").Value,
-                                        e.Element("Exec").Value,
-                                        e.Element("Image").Value,
-                                        e.Element("Icone").Value,
-                                        e.Element("Note").Value,
-                                        e.Element("Description").Value,
-                                        (LauncherName)Enum.Parse(typeof(LauncherName), e.Element("Launcher").Value),
-                                        Convert.ToBoolean(e.Element("IsManuallyAdded").Value)))
-                                   .ToList();
 
 
-                foreach (var searcher in searchers)//get les directory qu'est censer avoir la sauvegarde
-                {
-                    directoryDetected.AddRange(searcher.Dossiers);
-                }
-
-
-                var jeuxManuallyAdded = games.Where(j => j.IsManuallyAdded); //on recup les jeux ajouter manuellement
-                if (jeuxManuallyAdded.Count() != 0)
-                {
-                    var dossierJeuxManuallyAdded = jeuxManuallyAdded.Select(j => j.Dossier).ToList(); //on recup leurs dossier pour que la detection de mise a jour se passe bien
-                    directoryDetected.AddRange(dossierJeuxManuallyAdded); //on ajoute les dossiers des jeux ajoutés a la main
-                }
-
-                if (games.All(j => directoryDetected.Contains(j.Dossier))) //on regarde si chaque jeu a son dossier dans les dossiers trouvés
-                {
-                    needRecupGames = false;
-                }
-                else
-                {
-                    needRecupGames = true;
-                }
-            }
-            else
-            {
-                needRecupGames = true;
-                foreach (var searcher in searchers)//get les directory
-                {
-                    directoryDetected.AddRange(searcher.Dossiers);
-                }
-            }
-
-
-            if (!needRecupGames)
-            {
-                foreach (Launcher launcher in launchers) //on remplit la liste d'élément
-                {
-                    elements.Add(launcher);
-                    elements.AddRange(games.Take(launcher.NbJeux));
-                    games.RemoveRange(0, launcher.NbJeux);
-                }
-            }
-            else //si on a besoin de recuperer les jeux
+            if (needRecupGames || !IsSaveOk(searchers,games))//si on a besoin de recuperer les jeux
             {
                 List<Jeu> gamesFound = new List<Jeu>();
                 foreach (var searcher in searchers)//get les directory
@@ -132,8 +61,17 @@ namespace Persistance
                     }
                 }
             }
+            else 
+            {
+                foreach (Launcher launcher in launchers) //on remplit la liste d'élément
+                {
+                    elements.Add(launcher);
+                    elements.AddRange(games.Take(launcher.NbJeux));
+                    games.RemoveRange(0, launcher.NbJeux);
+                }
+            }
 
-            if (elements.Count == 0)
+            if (elements.Count == 0)//si on doit retourner un stub (fait pour les profs a supp sur version officiel)
             {
                 Logs.WarningLog("Pas de données présente->utilisation du stub");
                 if (games != null && launchers != null && games.Count == 11 && launchers.Count == 1)//si on a charger probablement un stub on renvoie les données de la sauvegarde
@@ -147,14 +85,67 @@ namespace Persistance
             return new Data(elements, additionalFolder);
         }
 
-        protected override IList<string> LoadAdditionalPath()
+        private bool LoadSave(out List<Jeu> games, out List<Launcher> launchers, out List<string> dossiers)
         {
-            if (File.Exists($"{Folder}/AdditionalFolder.txt"))
+            if (File.Exists($"{Folder}/BibliGames.xml") && new FileInfo($"{Folder}/BibliGames.xml").Length != 0) //si la sauvegarde existe et que le fichiers sont pas vide
             {
-                return new List<string>(File.ReadAllLines($"{Folder}/AdditionalFolder.txt")); //on recupere les dossier de recherche
-            }
-            return new List<string>() { }; //si le fichier existait pas on retourne une liste vide
+                XDocument saveFile = XDocument.Load($"{Folder}/BibliGames.xml");
 
+                var save = saveFile.Descendants();
+
+                launchers = save.Descendants("Launchers").Descendants() //chargement des launcher
+                                      .Select(e => new Launcher()
+                                      {
+                                          Nom = e.Attribute("Nom").Value,
+                                          NbJeux = int.Parse(e.Attribute("NbJeux").Value)
+                                      })
+                                      .ToList();
+
+                games = save.Descendants("Jeux").Descendants() //chargement des jeux
+                                   .Select(e => new Jeu(
+                                        e.Attribute("Nom").Value,
+                                        e.Attribute("Dossier").Value,
+                                        e.Attribute("Exec").Value,
+                                        e.Attribute("Image").Value,
+                                        e.Attribute("Icone").Value,
+                                        e.Attribute("Note").Value,
+                                        e.Attribute("Description").Value,
+                                        (LauncherName)Enum.Parse(typeof(LauncherName), e.Attribute("Launcher").Value),
+                                        Convert.ToBoolean(e.Attribute("IsManuallyAdded").Value)))
+                                   .ToList();
+
+                dossiers = save.Descendants("DossiersSupp").Descendants() //chargement des dossiers supplementaires
+                                        .Select(d => d.Attribute("Nom").Value)
+                                        .ToList();
+                return true;
+            }
+            games = null;
+            launchers = null;
+            dossiers = null;
+            return false;
+        }
+
+        private bool IsSaveOk(IList<GameSearcher> searchers, IList<Jeu> games)
+        {
+            List<string> directoryDetected = new List<string>();
+
+            foreach (var searcher in searchers)//get les directory qu'est censer avoir la sauvegarde
+            {
+                directoryDetected.AddRange(searcher.Dossiers);
+            }
+
+            var jeuxManuallyAdded = games.Where(j => j.IsManuallyAdded); //on recup les jeux ajouter manuellement
+            if (jeuxManuallyAdded.Count() != 0)
+            {
+                var dossierJeuxManuallyAdded = jeuxManuallyAdded.Select(j => j.Dossier).ToList(); //on recup leurs dossier pour que la detection de mise a jour se passe bien
+                directoryDetected.AddRange(dossierJeuxManuallyAdded); //on ajoute les dossiers des jeux ajoutés a la main
+            }
+
+            if (!games.All(j => directoryDetected.Contains(j.Dossier))) //on regarde si chaque jeu a son dossier dans les dossiers trouvés
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

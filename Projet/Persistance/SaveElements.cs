@@ -20,57 +20,41 @@ namespace Persistance
         public override void Save(IList<Element> elements, IList<string> additionalFolder)
         {
             XDocument fichier = new XDocument();
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true; //on active l'indentage du fichier
+            TextWriter textWriter = File.CreateText($"{Folder}/BibliGames.xml");
+            XmlWriter writer = XmlWriter.Create(textWriter, settings);
 
-            var launchers = elements.Where(e => e.GetType() == typeof(Launcher)) //sauvegarde des launchers
+            var launchers = new XElement("Launchers",elements.Where(e => e.GetType() == typeof(Launcher)) //sauvegarde des launchers
                                     .Select(e => e as Launcher)
                                     .Select(e => new XElement("Launcher",
                                     new XAttribute("Nom", e.Nom),               
-                                    new XElement("NbJeux", e.NbJeux)));
+                                    new XAttribute("NbJeux", e.NbJeux))));
 
-            fichier.Add(new XElement("Launchers", launchers));
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.Indent = true; //on active l'indatage du fichier
-            TextWriter textWriter = File.CreateText($"{Folder}/LauncherInfo.xml");
-            XmlWriter writer = XmlWriter.Create(textWriter, settings);
-            fichier.Save(writer); //on ecrit
-            writer.Close();
-            textWriter.Close();
-
-            fichier = new XDocument();
-            var jeux = elements.Where(e => e.GetType() == typeof(Jeu)) //sauvegarde des jeux
+            var jeux = new XElement("Jeux",elements.Where(e => e.GetType() == typeof(Jeu)) //sauvegarde des jeux
                              .Select(e => e as Jeu)
                              .Select(e => new XElement("Jeu",
                              new XAttribute("Nom", e.Nom),
-                             new XElement("Dossier", e.Dossier),
-                             new XElement("Exec", e.Exec),
-                             new XElement("Launcher", e.Launcher.ToString()),
-                             new XElement("Description", e.Description),
-                             new XElement("Note", e.Note),
-                             new XElement("Image", e.Image),
-                             new XElement("Icone", e.Icone),
-                             new XElement("IsManuallyAdded",e.IsManuallyAdded)));
+                             new XAttribute("Dossier", e.Dossier),
+                             new XAttribute("Exec", e.Exec),
+                             new XAttribute("Launcher", e.Launcher.ToString()),
+                             new XAttribute("Description", e.Description),
+                             new XAttribute("Note", e.Note),
+                             new XAttribute("Image", e.Image),
+                             new XAttribute("Icone", e.Icone),
+                             new XAttribute("IsManuallyAdded",e.IsManuallyAdded))));
 
-            fichier.Add(new XElement("Jeux", jeux));
+            var dossiersSupp = new XElement("DossiersSupp", additionalFolder.Select(d=>new XElement("Dossier",new XAttribute("Nom",d)))); //sauvegarde des dossiers supplementaires
 
-            textWriter = File.CreateText($"{Folder}/GamesInfo.xml");
-            writer = XmlWriter.Create(textWriter, settings);
+            fichier.Add(new XElement("BibliGames", launchers, jeux, dossiersSupp));           
             fichier.Save(writer); //on ecrit
             writer.Close();
             textWriter.Close();
 
-            TextWriter fichierAdditionalPaths = new StreamWriter($"{Folder}/AdditionalFolder.txt");
-            if (additionalFolder!=null)
-            {
-                foreach (string path in additionalFolder)
-                {
-                    fichierAdditionalPaths.WriteLine(path); //on copie chaque dossier supplementaire dans unfichier
-                }
-            }            
-            fichierAdditionalPaths.Close();
-            Logs.InfoLog("Sauvegarde de l'application");
+            Logs.InfoLog("Sauvegarde des données");
         }
 
-        public override void Save(Data data) //constructeur prenant un manager (fait la meme chose que l'autre)
+        public override void Save(Data data) //constructeur prenant un Data (fait la meme chose que l'autre)
         {
             Save(data.Elements, data.Dossiers);
         }

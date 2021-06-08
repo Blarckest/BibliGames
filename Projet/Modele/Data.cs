@@ -23,7 +23,7 @@ namespace Modele
         public Data CloneAll()
         {
             IList<Element> elements = new List<Element>();
-            IList<string> dossiers = new List<string>();
+            IList<string> dossiers = Dossiers == null ? new List<string>() : new List<string>(Dossiers);
             foreach (Element element in Elements)
             {
                 if (element.GetType() == typeof(Launcher))
