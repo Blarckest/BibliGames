@@ -22,12 +22,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FolderExplorer", "Projet\Fo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logger", "Projet\Logger\Logger.csproj", "{EA153A60-B220-43CF-A790-C2DCDF7A8ADF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stub", "Projet\Stub\Stub.csproj", "{58A40068-D09B-413F-89FD-16AEA4F28099}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stub", "Projet\Stub\Stub.csproj", "{58A40068-D09B-413F-89FD-16AEA4F28099}"
 	ProjectSection(ProjectDependencies) = postProject
 		{9918CCFC-6923-4912-8865-EEDBE7FD490A} = {9918CCFC-6923-4912-8865-EEDBE7FD490A}
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistance", "Projet\Persistance\Persistance.csproj", "{85102410-34A8-4718-A91B-F25385DFADE0}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Installer", "Projet\Installer\Installer.vdproj", "{A92370AD-4CA9-4A53-A69B-074B81C38667}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,8 @@ Global
 		{85102410-34A8-4718-A91B-F25385DFADE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85102410-34A8-4718-A91B-F25385DFADE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{85102410-34A8-4718-A91B-F25385DFADE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A92370AD-4CA9-4A53-A69B-074B81C38667}.Debug|Any CPU.ActiveCfg = Debug
+		{A92370AD-4CA9-4A53-A69B-074B81C38667}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
