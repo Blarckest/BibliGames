@@ -9,18 +9,17 @@ namespace Logger
     {
         private static Thread thread = new Thread(SaveLog);
         private static string dossier = "./Logs";
-        private static readonly ConcurrentQueue<string> queue= new ConcurrentQueue<string>();
+        private static readonly ConcurrentQueue<string> queue = new ConcurrentQueue<string>();
 
         private static void SaveLog()
         {
             string log;
             Directory.CreateDirectory(dossier);
-            StreamWriter sw = new StreamWriter($"{dossier}/FichierDeLogs.txt", true);
+            using StreamWriter sw = new StreamWriter($"{dossier}/FichierDeLogs.txt", true);
             while (queue.TryDequeue(out log))
             {
                 sw.WriteLine(log);
             }
-            sw.Close();
         }
 
         public static void InfoLog(string action)
@@ -34,7 +33,7 @@ namespace Logger
                     thread.Start();
                 }
                 catch { }
-            }  
+            }
         }
 
         public static void ErrorLog(string action)
@@ -70,9 +69,8 @@ namespace Logger
             string fichier = dossier + "/FichierDeLogs.txt";
             if (File.Exists(fichier))
             {
-                StreamReader sr = new StreamReader($"{dossier}/FichierDeLogs.txt");
+                using StreamReader sr = new StreamReader($"{dossier}/FichierDeLogs.txt");
                 string line = sr.ReadLine();
-                sr.Close();
                 line = line.Substring(0, 10);
                 DateTime date = DateTime.Today;
                 if (line != date.ToString("d"))

@@ -189,9 +189,8 @@ namespace Modele
         private void CopyDllRessourceToFile(Assembly assembly, string ressource, string destination)
         {
             var memStream = ExctractImageFromDll(assembly, ressource); //on recupere l'image sous forme de stream
-            var fileStream = File.Create(destination); //on creer le fichier
+            using var fileStream = File.Create(destination); //on creer le fichier
             memStream.CopyTo(fileStream); //on copy les données
-            fileStream.Close(); //on ferme
         }
         private MemoryStream ExctractImageFromDll(Assembly assembly, string nomFichier)
         {

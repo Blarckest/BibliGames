@@ -22,34 +22,32 @@ namespace Persistance
             XDocument fichier = new XDocument();
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true; //on active l'indentage du fichier
-            TextWriter textWriter = File.CreateText($"{Folder}/BibliGames.xml");
-            XmlWriter writer = XmlWriter.Create(textWriter, settings);
+            using TextWriter textWriter = File.CreateText($"{Folder}/BibliGames.xml");
+            using XmlWriter writer = XmlWriter.Create(textWriter, settings);
 
             var launchers = new XElement("Launchers",elements.Where(e => e.GetType() == typeof(Launcher)) //sauvegarde des launchers
                                     .Select(e => e as Launcher)
                                     .Select(e => new XElement("Launcher",
-                                    new XAttribute("Nom", e.Nom),               
+                                    new XAttribute("Nom", e.Nom ?? ""),               
                                     new XAttribute("NbJeux", e.NbJeux))));
 
             var jeux = new XElement("Jeux",elements.Where(e => e.GetType() == typeof(Jeu)) //sauvegarde des jeux
                              .Select(e => e as Jeu)
                              .Select(e => new XElement("Jeu",
-                             new XAttribute("Nom", e.Nom),
-                             new XAttribute("Dossier", e.Dossier),
-                             new XAttribute("Exec", e.Exec),
-                             new XAttribute("Launcher", e.Launcher.ToString()),
-                             new XAttribute("Description", e.Description),
-                             new XAttribute("Note", e.Note),
-                             new XAttribute("Image", e.Image),
-                             new XAttribute("Icone", e.Icone),
+                             new XAttribute("Nom", e.Nom ?? ""),
+                             new XAttribute("Dossier", e.Dossier ?? ""),
+                             new XAttribute("Exec", e.Exec ?? ""),
+                             new XAttribute("Launcher", e.Launcher.ToString() ?? ""),
+                             new XAttribute("Description", e.Description ?? ""),
+                             new XAttribute("Note", e.Note ?? ""),
+                             new XAttribute("Image", e.Image ?? ""),
+                             new XAttribute("Icone", e.Icone ?? ""),
                              new XAttribute("IsManuallyAdded",e.IsManuallyAdded))));
 
-            var dossiersSupp = new XElement("DossiersSupp", additionalFolder.Select(d=>new XElement("Dossier",new XAttribute("Nom",d)))); //sauvegarde des dossiers supplementaires
+            var dossiersSupp = new XElement("DossiersSupp", additionalFolder.Select(d=>new XElement("Dossier",new XAttribute("Nom", d ?? "")))); //sauvegarde des dossiers supplementaires
 
             fichier.Add(new XElement("BibliGames", launchers, jeux, dossiersSupp));           
             fichier.Save(writer); //on ecrit
-            writer.Close();
-            textWriter.Close();
 
             Logs.InfoLog("Sauvegarde des données");
         }

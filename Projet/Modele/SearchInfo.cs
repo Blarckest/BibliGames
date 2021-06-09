@@ -97,11 +97,10 @@ namespace Modele
             request.ContentLength = postsourcedata.Length;  //parametre de la requete
 
 
-            Stream writeStream = request.GetRequestStream(); //recuperation du flux
+            using Stream writeStream = request.GetRequestStream(); //recuperation du flux
             Encoding encoding = new UTF8Encoding();
             byte[] bytes = encoding.GetBytes(postsourcedata);
             writeStream.Write(bytes, 0, bytes.Length); //envoie
-            writeStream.Close();
             WebResponse response = request.GetResponse(); //recup de la reponse
             Stream responseStream = response.GetResponseStream();
             StreamReader readStream = new StreamReader(responseStream, Encoding.UTF8); //extraction de la reponse
@@ -184,9 +183,8 @@ namespace Modele
                 Regex reg = new Regex("<.?.?..?>");
                 texte = reg.Replace(texte, string.Empty); //on supp toutes les balise de paragraphes et break
                 texte = Translate(texte);
-                StreamWriter fichier = new StreamWriter(@$".\Ressources\Infojeux\{GetFolderName(jeu)}\text.txt");
+                using StreamWriter fichier = new StreamWriter(@$".\Ressources\Infojeux\{GetFolderName(jeu)}\text.txt");
                 fichier.WriteLine(texte);
-                fichier.Close();
                 return texte;
             }
             catch (Exception)
