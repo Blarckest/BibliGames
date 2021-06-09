@@ -13,7 +13,7 @@ namespace Stub
         {
             List<Element> elements = new List<Element>();
             List<Jeu> games = new List<Jeu>();
-            string[] pathToTest = { "../../../../../Test" }; //on va au dossier de test
+            string[] pathToTest = { "./Test" }; //on va au dossier de test
 
             games = new OtherSearcher(pathToTest).Jeux;//on charge
 

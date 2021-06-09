@@ -19,6 +19,72 @@
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_0C3E2315F9D04D1084F8A3CE1C7AEAC9"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_0D7C5B56CFAB43F2AB1350C42DB1C2AB"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_43F4270AC49F480090E1934F9FEAB7F5"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_51360E431FC4461BA951A1C6561C5948"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_5C197B6482E14901B60238477A6184EE"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B1448FF739C84E35B5189060E970B9C5"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BA76647C37AA486BAD59D0D32CA870A1"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C972B7D61D6B4837B0B474B71B68BBA4"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DAC3347C14FE4D01A0C7B84BFABF9689"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DF336F5C957A4ECBA66EAD57181352EE"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F4ED1C6EB5684230BA901336BCC36133"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -126,6 +192,226 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0C3E2315F9D04D1084F8A3CE1C7AEAC9"
+            {
+            "SourcePath" = "8:..\\..\\Test\\MudRunner\\MudRunner.exe"
+            "TargetName" = "8:MudRunner.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_4C6A6DBEBE14455DBF8F23C5DC4A5CC0"
+            "Condition" = "8:TYPEUTILISATEUR=\"PROF\""
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:FALSE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0D7C5B56CFAB43F2AB1350C42DB1C2AB"
+            {
+            "SourcePath" = "8:..\\..\\Test\\Portal 2\\portal2.exe"
+            "TargetName" = "8:portal2.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_7F6B135191C546E58D56DDD241C6F907"
+            "Condition" = "8:TYPEUTILISATEUR=\"PROF\""
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:FALSE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_43F4270AC49F480090E1934F9FEAB7F5"
+            {
+            "SourcePath" = "8:..\\..\\Test\\PAYDAY 2\\payday2_win32_release.exe"
+            "TargetName" = "8:payday2_win32_release.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_5EF675CDC77E4AD2AEBB3B946B15F0E2"
+            "Condition" = "8:TYPEUTILISATEUR=\"PROF\""
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:FALSE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_51360E431FC4461BA951A1C6561C5948"
+            {
+            "SourcePath" = "8:..\\..\\Test\\Hob\\HOB.exe"
+            "TargetName" = "8:HOB.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_11D119F24B1C428D9F7D802407FC652F"
+            "Condition" = "8:TYPEUTILISATEUR=\"PROF\""
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:FALSE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5C197B6482E14901B60238477A6184EE"
+            {
+            "SourcePath" = "8:..\\..\\Test\\Path of Exile\\PathOfExileSteam.exe"
+            "TargetName" = "8:PathOfExileSteam.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_33EA99FF1D034D34B77C06C07AAB15FB"
+            "Condition" = "8:TYPEUTILISATEUR=\"PROF\""
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:FALSE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B1448FF739C84E35B5189060E970B9C5"
+            {
+            "SourcePath" = "8:..\\..\\Test\\PlanetSide 2\\PlanetSide2_x64.exe"
+            "TargetName" = "8:PlanetSide2_x64.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_3FB8D4F4DB5E4B538B20619D9A15B1A0"
+            "Condition" = "8:TYPEUTILISATEUR=\"PROF\""
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:FALSE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BA76647C37AA486BAD59D0D32CA870A1"
+            {
+            "SourcePath" = "8:..\\..\\Test\\Aim Lab\\AimLab_tb.exe"
+            "TargetName" = "8:AimLab_tb.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_3B558614922D47E3B663233B251117EF"
+            "Condition" = "8:TYPEUTILISATEUR=\"PROF\""
+            "Transitive" = "11:TRUE"
+            "Vital" = "11:FALSE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C972B7D61D6B4837B0B474B71B68BBA4"
+            {
+            "SourcePath" = "8:..\\..\\Test\\Dauntless\\Dauntless.exe"
+            "TargetName" = "8:Dauntless.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_4572B61C129842068484AFF43442677B"
+            "Condition" = "8:TYPEUTILISATEUR=\"PROF\""
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:FALSE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DAC3347C14FE4D01A0C7B84BFABF9689"
+            {
+            "SourcePath" = "8:..\\..\\Test\\BusinessTour -- Multiplayer Board Game\\BusinessTour.exe"
+            "TargetName" = "8:BusinessTour.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_16056C49CAE0450A86D2FA4F6545C161"
+            "Condition" = "8:TYPEUTILISATEUR=\"PROF\""
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:FALSE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DF336F5C957A4ECBA66EAD57181352EE"
+            {
+            "SourcePath" = "8:..\\..\\Test\\Among Us\\Among Us.exe"
+            "TargetName" = "8:Among Us.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_D430A42D89FC4C25A4A2C1F1CEEA337B"
+            "Condition" = "8:TYPEUTILISATEUR=\"PROF\""
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:FALSE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F4ED1C6EB5684230BA901336BCC36133"
+            {
+            "SourcePath" = "8:..\\..\\Test\\F1 2018\\F1_2018.exe"
+            "TargetName" = "8:F1_2018.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_825B2633780D43DABE9FC5E3173B7D1A"
+            "Condition" = "8:TYPEUTILISATEUR=\"PROF\""
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:FALSE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -142,6 +428,138 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_BF3FFC9A04BE46A99BDC92213924CF77"
+                    {
+                    "Name" = "8:Test"
+                    "AlwaysCreate" = "11:TRUE"
+                    "Condition" = "8:TYPEUTILISATEUR=\"PROF\""
+                    "Transitive" = "11:TRUE"
+                    "Property" = "8:_E6AB109D95804010B960126FEA45C4D2"
+                        "Folders"
+                        {
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_11D119F24B1C428D9F7D802407FC652F"
+                            {
+                            "Name" = "8:Hob"
+                            "AlwaysCreate" = "11:TRUE"
+                            "Condition" = "8:TYPEUTILISATEUR=\"PROF\""
+                            "Transitive" = "11:TRUE"
+                            "Property" = "8:_6B73E7E559314963A4FA6B6685BF524B"
+                                "Folders"
+                                {
+                                }
+                            }
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_16056C49CAE0450A86D2FA4F6545C161"
+                            {
+                            "Name" = "8:BusinessTour -- Multiplayer Board Game"
+                            "AlwaysCreate" = "11:TRUE"
+                            "Condition" = "8:TYPEUTILISATEUR=\"PROF\""
+                            "Transitive" = "11:TRUE"
+                            "Property" = "8:_CAB8F49FDC544BD28A8CF2E5D1D66F7B"
+                                "Folders"
+                                {
+                                }
+                            }
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_33EA99FF1D034D34B77C06C07AAB15FB"
+                            {
+                            "Name" = "8:Path of Exile"
+                            "AlwaysCreate" = "11:TRUE"
+                            "Condition" = "8:TYPEUTILISATEUR=\"PROF\""
+                            "Transitive" = "11:TRUE"
+                            "Property" = "8:_B70BE7C4E7DF4D5E8C0573DDC234E2CE"
+                                "Folders"
+                                {
+                                }
+                            }
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_3B558614922D47E3B663233B251117EF"
+                            {
+                            "Name" = "8:Aim Lab"
+                            "AlwaysCreate" = "11:TRUE"
+                            "Condition" = "8:TYPEUTILISATEUR=\"PROF\""
+                            "Transitive" = "11:TRUE"
+                            "Property" = "8:_7053980F355B43CBAD67F286FCBF2A5D"
+                                "Folders"
+                                {
+                                }
+                            }
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_3FB8D4F4DB5E4B538B20619D9A15B1A0"
+                            {
+                            "Name" = "8:PlanetSide 2"
+                            "AlwaysCreate" = "11:TRUE"
+                            "Condition" = "8:TYPEUTILISATEUR=\"PROF\""
+                            "Transitive" = "11:TRUE"
+                            "Property" = "8:_C163A88E3FB2495F8E3AD8CDDB3C4D1E"
+                                "Folders"
+                                {
+                                }
+                            }
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_4572B61C129842068484AFF43442677B"
+                            {
+                            "Name" = "8:Dauntless"
+                            "AlwaysCreate" = "11:TRUE"
+                            "Condition" = "8:TYPEUTILISATEUR=\"PROF\""
+                            "Transitive" = "11:TRUE"
+                            "Property" = "8:_905F26312D4B4B18B96BA1F12524B19C"
+                                "Folders"
+                                {
+                                }
+                            }
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_4C6A6DBEBE14455DBF8F23C5DC4A5CC0"
+                            {
+                            "Name" = "8:MudRunner"
+                            "AlwaysCreate" = "11:TRUE"
+                            "Condition" = "8:TYPEUTILISATEUR=\"PROF\""
+                            "Transitive" = "11:TRUE"
+                            "Property" = "8:_E9C5B961E35E439D9140220E1C507A05"
+                                "Folders"
+                                {
+                                }
+                            }
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_5EF675CDC77E4AD2AEBB3B946B15F0E2"
+                            {
+                            "Name" = "8:PAYDAY 2"
+                            "AlwaysCreate" = "11:TRUE"
+                            "Condition" = "8:TYPEUTILISATEUR=\"PROF\""
+                            "Transitive" = "11:TRUE"
+                            "Property" = "8:_A5FF6289AA954E678F40DBE14E689C56"
+                                "Folders"
+                                {
+                                }
+                            }
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_7F6B135191C546E58D56DDD241C6F907"
+                            {
+                            "Name" = "8:Portal 2"
+                            "AlwaysCreate" = "11:TRUE"
+                            "Condition" = "8:TYPEUTILISATEUR=\"PROF\""
+                            "Transitive" = "11:TRUE"
+                            "Property" = "8:_1CF898090B14421B8F5E82A19F864C2A"
+                                "Folders"
+                                {
+                                }
+                            }
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_825B2633780D43DABE9FC5E3173B7D1A"
+                            {
+                            "Name" = "8:F1 2018"
+                            "AlwaysCreate" = "11:TRUE"
+                            "Condition" = "8:TYPEUTILISATEUR=\"PROF\""
+                            "Transitive" = "11:TRUE"
+                            "Property" = "8:_6E74BCD9D1F14440A01FBB65756D855F"
+                                "Folders"
+                                {
+                                }
+                            }
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_D430A42D89FC4C25A4A2C1F1CEEA337B"
+                            {
+                            "Name" = "8:Among Us"
+                            "AlwaysCreate" = "11:TRUE"
+                            "Condition" = "8:TYPEUTILISATEUR=\"PROF\""
+                            "Transitive" = "11:TRUE"
+                            "Property" = "8:_22E6457AB54545AEBD6CFFB09CC88C77"
+                                "Folders"
+                                {
+                                }
+                            }
+                        }
+                    }
                 }
             }
             "{1525181F-901A-416C-8A58-119130FE478E}:_4D8FE0D87C184D57B8D77E3D2A880B5E"
@@ -183,7 +601,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:BibliGames"
         "ProductCode" = "8:{E301912A-6AF4-4BE0-B6B6-36D73EA9B25A}"
-        "PackageCode" = "8:{8559B8E4-7BB2-4C40-88BA-0D64315FC547}"
+        "PackageCode" = "8:{3F174BB4-C21B-425D-9A14-F635C1874613}"
         "UpgradeCode" = "8:{C7A532A9-5808-40B1-BC1F-16BB25E01D16}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -616,6 +1034,132 @@
                             "Setting" = "3:1"
                             "Value" = "8:#1203"
                             "DefaultValue" = "8:#1203"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_CC6B3A537A494E1D85CFC854C6428320"
+                    {
+                    "Sequence" = "3:110"
+                    "DisplayName" = "8:RadioButtons   (2 buttons)"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdCustom2ButtonDlg.wid"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "BannerText"
+                            {
+                            "Name" = "8:BannerText"
+                            "DisplayName" = "8:#1014"
+                            "Description" = "8:#1114"
+                            "Type" = "3:3"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:Type d'utilisateur"
+                            "DefaultValue" = "8:#1214"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "BodyText"
+                            {
+                            "Name" = "8:BodyText"
+                            "DisplayName" = "8:#1015"
+                            "Description" = "8:#1115"
+                            "Type" = "3:3"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:Veuillez choisir votre type d'utilisateur"
+                            "DefaultValue" = "8:#1215"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Button1Label"
+                            {
+                            "Name" = "8:Button1Label"
+                            "DisplayName" = "8:#1022"
+                            "Description" = "8:#1122"
+                            "Type" = "3:3"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:Professeur"
+                            "DefaultValue" = "8:#1222"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Button1Value"
+                            {
+                            "Name" = "8:Button1Value"
+                            "DisplayName" = "8:#1018"
+                            "Description" = "8:#1118"
+                            "Type" = "3:3"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:PROF"
+                            "DefaultValue" = "8:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Button2Label"
+                            {
+                            "Name" = "8:Button2Label"
+                            "DisplayName" = "8:#1023"
+                            "Description" = "8:#1123"
+                            "Type" = "3:3"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:Autres"
+                            "DefaultValue" = "8:#1223"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Button2Value"
+                            {
+                            "Name" = "8:Button2Value"
+                            "DisplayName" = "8:#1019"
+                            "Description" = "8:#1119"
+                            "Type" = "3:3"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:AUTRES"
+                            "DefaultValue" = "8:2"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "ButtonProperty"
+                            {
+                            "Name" = "8:ButtonProperty"
+                            "DisplayName" = "8:#1017"
+                            "Description" = "8:#1117"
+                            "Type" = "3:14"
+                            "ContextData" = "8:Public"
+                            "Attributes" = "3:2"
+                            "Setting" = "3:2"
+                            "Value" = "8:TYPEUTILISATEUR"
+                            "DefaultValue" = "8:BUTTON2"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "DefaultValue"
+                            {
+                            "Name" = "8:DefaultValue"
+                            "DisplayName" = "8:#1016"
+                            "Description" = "8:#1116"
+                            "Type" = "3:3"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:AUTRES"
+                            "DefaultValue" = "8:1"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }

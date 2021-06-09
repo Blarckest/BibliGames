@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Modele\Modele.csproj" />
+    <ProjectReference Include="..\Persistance\Persistance.csproj" />
+    <ProjectReference Include="..\Stub\Stub.csproj" />
   </ItemGroup>
 
 </Project>

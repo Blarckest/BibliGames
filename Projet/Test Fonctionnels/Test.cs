@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Persistance;
 using Modele;
+using Stub;
 
 namespace Test_Fonctionnels
 {
@@ -15,16 +16,16 @@ namespace Test_Fonctionnels
             }
         }
 
-        public static void TestStub()
+        public static IPersistance TestStub()
         {
-            Loader loader = new LoadElements("");
+            return new Stub.Stub();
         }
 
         public static void TestGameDirectory()
         {
             TestStub();
             List<string> path = new List<string>();
-            path.Add("../../../../../Test");
+            path.Add("./Test");
             List<string> dossiers = new List<string>();
              List <GameSearcher> searchers = new List<GameSearcher> 
              {
@@ -68,50 +69,22 @@ namespace Test_Fonctionnels
             }
         }
 
-        private static void TestSave()
+        private static void TestLoadAndSave()
         {
-            const string path = "./Ressource/sauvegarde";
-            Saver save = new SaveElements(path);
-            Loader loader = new LoadElements(path);
-            var manager = new Manager(loader.Load());
-            IList<string> add = new List<string>();
-            add.Add("zefzqf");
-            save.Save(manager.Data.Elements, add);
-        }
-
-        private static void TestLoad()
-        {
-            const string path = "./Ressource/sauvegarde";
-            Loader loader = new LoadElements(path);
-            Manager manager = new Manager(loader.Load());
+            Modele.Manager manager = new Manager(new Persistance.Persistance());//load
             TestAfficherElements(manager);
-        }
-
-        private static void TestLoadAfficheSave(Loader loader=null)
-        {
-            if (loader==null)
-            {
-                loader = new LoadElements("./Ressources/sauvegarde");
-            }
-            Manager manager = new Manager(loader.Load());
-            if (manager.Affichage.Count==0)
-            {
-                manager.AjoutJeu(new Jeu("Riot1", "", "Valorant.exe", LauncherName.Riot));
-                manager.AjoutJeu(new Jeu("Riot2", "", "Valorant.exe", LauncherName.Riot));
-                manager.AjoutJeu(new Jeu("Steam1", "", "Valorant.exe", LauncherName.Steam));
-                manager.AjoutJeu(new Jeu("EG1", "", "Valorant.exe", LauncherName.EpicGames));
-            }
+            manager.AjoutJeu(new Jeu("Valorant", "dossier", "Valorant.exe", "image", "icone", "note", "description", LauncherName.Riot));
             TestAfficherElements(manager);
-            Saver saver = new SaveElements("./Ressources/sauvegarde");
-            saver.Save(manager.Data);
+            manager.Save();
+            manager = new Manager(new Persistance.Persistance());//load
+            TestAfficherElements(manager);
         }
 
         static void Main(string[] args)
         {
             //TestExecutable();
-            //TestSave();
-            //TestLoad();
-            TestLoadAfficheSave();
+            //TestGameDirectory();
+            //TestLoadAndSave();
         }
     }
 }

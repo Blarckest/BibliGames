@@ -38,4 +38,8 @@
     <SplashScreen Include="SplashScreen\Ecran_app.png" />
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="::decommenter les 2 lignes si besoin&#xD;&#xA;::MKDIR $(TargetDir)Test&#xD;&#xA;::XCOPY &quot;$(SolutionDir)Test&quot; &quot;$(TargetDir)Test&quot; /S /Y" />
+  </Target>
+
 </Project>
