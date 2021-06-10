@@ -30,7 +30,7 @@ namespace Persistance
             List<Element> elements = new List<Element>();
 
 
-            if (needRecupGames || IsSaveOk(searchers, games))//si on a besoin de recuperer les jeux
+            if (needRecupGames || !IsSaveOk(searchers, games))//si on a besoin de recuperer les jeux
             {
                 List<Jeu> gamesFound = new List<Jeu>();
                 foreach (var searcher in searchers)//get les jeux
@@ -138,7 +138,7 @@ namespace Persistance
                 directoryDetected.AddRange(dossierJeuxManuallyAdded); //on ajoute les dossiers des jeux ajoutés a la main
             }
 
-            if (!games.All(j => directoryDetected.Contains(j.Dossier))) //on regarde si chaque jeu a son dossier dans les dossiers trouvés
+            if (games.All(j => directoryDetected.Contains(j.Dossier))) //on regarde si chaque jeu a son dossier dans les dossiers trouvés
             {
                 return true;
             }
