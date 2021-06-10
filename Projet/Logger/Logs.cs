@@ -69,9 +69,12 @@ namespace Logger
             string fichier = dossier + "/FichierDeLogs.txt";
             if (File.Exists(fichier))
             {
-                using StreamReader sr = new StreamReader($"{dossier}/FichierDeLogs.txt");
-                string line = sr.ReadLine();
-                line = line.Substring(0, 10);
+                string line;
+                using (StreamReader sr = new StreamReader($"{dossier}/FichierDeLogs.txt"))
+                {
+                    line = sr.ReadLine();
+                    line = line.Substring(0, 10);
+                }
                 DateTime date = DateTime.Today;
                 if (line != date.ToString("d"))
                 {

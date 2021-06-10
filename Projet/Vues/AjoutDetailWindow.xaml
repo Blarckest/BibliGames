@@ -27,20 +27,20 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.ColumnSpan="2" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
-            <TextBlock Text="Lien vers l'exec. : " VerticalAlignment="Center" Width="110" HorizontalAlignment="Left"/>
-            <TextBox x:Name="textBoxLienExecutable" Width="500" VerticalAlignment="Center" Text="{Binding Executable}"/>
-            <Image Margin="5" Source="/Icones;Component/parcourir.png" Width="30" MouseLeftButtonDown="ChercherExec"/>
+        <StackPanel Grid.ColumnSpan="2" Grid.Row="0" Style="{StaticResource SPNomValueExplorer}">
+            <TextBlock Text="Lien vers l'exec. : "/>
+            <TextBox x:Name="textBoxLienExecutable" Text="{Binding Executable}"/>
+            <Image MouseLeftButtonDown="ChercherExec"/>
         </StackPanel>
-        <StackPanel Grid.ColumnSpan="2" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <TextBlock Text="Lien vers l'icone : " VerticalAlignment="Center" Width="110" HorizontalAlignment="Left"/>
-            <TextBox x:Name="textBoxLienIcone" Width="500" VerticalAlignment="Center" Text="{Binding Icone}"/>
-            <Image Margin="5" Source="/Icones;Component/parcourir.png" Width="30" MouseLeftButtonDown="ChercherIcone"/>
+        <StackPanel Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource SPNomValueExplorer}">
+            <TextBlock Text="Lien vers l'icone : "/>
+            <TextBox x:Name="textBoxLienIcone" Text="{Binding Icone}"/>
+            <Image MouseLeftButtonDown="ChercherIcone"/>
         </StackPanel>
-        <StackPanel Grid.ColumnSpan="2" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,13">
-            <TextBlock Text="Lien vers l'image: " VerticalAlignment="Center" Width="110" HorizontalAlignment="Left"/>
-            <TextBox x:Name="textBoxLienImage" Width="500" VerticalAlignment="Center" Text="{Binding Image}"/>
-            <Image Margin="5" Source="/Icones;Component/parcourir.png" Width="30" MouseLeftButtonDown="ChercherImage"/>
+        <StackPanel Grid.ColumnSpan="2" Grid.Row="2" Style="{StaticResource SPNomValueExplorer}" Margin="0,0,0,13">
+            <TextBlock Text="Lien vers l'image: "/>
+            <TextBox x:Name="textBoxLienImage" Text="{Binding Image}"/>
+            <Image MouseLeftButtonDown="ChercherImage"/>
         </StackPanel>
         <StackPanel Grid.ColumnSpan="2" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Text="Description: "/>
@@ -49,9 +49,7 @@
                      materialDesign:TextFieldAssist.HasOutlinedTextField="True" 
                      materialDesign:TextFieldAssist.TextFieldCornerRadius="5"/>
         </StackPanel>
-        <Button Grid.Row="4" Content="Enregistrer" HorizontalAlignment="Center"
-                VerticalAlignment="Top" Margin="5,10,5,5" Click="Valider"/>
-        <Button Grid.Row="4" Grid.Column="1" Content="Retour" HorizontalAlignment="Center"
-                VerticalAlignment="Top" Margin="5,10,5,5" Click="Annuler"/>
+        <Button Grid.Row="4" Content="Enregistrer" Style="{StaticResource BoutonValideAnnule}" Margin="5,10,5,5" Click="Valider"/>
+        <Button Grid.Row="4" Grid.Column="1" Content="Retour" Style="{StaticResource BoutonValideAnnule}" Margin="5,10,5,5" Click="Annuler"/>
     </Grid>
 </Window>

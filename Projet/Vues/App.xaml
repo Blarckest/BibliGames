@@ -4,17 +4,40 @@
              xmlns:local="clr-namespace:Vues"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              StartupUri="MainWindow.xaml">
+
+    <!--<Button Grid.Row="4" Content="Enregistrer" HorizontalAlignment="Center"
+                VerticalAlignment="Top" Margin="5,10,5,5" Click="Valider"/>-->
     <Application.Resources>
-        <!--<SolidColorBrush x:Key="BackgroundColorDarkTheme">#24282F</SolidColorBrush>
-        <SolidColorBrush x:Key="TextColorDarkTheme">#C5CBD8</SolidColorBrush>
-        <Style TargetType="Panel" x:Key="BlackTheme">
-            <Setter Property="Background" Value="{StaticResource BackgroundColorDarkTheme}"/>
-        </Style>-->
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <materialDesign:BundledTheme BaseTheme="Dark" PrimaryColor="LightBlue"  SecondaryColor="Purple" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="SPNomValueExplorer" TargetType="StackPanel">
+                <Style.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                        <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+                        <Setter Property="Width" Value="110"></Setter>
+                    </Style>
+                    <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBoxBase}">
+                        <Setter Property="Width" Value="500"></Setter>
+                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                    </Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Margin" Value="5"></Setter>
+                        <Setter Property="Width" Value="30"></Setter>
+                        <Setter Property="Source" Value="/Icones;Component/parcourir.png"></Setter>
+                    </Style>
+                </Style.Resources>
+                <Setter Property="Orientation" Value="Horizontal"></Setter>
+                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+            </Style>
+            <Style x:Key="BoutonValideAnnule" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                <Setter Property="VerticalAlignment" Value="top"></Setter>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
