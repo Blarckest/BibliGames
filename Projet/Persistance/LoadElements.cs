@@ -36,7 +36,7 @@ namespace Persistance
             if (needRecupGames || !IsSaveOk(searchers,games))//si on a besoin de recuperer les jeux
             {
                 List<Jeu> gamesFound = new List<Jeu>();
-                foreach (var searcher in searchers)//get les directory
+                foreach (var searcher in searchers)//get les jeux
                 {
                     gamesFound.AddRange(searcher.Jeux);
                 }

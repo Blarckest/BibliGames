@@ -14,44 +14,52 @@ namespace Modele
         private readonly IList<string> listSteamApps = new List<string>();
         protected override void GetGames()
         {
-            jeux = new List<Jeu>();
-            string nom = "";
-            string folderName = "";
-            foreach (string pathToSteamApps in listSteamApps) //on parcours les steamapps
+            if (dossiers != null)
             {
-                string[] allFiles = Directory.GetFiles(pathToSteamApps, "*.acf"); //ce dossier contient tout les fichiers de config de tout les jeux
-                foreach (string file in allFiles)
+                jeux = new List<Jeu>();
+                string nom = "";
+                string folderName = "";
+                foreach (string pathToSteamApps in listSteamApps) //on parcours les steamapps
                 {
-                    if (File.Exists(file))
+                    string[] allFiles = Directory.GetFiles(pathToSteamApps, "*.acf"); //ce dossier contient tout les fichiers de config de tout les jeux
+                    foreach (string file in allFiles)
                     {
-                        string[] lines = File.ReadAllLines(file);
-                        foreach (string line in lines) //parcour du fichier
+                        if (File.Exists(file))
                         {
-                            if (line.Contains("name")) //recuperation du nom
+                            string[] lines = File.ReadAllLines(file);
+                            foreach (string line in lines) //parcour du fichier
                             {
-                                nom = line.Substring(10);
-                                nom = nom.Replace("\"", "");
+                                if (line.Contains("name")) //recuperation du nom
+                                {
+                                    nom = line.Substring(10);
+                                    nom = nom.Replace("\"", "");
+                                }
+                                else if (line.Contains("installdir")) //recuperation du dossier
+                                {
+                                    folderName = line.Substring(16);
+                                    folderName = folderName.Replace("\"", "");
+                                    folderName = $"{pathToSteamApps}{@"common\"}{folderName}";
+                                    break;
+                                }
                             }
-                            else if (line.Contains("installdir")) //recuperation du dossier
+                            if (nom != "Steamworks Common Redistributables") //Ce dossier n'est pas un jeu
                             {
-                                folderName = line.Substring(16);
-                                folderName = folderName.Replace("\"", "");
-                                folderName = $"{pathToSteamApps}{@"common\"}{folderName}";
-                                break;
-                            }
-                        }
-                        if (nom != "Steamworks Common Redistributables") //Ce dossier n'est pas un jeu
-                        {
-                            Jeu jeu = SearchForExecutables(folderName, LauncherName.Steam);
-                            jeu.Nom = nom;
-                            jeux.Add(jeu);
-                            Logs.InfoLog($"Ajout du jeu {nom}");
+                                Jeu jeu = SearchForExecutables(folderName, LauncherName.Steam);
+                                jeu.Nom = nom;
+                                jeux.Add(jeu);
+                                Logs.InfoLog($"Ajout du jeu {nom}");
 
+                            }
                         }
                     }
                 }
+                jeux.Sort();
             }
-            jeux.Sort();
+            else
+            {
+                GetGamesDirectory(); //si la fonction a jamais ete execute on l'execute
+                GetGames(); //on revient a la fonction actuel avec cette fois un dossiers non null
+            }
         }
 
         protected override void GetGamesDirectory()

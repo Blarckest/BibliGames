@@ -39,16 +39,14 @@
         <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Text="Luncher associé: " VerticalAlignment="Center"/>
             <ComboBox x:Name="ListeLuncher" Width="570" ItemsSource="{Binding Source={StaticResource LauncherName}}"/>
-            <!--liste des luncher via data binding-->
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource SPNomValueExplorer}" Margin="0,10,0,7">
-            <TextBlock Text="Lien vers l'executable: " Width="auto"/>
+            <TextBlock Text="Lien vers l'executable:" Width="auto"/>
             <TextBox x:Name="textBoxLienExe"/>
             <Image MouseLeftButtonDown="ChercherExecutable"/>
         </StackPanel>
         
-        <Button Grid.Row="2"  Content="Enregistrer" Style="{StaticResource BoutonValideAnnule}" Click="Valider"/>
-        
+        <Button Grid.Row="2"  Content="Enregistrer" Style="{StaticResource BoutonValideAnnule}" Click="Valider"/>        
         <Button Grid.Row="2" Grid.Column="1" Content="Retour" Style="{StaticResource BoutonValideAnnule}" Click="Annuler"/>
     </Grid>
 </Window>
