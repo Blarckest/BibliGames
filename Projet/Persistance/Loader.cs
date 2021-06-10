@@ -1,6 +1,4 @@
 ﻿using Modele;
-using System;
-using System.Collections.Generic;
 
 namespace Persistance
 {

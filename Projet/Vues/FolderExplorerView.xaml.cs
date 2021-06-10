@@ -1,19 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
+﻿using FolderExplorer;
 using System.Windows;
-using System.IO;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using Microsoft.Win32;
-using System.Linq;
-using FolderExplorer;
 
 namespace Vues
 {
@@ -23,7 +11,7 @@ namespace Vues
     public partial class FolderExplorerView : Window
     {
         public string DossierSelectionner { get; private set; }
-        private FolderExplorer.FolderExplorer FolderExplorer { get; } = new FolderExplorer.FolderExplorer(); 
+        private FolderExplorer.FolderExplorer FolderExplorer { get; } = new FolderExplorer.FolderExplorer();
         public FolderExplorerView()
         {
 
@@ -51,7 +39,7 @@ namespace Vues
             }
             FolderExplorer.SearchActivated = true;
         }
-       
+
         private void Annuler(object sender, RoutedEventArgs e) //appeller lors du clic sur le bouton annuler
         {
             DossierSelectionner = null; //met retour a null
@@ -60,7 +48,7 @@ namespace Vues
 
         private void Selectionner(object sender, RoutedEventArgs e) //appeller lors du clic sur le bouton selectionner
         {
-            if (VueDesDossiers.SelectedItem!=null) //on ferme uniquement si un dossier a été selectionner
+            if (VueDesDossiers.SelectedItem != null) //on ferme uniquement si un dossier a été selectionner
             {
                 DossierSelectionner = FolderExplorer.GetRepertoireChoisi((LigneExplorateur)VueDesDossiers.SelectedItem);
                 this.Close();
@@ -81,7 +69,7 @@ namespace Vues
         {
             FolderExplorer.Remonter();
         }
-        
+
         private void TextBoxChemin_TouchEnterPressed(object sender, KeyEventArgs e) //la textbox a ete modifier cette fonction sert a voir si on peux aller a l'endroit demander
         {
             if (e.Key == Key.Return)

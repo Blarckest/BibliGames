@@ -1,12 +1,4 @@
-﻿using Persistance;
-using Logger;
-using Modele;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Resources;
-using System.Text;
+﻿using Modele;
 using System.Windows.Controls;
 
 namespace Vues

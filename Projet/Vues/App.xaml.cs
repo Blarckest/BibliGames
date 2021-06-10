@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Modele;
 using System.Windows;
-using Modele;
-using Persistance;
 
 namespace Vues
 {

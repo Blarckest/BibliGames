@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Modele;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using Modele;
 
 namespace Vues
 {
@@ -20,7 +11,7 @@ namespace Vues
     /// </summary>
     public partial class AjoutDetailWindow : Window, INotifyPropertyChanged
     {
-        private Jeu Jeu{ get; }
+        private Jeu Jeu { get; }
         private string executable;
         private string image;
         private string icone;
@@ -98,8 +89,8 @@ namespace Vues
             }
         }
 
-            private void ChercherExec(object sender, MouseButtonEventArgs e)
-            {
+        private void ChercherExec(object sender, MouseButtonEventArgs e)
+        {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.InitialDirectory = "C:\\";
             dlg.Multiselect = false;

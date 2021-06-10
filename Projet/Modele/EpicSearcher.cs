@@ -1,11 +1,8 @@
-﻿using Logger;
-using Microsoft.Win32;
-using System;
+﻿using Microsoft.Win32;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Modele
 {
@@ -13,15 +10,15 @@ namespace Modele
     {
         protected override void GetGames()
         {
-            if (dossiers!=null)
+            if (dossiers != null)
             {
-                if (jeux==null)
+                if (jeux == null)
                 {
                     jeux = new List<Jeu>();
                 }
                 foreach (var jeu in jeux)
                 {
-                    if (jeu.Exec==null)
+                    if (jeu.Exec == null)
                     {
                         string[] nomExecutables = Directory.GetFiles(jeu.Dossier, "*.exe", SearchOption.AllDirectories); //recup tout les .exe dans tout les sous-dossier
                         jeu.Exec = Filter(nomExecutables, jeu.Nom); //filtrage

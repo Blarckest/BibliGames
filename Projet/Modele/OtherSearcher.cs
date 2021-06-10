@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace Modele
 {
@@ -10,7 +9,7 @@ namespace Modele
         private IEnumerable<string> Paths { get; set; }
         public OtherSearcher(IEnumerable<string> paths)
         {
-            if (paths!=null)
+            if (paths != null)
             {
                 Paths = paths;
             }
@@ -24,7 +23,7 @@ namespace Modele
         {
             if (path != null)
             {
-                Paths = new List<string>(new List<string> { path } );
+                Paths = new List<string>(new List<string> { path });
             }
             else
             {
@@ -57,7 +56,7 @@ namespace Modele
                 }
             }
         }
-        
+
         protected override void GetGames()
         {
             if (dossiers != null)

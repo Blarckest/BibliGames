@@ -1,13 +1,10 @@
 ﻿using Logger;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
-using System.Net;
-using System.Threading;
-using System.Text.RegularExpressions;
 using System.Linq;
-using System.Net.Http;
+using System.Net;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Modele
 {
@@ -26,7 +23,7 @@ namespace Modele
 
         internal static void SetInfo(object jeu) //on recoit un objet pour etre en accord avec le deleguate de ParameterizedThreadStart
         {
-            if (jeu.GetType()==typeof(Jeu))
+            if (jeu.GetType() == typeof(Jeu))
             {
                 Jeu jeuRecu = jeu as Jeu;
                 rand = new Random();//on est obligé d'instancier les variables threadStatic dans le constructeur
@@ -42,7 +39,7 @@ namespace Modele
                     else//si la description est vide on va la chercher dans le fichier
                     {
                         jeuRecu.Image = @$".\Ressources\InfoJeux\{GetFolderName(jeuRecu)}\image.jpg";
-                    } 
+                    }
                 }
                 if (string.IsNullOrEmpty(jeuRecu.Icone))
                 {
@@ -53,7 +50,7 @@ namespace Modele
                     else//si la description est vide on va la chercher dans le fichier
                     {
                         jeuRecu.Icone = @$".\Ressources\InfoJeux\{GetFolderName(jeuRecu)}\icon.jpg";
-                    } 
+                    }
                 }
                 if (string.IsNullOrEmpty(jeuRecu.Description))
                 {
@@ -64,21 +61,21 @@ namespace Modele
                     else //si la description est vide on va la chercher dans le fichier
                     {
                         jeuRecu.Description = File.ReadAllText(@$".\Ressources\InfoJeux\{GetFolderName(jeuRecu)}\text.txt");
-                    } 
+                    }
                 }
 
                 if (needImage || needIcone || needDescription)
                 {
                     ExtractGameInfoFromWeb(jeuRecu, needImage, needIcone, needDescription);
                 }
-            } 
+            }
         }
 
         internal static Jeu ExtractGameFromExec(string exec)
         {
             string dossier = Directory.GetParent(exec).FullName;
             string nom = Path.GetFileName(Directory.GetParent(exec).FullName);
-            return new Jeu(nom,dossier,exec);
+            return new Jeu(nom, dossier, exec);
         }
 
         private static string Translate(string original)
@@ -105,14 +102,14 @@ namespace Modele
             Stream responseStream = response.GetResponseStream();
             StreamReader readStream = new StreamReader(responseStream, Encoding.UTF8); //extraction de la reponse
             string page = readStream.ReadToEnd();
-            page = page.Substring(page.IndexOf("text\":\"")+ "text\":\"".Length); //exctraction de la partie qui nous interesse
+            page = page.Substring(page.IndexOf("text\":\"") + "text\":\"".Length); //exctraction de la partie qui nous interesse
             page = page.Substring(0, page.IndexOf("\",\"links\":"));
             page = page.Replace("\\n ", "\n"); //on remet les saut de lignes
             page = page.Replace("\\n", "\n");
             return page;
         }
 
-        private static void ExtractGameInfoFromWeb(Jeu jeu,bool needImage,bool needIcon,bool needDescription)
+        private static void ExtractGameInfoFromWeb(Jeu jeu, bool needImage, bool needIcon, bool needDescription)
         {
             if (GoToGamePage(jeu))
             {
@@ -137,12 +134,12 @@ namespace Modele
                     jeu.Description = ExtractDescription(jeu);
                 }
             }
-            
+
         }
         private static string ReplaceName(Jeu jeu)
         {
             //aller directement a la page du jeux en allant https://www.igdb.com/games/+(jeux en minuscule et espace remplacer par '-' tt les caracteres speciaux sont supprimé)
-            string nom=jeu.Nom;
+            string nom = jeu.Nom;
             nom = nom.ToLower();
             Regex reg = new Regex("[*':\",_&#^@]"); //ces char sont a supp
             nom = reg.Replace(nom, string.Empty);
@@ -232,7 +229,7 @@ namespace Modele
         private static string GetFolderName(Jeu jeu)
         {
             Regex reg = new Regex("[<>:\"“/\\|?*]"); //ces char sont interdit dans un nom de dossier
-            return reg.Replace(jeu.Nom, "");           
+            return reg.Replace(jeu.Nom, "");
         }
 
         private static void CreateFolderStructure(Jeu jeu)

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FolderExplorer
+﻿namespace FolderExplorer
 {
     /// <summary>
     /// contient les informations presentes sur une ligne de l'explorateur a savoir une image et du text

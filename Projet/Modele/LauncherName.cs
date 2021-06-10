@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Modele
+﻿namespace Modele
 {
     public enum LauncherName : byte
     {

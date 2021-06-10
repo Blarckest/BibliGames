@@ -1,16 +1,11 @@
 ﻿using Logger;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using System.Threading;
-using System.Linq;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Collections.Specialized;
-using System.Collections.ObjectModel;
-using System.Windows;
+using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace Modele
 {
@@ -41,7 +36,7 @@ namespace Modele
         {
             get
             {
-                if (ElementSelected!=null)
+                if (ElementSelected != null)
                 {
                     if (ElementSelected.GetType() == typeof(Launcher))
                     {
@@ -50,7 +45,7 @@ namespace Modele
                         Recherche(temp);
                         return temp;
                     }
-                    return new List<Element> { }; 
+                    return new List<Element> { };
                 }
                 return null;
             }
@@ -68,9 +63,9 @@ namespace Modele
             Persistance = persistance;
             data = Persistance.Load().CloneAll();
             data.SetInfoForAll(); //on set les infos
-            Logs.InfoLog("Chargement des données");            
+            Logs.InfoLog("Chargement des données");
         }
-        
+
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

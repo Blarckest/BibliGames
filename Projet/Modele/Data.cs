@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 
 namespace Modele
@@ -32,7 +31,7 @@ namespace Modele
                     Launcher temp = element as Launcher;
 
                     elements.Add(new Launcher(temp.NbJeux, (LauncherName)Enum.Parse(typeof(LauncherName), temp.Nom)));
-                    
+
                 }
                 else if (element.GetType() == typeof(Jeu))
                 {

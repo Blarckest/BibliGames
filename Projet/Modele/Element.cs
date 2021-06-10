@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace Modele
 {
-    public abstract class Element : IEquatable<Element>,IComparable<Element>
+    public abstract class Element : IEquatable<Element>, IComparable<Element>
     {
-        public string Nom { get; set;} = null;
+        public string Nom { get; set; } = null;
         protected Element(string nom)
         {
             Nom = nom;

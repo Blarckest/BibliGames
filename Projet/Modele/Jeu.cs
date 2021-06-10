@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace Modele
 {
     public class Jeu : Element, INotifyPropertyChanged
     {
-        private string exec=null, description=null, image=null, note="", icone=null;
+        private string exec = null, description = null, image = null, note = "", icone = null;
         public bool IsManuallyAdded { get; set; } = false;
         public string Dossier { get; set; } = null;
         public LauncherName Launcher { get; set; }
@@ -51,24 +46,25 @@ namespace Modele
                 NotifyPropertyChanged();
             }
         }
-        public string Image {
+        public string Image
+        {
             get => image;
             set
             {
-                image  =  value;
+                image = value;
                 NotifyPropertyChanged();
             }
         }
-        
 
-        public Jeu(string nom,string dossier,string exec,LauncherName launcher=LauncherName.Autre) : base(nom)
+
+        public Jeu(string nom, string dossier, string exec, LauncherName launcher = LauncherName.Autre) : base(nom)
         {
             Dossier = dossier;
             Exec = exec;
             Launcher = launcher;
         }
 
-        public Jeu(string nom, string dossier, string exec, string image, string icone, string note,string description, LauncherName launcher = LauncherName.Autre, bool isManuallyAdded=false) : this(nom, dossier,exec,launcher)
+        public Jeu(string nom, string dossier, string exec, string image, string icone, string note, string description, LauncherName launcher = LauncherName.Autre, bool isManuallyAdded = false) : this(nom, dossier, exec, launcher)
         {
             Image = image;
             Icone = icone;

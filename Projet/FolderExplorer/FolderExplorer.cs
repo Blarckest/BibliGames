@@ -14,8 +14,8 @@ namespace FolderExplorer
         private readonly Stack<string> historique; //contient l'historique
         private readonly Stack<string> forwardHistorique; //permet de retourner a la valeur d'avant
         public string DossierSelectionner { get; set; } //contient la valeur du dossier actuel
-        public ObservableCollection<LigneExplorateur> ListeDossier { get;} //la liste afficher
-        public ObservableCollection<LigneExplorateur> QuickAccess { get;} //la liste des raccourcisafficher
+        public ObservableCollection<LigneExplorateur> ListeDossier { get; } //la liste afficher
+        public ObservableCollection<LigneExplorateur> QuickAccess { get; } //la liste des raccourcisafficher
         private string message, messageError, chemin;
         public string Message
         {

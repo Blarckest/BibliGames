@@ -1,5 +1,4 @@
 using Modele;
-using System;
 using Xunit;
 
 namespace TestUnitaire
@@ -15,7 +14,7 @@ namespace TestUnitaire
         public void TestNomJeu(string nom)
         {
             Jeu.Nom = nom;
-            Assert.Equal(nom,Jeu.Nom);
+            Assert.Equal(nom, Jeu.Nom);
         }
 
         [Theory]

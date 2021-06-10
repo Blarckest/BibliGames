@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Text;
 using System.Windows.Data;
 
 namespace Vues.Converters
@@ -17,8 +15,8 @@ namespace Vues.Converters
                 return null;
             }
             string imagePath = value as string;
-            if (imagePath[0]=='.')//si c'est un chemin relatif
-            {             
+            if (imagePath[0] == '.')//si c'est un chemin relatif
+            {
                 imagePath = imagePath[2..];
                 if (!string.IsNullOrWhiteSpace(imagePath))
                 {

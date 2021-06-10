@@ -1,5 +1,4 @@
 ﻿using Modele;
-using System;
 using Xunit;
 
 namespace TestUnitaire
@@ -14,10 +13,11 @@ namespace TestUnitaire
         public void TestNombreLauncher(int v)
         {
             Launcher.NbJeux = v;
-            if(v<0)
+            if (v < 0)
             {
                 Assert.Equal(0, Launcher.NbJeux);
-            } else
+            }
+            else
             {
                 Assert.Equal(v, Launcher.NbJeux);
             }

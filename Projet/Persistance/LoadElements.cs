@@ -2,12 +2,9 @@
 using Modele;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-using System.Xml;
-using System.Xml.Linq;
 using System.IO;
-using System.Threading;
+using System.Linq;
+using System.Xml.Linq;
 
 namespace Persistance
 {
@@ -33,7 +30,7 @@ namespace Persistance
             List<Element> elements = new List<Element>();
 
 
-            if (needRecupGames || !IsSaveOk(searchers,games))//si on a besoin de recuperer les jeux
+            if (needRecupGames || !IsSaveOk(searchers, games))//si on a besoin de recuperer les jeux
             {
                 List<Jeu> gamesFound = new List<Jeu>();
                 foreach (var searcher in searchers)//get les jeux
@@ -61,7 +58,7 @@ namespace Persistance
                     }
                 }
             }
-            else 
+            else
             {
                 foreach (Launcher launcher in launchers) //on remplit la liste d'élément
                 {

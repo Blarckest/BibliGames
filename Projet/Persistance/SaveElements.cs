@@ -1,12 +1,10 @@
 ﻿using Logger;
 using Modele;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
-using System.IO;
 
 namespace Persistance
 {
@@ -14,7 +12,7 @@ namespace Persistance
     {
         public SaveElements(string folder) : base(folder)
         {
-           
+
         }
 
         public override void Save(IList<Element> elements, IList<string> additionalFolder)
@@ -25,13 +23,13 @@ namespace Persistance
             using TextWriter textWriter = File.CreateText($"{Folder}/BibliGames.xml");
             using XmlWriter writer = XmlWriter.Create(textWriter, settings);
 
-            var launchers = new XElement("Launchers",elements.Where(e => e.GetType() == typeof(Launcher)) //sauvegarde des launchers
+            var launchers = new XElement("Launchers", elements.Where(e => e.GetType() == typeof(Launcher)) //sauvegarde des launchers
                                     .Select(e => e as Launcher)
                                     .Select(e => new XElement("Launcher",
-                                    new XAttribute("Nom", e.Nom ?? ""),               
+                                    new XAttribute("Nom", e.Nom ?? ""),
                                     new XAttribute("NbJeux", e.NbJeux))));
 
-            var jeux = new XElement("Jeux",elements.Where(e => e.GetType() == typeof(Jeu)) //sauvegarde des jeux
+            var jeux = new XElement("Jeux", elements.Where(e => e.GetType() == typeof(Jeu)) //sauvegarde des jeux
                              .Select(e => e as Jeu)
                              .Select(e => new XElement("Jeu",
                              new XAttribute("Nom", e.Nom ?? ""),
@@ -42,11 +40,11 @@ namespace Persistance
                              new XAttribute("Note", e.Note ?? ""),
                              new XAttribute("Image", e.Image ?? ""),
                              new XAttribute("Icone", e.Icone ?? ""),
-                             new XAttribute("IsManuallyAdded",e.IsManuallyAdded))));
+                             new XAttribute("IsManuallyAdded", e.IsManuallyAdded))));
 
-            var dossiersSupp = new XElement("DossiersSupp", additionalFolder.Select(d=>new XElement("Dossier",new XAttribute("Nom", d ?? "")))); //sauvegarde des dossiers supplementaires
+            var dossiersSupp = new XElement("DossiersSupp", additionalFolder.Select(d => new XElement("Dossier", new XAttribute("Nom", d ?? "")))); //sauvegarde des dossiers supplementaires
 
-            fichier.Add(new XElement("BibliGames", launchers, jeux, dossiersSupp));           
+            fichier.Add(new XElement("BibliGames", launchers, jeux, dossiersSupp));
             fichier.Save(writer); //on ecrit
 
             Logs.InfoLog("Sauvegarde des données");

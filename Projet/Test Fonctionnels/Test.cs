@@ -1,8 +1,6 @@
-﻿using System;
+﻿using Modele;
+using System;
 using System.Collections.Generic;
-using Persistance;
-using Modele;
-using Stub;
 
 namespace Test_Fonctionnels
 {
@@ -27,7 +25,7 @@ namespace Test_Fonctionnels
             List<string> path = new List<string>();
             path.Add("./Test");
             List<string> dossiers = new List<string>();
-             List <GameSearcher> searchers = new List<GameSearcher> 
+            List<GameSearcher> searchers = new List<GameSearcher>
              {
                 new EpicSearcher(),
                 new OriginSearcher(),

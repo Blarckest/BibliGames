@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Modele
@@ -14,7 +13,7 @@ namespace Modele
         private IDictionary<string, string> dossierToNomOrigin = new Dictionary<string, string>();
         protected override void GetGames()
         {
-            if (dossiers!=null)
+            if (dossiers != null)
             {
                 jeux = new List<Jeu>();
                 foreach (var keyValue in dossierToNomOrigin)
@@ -28,7 +27,7 @@ namespace Modele
                     jeux.Add(jeu);
                     Logs.InfoLog($"Ajout du jeu {nom}");
                 }
-                jeux.Sort(); 
+                jeux.Sort();
             }
             else
             {
