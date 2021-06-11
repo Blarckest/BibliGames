@@ -13,7 +13,7 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="FolderExplorer" Height="450" Width="800">
+        Title="FolderExplorer" Height="450" Width="800" MinWidth="730" MinHeight="400">
     <DockPanel>
         <Grid DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>
@@ -47,8 +47,8 @@
             <TextBlock x:Name="ErrorBlock" FontSize="17" Foreground="Red" Grid.Column="0" Text="{Binding MessageError}" />
             <TextBlock x:Name="MessageBlock" FontSize="17" Grid.Column="0" Grid.Row="1" Text="{Binding Message}"/>
             <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.RowSpan="2" Grid.Column="1">
-                <Button Content="Annuler" Margin="10" Click="Annuler"/>
-                <Button Content="Selectionner" Margin="10" Click="Selectionner"/>
+                <Button Content="Selectionner" Margin="10" Width="110" Click="Selectionner"/>
+                <Button Content="Annuler" Margin="10" Width="110" Click="Annuler"/>                
             </StackPanel>
         </Grid>
 
