@@ -8,7 +8,7 @@ namespace Modele
     public class RiotSearcher : GameSearcher
     {
         private const string regKey = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\";
-        Dictionary<string, string> dossierToNom = new Dictionary<string, string>();
+        IDictionary<string, string> dossierToNom = new Dictionary<string, string>();
         protected override void GetGames()
         {
             if (dossiers != null)

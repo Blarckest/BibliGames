@@ -22780,7 +22780,7 @@
 											"top": 1436,
 											"width": 141.26708984375,
 											"height": 13,
-											"text": "+Saver(data: Data): void",
+											"text": "+Save(data: Data): void",
 											"horizontalAlignment": 0
 										}
 									],
@@ -31951,7 +31951,7 @@
 							"_parent": {
 								"$ref": "AAAAAAF5zhoBYGxro6A="
 							},
-							"name": "Saver",
+							"name": "Save",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
