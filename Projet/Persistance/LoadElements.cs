@@ -68,17 +68,6 @@ namespace Persistance
                 }
             }
 
-            if (Directory.Exists("./Test"))//si on doit retourner un stub (fait pour les profs a supp sur version officiel)
-            {
-                Logs.WarningLog("Dossier test trouvé->utilisation du stub");
-                if (games != null && launchers != null && games.Count == 11 && launchers.Count == 1)//si on a charger probablement un stub on renvoie les données de la sauvegarde
-                {
-                    elements.AddRange(launchers);
-                    elements.AddRange(games);
-                    return new Data(elements, new List<string>());
-                }
-                return new Stub.Stub().Load(); // sinon on charge un nouveau stub
-            }
             return new Data(elements, additionalFolder);
         }
 
